@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/hello/{name}/{id}', function($name, $id) {
+    return view('hello', ["name" => $name, "id" => $id]);
+});
