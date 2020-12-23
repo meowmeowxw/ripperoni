@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello/{name}/{id}', function($name, $id) {
+Route::get('/hello/{name?}/{id?}', function ($name = 'meowmeowxw', $id = '0') {
     return view('hello', ["name" => $name, "id" => $id]);
+})->whereNumber('id')->whereAlphaNumeric('name');
+
+Route::get('/profile', function () {
+    return 'success';
+})->middleware('token-valid');
+
+Route::get('/users/{user}', function (User $user) {
+    return view('hello', ["name" => $user->getKeyName()]);
 });
