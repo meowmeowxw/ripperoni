@@ -1,8 +1,21 @@
 # E-Commerce
 
-## Run
+## Install
 
+First install dependecies with docker:
+
+```sh
+docker run --rm \
+    -v $(pwd):/opt \
+    -w /opt \
+    laravelsail/php80-composer:latest \
+    composer install
 ```
-cp .env.example .env
-php artisan key:generate
-```
+
+Start the server:
+
+`./vendor/bin/sail up`
+
+Then generate key:
+
+`./vendor/bin/sail php artisan key:generate`
