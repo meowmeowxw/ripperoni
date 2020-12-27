@@ -12,10 +12,21 @@ docker run --rm \
     composer install
 ```
 
+Alias sail:
+
+`alias sail="./vendor/bin/sail"`
+
 Start the server:
 
-`./vendor/bin/sail up`
+`sail up`
 
 Then generate key:
 
-`./vendor/bin/sail php artisan key:generate`
+`sail php artisan key:generate`
+
+Create tables and add data:
+
+```php
+sail php artisan migrate:refresh
+sail php artisan db:seed --class=UserSeeder
+```

@@ -26,6 +26,21 @@ Route::get('/profile', function () {
     return 'success';
 })->middleware('token.valid');
 
+Route::prefix('/users')->group(function () {
+
+    Route::get('/', function() {
+        foreach(User::all() as $user) {
+            echo $user->name."<br>";
+        }
+    });
+
+    Route::get('/email', function() {
+        foreach(User::all() as $user) {
+            echo $user->email."<br>";
+        }
+    });
+});
+
 Route::get('/users/{user}', function (User $user) {
     return view('hello', ["name" => $user->getKeyName()]);
 });
