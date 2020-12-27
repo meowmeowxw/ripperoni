@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +16,10 @@ use App\Models\User;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::get('/hello/{name?}/{id?}', function ($name = 'meowmeowxw', $id = '0') {
     return view('hello', ['name' => $name, 'id' => $id]);
@@ -59,3 +62,4 @@ Route::prefix('/users')->group(function () {
 Route::get('/users/{user}', function (User $user) {
     return view('hello', ["name" => $user->getKeyName()]);
 });
+require __DIR__.'/auth.php';
