@@ -29,14 +29,29 @@ Route::get('/profile', function () {
 Route::prefix('/users')->group(function () {
 
     Route::get('/', function() {
+        return view('users', ['users' => User::all()]);
+    });
+
+    Route::get('/id', function() {
         foreach(User::all() as $user) {
-            echo $user->name."<br>";
+            echo $user->id."<br>";
         }
+    });
+
+    Route::get('/{id?}', function($id) {
+        $user = User::where('id', $id)->first();
+        echo $user->name.", ".$user->email.", ".$user->password;
     });
 
     Route::get('/email', function() {
         foreach(User::all() as $user) {
             echo $user->email."<br>";
+        }
+    });
+
+    Route::get('/password', function() {
+        foreach(User::all() as $user) {
+            echo $user->password."<br>";
         }
     });
 });
