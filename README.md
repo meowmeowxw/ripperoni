@@ -30,3 +30,10 @@ Create tables and add data:
 sail php artisan migrate:refresh
 sail php artisan db:seed --class=UserSeeder
 ```
+
+Install js/css components:
+
+```sh
+npm install
+npm run dev
+```
