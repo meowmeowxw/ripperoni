@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\User;
 /*
 |--------------------------------------------------------------------------
@@ -62,4 +64,31 @@ Route::prefix('/users')->group(function () {
 Route::get('/users/{user}', function (User $user) {
     return view('hello', ["name" => $user->getKeyName()]);
 });
-require __DIR__.'/auth.php';
+
+Route::prefix('/register')->group(function() {
+    Route::get('/', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('/', [RegisteredUserController::class, 'store']);
+});
+
+Route::prefix('/login')->group(function() {
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+        ->middleware('guest')
+        ->name('login');
+
+    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+        ->middleware('guest');
+});
+
+Route::prefix('/confirm-password')->group(function() {
+    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
+        ->name('password.confirm');
+
+    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
+});
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+

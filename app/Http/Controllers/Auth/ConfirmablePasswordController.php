@@ -11,6 +11,16 @@ use Illuminate\Validation\ValidationException;
 class ConfirmablePasswordController extends Controller
 {
     /**
+     * Instantiate a new controller instance
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Show the confirm password view.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Hash;
 class RegisteredUserController extends Controller
 {
     /**
+     * Instantiate a new controller instance
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
+
+    /**
      * Display the registration view.
      *
      * @return \Illuminate\View\View

@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticatedSessionController extends Controller
 {
     /**
+     * Instantiate a new controller instance
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    /**
      * Display the login view.
      *
      * @return \Illuminate\View\View
