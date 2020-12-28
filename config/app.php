@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Ripperoni'),
 
     /*
     |--------------------------------------------------------------------------
@@ -167,7 +167,7 @@ return [
          */
 
         /*
-         * IDE 
+         * IDE
          */
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
