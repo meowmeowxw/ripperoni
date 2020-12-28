@@ -2,3 +2,15 @@
     background-color: $yellow !important;
 }
 
+.card-header {
+    background-color: $yellow !important;
+}
+
+.form-control {
+    &:active {
+        border-color: $red !important;
+    }
+    &:focus {
+        border-color: $red !important;
+    }
+}

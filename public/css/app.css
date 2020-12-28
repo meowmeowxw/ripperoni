@@ -10907,3 +10907,15 @@ a.text-dark:focus {
   background-color: #fadc44 !important;
 }
 
+.card-header {
+  background-color: #fadc44 !important;
+}
+
+.form-control:active {
+  border-color: #e3342f !important;
+}
+
+.form-control:focus {
+  border-color: #e3342f !important;
+}
+
