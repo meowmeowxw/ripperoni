@@ -19,10 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::get('/hello/{name?}/{id?}', function ($name = 'meowmeowxw', $id = '0') {
     return view('hello', ['name' => $name, 'id' => $id]);
 })->whereNumber('id')->whereAlphaNumeric('name');
@@ -73,22 +69,25 @@ Route::prefix('/register')->group(function() {
 });
 
 Route::prefix('/login')->group(function() {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
+    Route::get('/', [AuthenticatedSessionController::class, 'create'])
         ->middleware('guest')
         ->name('login');
 
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+    Route::post('/', [AuthenticatedSessionController::class, 'store'])
         ->middleware('guest');
 });
 
 Route::prefix('/confirm-password')->group(function() {
-    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
+    Route::get('/', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('/', [ConfirmablePasswordController::class, 'store']);
 });
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
