@@ -10,7 +10,8 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
+    require('bootstrap/js/dist/dropdown');
+    require('bootstrap/js/dist/collapse');
 } catch (e) {}
 
 /**
