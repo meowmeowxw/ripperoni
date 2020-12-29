@@ -16,16 +16,8 @@ use App\Models\User;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/hello/{name?}/{id?}', function ($name = 'meowmeowxw', $id = '0') {
-    return view('hello', ['name' => $name, 'id' => $id]);
-})->whereNumber('id')->whereAlphaNumeric('name');
-
-Route::get('/profile', function () {
-    return 'success';
-})->middleware('token.valid');
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::prefix('/users')->group(function () {
 
@@ -57,10 +49,6 @@ Route::prefix('/users')->group(function () {
     });
 });
 
-Route::get('/users/{user}', function (User $user) {
-    return view('hello', ["name" => $user->getKeyName()]);
-});
-
 Route::prefix('/register')->group(function() {
     Route::get('/', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -87,7 +75,3 @@ Route::prefix('/confirm-password')->group(function() {
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
