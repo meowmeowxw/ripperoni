@@ -23,12 +23,16 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
+        static $is_seller = True;
+        $user_obj = [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => Hash::make($this->faker->password()), // password
             'remember_token' => Str::random(10),
+            'is_seller' => $is_seller,
         ];
+        $is_seller = !$is_seller;
+        return $user_obj;
     }
 }

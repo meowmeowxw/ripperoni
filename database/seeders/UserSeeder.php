@@ -19,9 +19,11 @@ class UserSeeder extends Seeder
     {
         User::factory(10)->create();
         DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => 'giovanni.disanti@protonmail.com',
-            'password' => Hash::make('password'),
+            'name' => "a",
+            'email' => 'a@a.it',
+            'password' => Hash::make('a'),
+            'remember_token' => Str::random(10),
+            'is_seller' => True,
         ]);
     }
 }
