@@ -17,7 +17,10 @@ class Product extends \Illuminate\Database\Eloquent\Model
 
     protected $dates = ['deleted_at'];
 
-    public $timestamps = false;
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'sub_orders')->withPivot('price', 'quantity');
+    }
 
     public function category()
     {

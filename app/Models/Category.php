@@ -10,11 +10,10 @@ class Category extends \Illuminate\Database\Eloquent\Model
     protected $fillable = [
         'name',
     ];
+
     protected $dates = ['deleted_at'];
 
     public $table = 'categories';
-
-    public $timestamps = false;
 
     public function products()
     {

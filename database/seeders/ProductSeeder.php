@@ -15,7 +15,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $products = [
+        $beers = [
             'Ale' => [
                 [
                     'name' => 'Ritual Pale Ale',
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
                 ],
                 [
                     'name' => 'Threes Vliet',
-                    'description' => 'e of the cleanest, most drinkable American pilsners, it has classic cracker-like malt flavor and a truly balanced and subtle hop profile, which I feel a lot of breweries putting out great IPAs struggle to achieve with their pilsners.',
+                    'description' => 'One of the cleanest, most drinkable American pilsners, it has classic cracker-like malt flavor and a truly balanced and subtle hop profile, which I feel a lot of breweries putting out great IPAs struggle to achieve with their pilsners.',
                     'price' => 3,
                     'quantity' => 5
                 ]
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
                 ]
             ],
         ];
-        foreach($products as $categoryName => $products) {
+        foreach ($beers as $categoryName => $products) {
             $category = Category::where('name', $categoryName)->first();
             $category->products()->createMany($products);
         }

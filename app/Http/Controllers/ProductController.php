@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function show()
     {
         $array = [];
-        foreach(Category::all() as $category) {
+        foreach (Category::all() as $category) {
             $products = Product::where('category_id', $category->id)->get();
             $array += [$category->name => $products];
             // dd($array);
