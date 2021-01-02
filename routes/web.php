@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
 /*
@@ -20,6 +21,14 @@ use App\Models\Product;
 
 Route::get('/', [ProductController::class, 'show'])
     ->middleware(['auth'])->name('dashboard');
+
+Route::get('/orders', function() {
+    $orders = Auth::user()->orders()->get();
+    return view('orders', [
+        'orders' => $orders,
+        'user' => Auth::user(),
+    ]);
+});
 
 Route::prefix('/users')->group(function () {
 
