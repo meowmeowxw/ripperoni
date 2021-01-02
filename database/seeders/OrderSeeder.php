@@ -12,7 +12,7 @@ use App\Models\SubOrder;
 
 class OrderSeeder extends Seeder
 {
-    private const NUM_ORDER = 10;
+    private const NUM_ORDER = 60;
     /**
      * Seed the categories table
      *
