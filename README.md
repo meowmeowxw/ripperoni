@@ -28,7 +28,7 @@ Create tables and add data:
 
 ```php
 sail php artisan migrate:refresh
-sail php artisan db:seed --class=UserSeeder
+sail php artisan db:seed
 ```
 
 Install js/css components:
@@ -36,4 +36,6 @@ Install js/css components:
 ```sh
 npm install
 npm run dev
+# Alternative to create minified js/css:
+# npm run prod
 ```
