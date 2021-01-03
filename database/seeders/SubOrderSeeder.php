@@ -28,10 +28,11 @@ class SubOrderSeeder extends Seeder
                 ->take($faker->numberBetween(1, self::MAX_PRODUCTS))
                 ->get()
                 ->mapWithKeys(function($product) use ($faker, $created_at) {
+                    $quantity = $faker->numberBetween(1, self::MAX_QUANTITY);
                     return [
                         $product->id => [
-                            'quantity' => $faker->numberBetween(1, self::MAX_QUANTITY),
-                            'price' => $product->price,
+                            'quantity' => $quantity,
+                            'price' => $product->price * $quantity,
                             'created_at' => $created_at,
                             'updated_at' => $created_at,
                         ],
@@ -39,6 +40,11 @@ class SubOrderSeeder extends Seeder
                 })
                 ->all();
             $order->products()->attach($products);
+            $order->price = 0.0;
+            foreach ($order->products as $product) {
+                $order->price += $product->pivot->price;
+            }
+            $order->save();
         }
     }
 }
