@@ -24,7 +24,7 @@ class UserFactory extends Factory
     public function definition()
     {
         static $is_seller = True;
-        $user_obj = [
+        $user = [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
@@ -33,6 +33,6 @@ class UserFactory extends Factory
             'is_seller' => $is_seller,
         ];
         $is_seller = !$is_seller;
-        return $user_obj;
+        return $user;
     }
 }
