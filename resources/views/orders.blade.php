@@ -11,8 +11,8 @@
                             <h3>Order id: {{ $order->id }} with price: {{ $order->price }}</h3>
                             <subsection>
                                 <h4>Beers</h4>
-                                @foreach ($order->products()->get() as $beer)
-                                    <li>{{ $beer->name }} quantity: {{ $beer->quantity }}</li>
+                                @foreach ($order->products as $beer)
+                                    <li>{{ $beer->name }} quantity: {{ $beer->pivot->quantity }}</li>
                                 @endforeach
                             </subsection>
                         </section>

@@ -4,6 +4,7 @@
 namespace App\Models;
 
 use App\Models\Category;
+use App\Models\Order;
 
 class Product extends \Illuminate\Database\Eloquent\Model
 {

@@ -24,6 +24,14 @@ Route::get('/', [ProductController::class, 'show'])
 
 Route::get('/orders', function() {
     $orders = Auth::user()->orders()->get();
+    /*
+     * Example of code to use pivot... https://stackoverflow.com/questions/27038636/laravel-pivot-returning-null
+     * Weird but understandable.
+    $products = Order::find(1)->products;
+    foreach ($products as $product) {
+       echo $product->pivot->quantity."<br>";
+    }
+     */
     return view('orders', [
         'orders' => $orders,
         'user' => Auth::user(),
