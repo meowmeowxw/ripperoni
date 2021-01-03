@@ -26,6 +26,16 @@ class CreateSellersTable extends Migration
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
+
+        Schema::table('products', function(Blueprint $table) {
+            $table->unsignedBigInteger('seller_id')->index();
+
+            $table->foreign('seller_id')
+                ->references('id')
+                ->on('sellers')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+        });
     }
 
     /**
