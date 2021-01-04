@@ -56,6 +56,9 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        if ($request->is_seller) {
+            return route('seller.register');
+        }
         return redirect(RouteServiceProvider::HOME);
     }
 }

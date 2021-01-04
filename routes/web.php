@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Seller\RegisterSellerController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -19,6 +20,16 @@ use App\Models\Product;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::prefix('/seller')->group(function() {
+    Route::get('/register', [RegisterSellerController::class, 'create'])
+        ->middleware('auth')
+        ->middleware('not.seller')
+        ->name('seller.register');
+
+    Route::post('/register', [RegisterSellerController::class, 'store'])
+        ->middleware('auth');
+});
 
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
