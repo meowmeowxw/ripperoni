@@ -14,6 +14,7 @@ class Product extends \Illuminate\Database\Eloquent\Model
         'description',
         'price',
         'quantity',
+        'path',
     ];
 
     protected $dates = ['deleted_at'];
