@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
 use App\Models\User;
+use App\Models\Seller;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
@@ -20,7 +21,7 @@ use App\Models\Product;
 */
 
 Route::get('/', [ProductController::class, 'show'])
-    ->middleware(['auth'])->name('dashboard');
+    ->name('dashboard');
 
 Route::get('/orders', function() {
     $orders = Auth::user()->orders()->get();
@@ -36,7 +37,16 @@ Route::get('/orders', function() {
         'orders' => $orders,
         'user' => Auth::user(),
     ]);
-});
+})->middleware('auth')->name('orders');
+
+Route::get('/sellers', function() {
+    foreach (Seller::all() as $seller) {
+        echo "<h2>".$seller->company."</h2>";
+        foreach ($seller->products as $product) {
+            echo "<li>".$product->name."</li>";
+        }
+    }
+})->name('sellers');
 
 Route::prefix('/users')->group(function () {
 
