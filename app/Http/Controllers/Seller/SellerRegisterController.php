@@ -15,7 +15,7 @@ class SellerRegisterController extends Controller
     {
         $this->middleware([
             'auth',
-            'not.seller'
+            'customer'
         ]);
     }
 
