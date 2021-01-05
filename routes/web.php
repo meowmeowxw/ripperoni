@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\Seller\RegisterSellerController;
+use App\Http\Controllers\Seller\SellerRegisterController;
+use App\Http\Controllers\Seller\SellerSettingsController;
+use App\Http\Controllers\Seller\SellerProductsController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -22,13 +24,17 @@ use App\Models\Product;
 */
 
 Route::prefix('/seller')->group(function() {
-    Route::get('/register', [RegisterSellerController::class, 'create'])
-        ->middleware('auth')
-        ->middleware('not.seller')
+    Route::get('/register', [SellerRegisterController::class, 'create'])
         ->name('seller.register');
+    Route::post('/register', [SellerRegisterController::class, 'store']);
 
-    Route::post('/register', [RegisterSellerController::class, 'store'])
-        ->middleware('auth');
+    Route::get('/settings', [SellerSettingsController::class, 'create'])
+        ->name('seller.settings');
+    Route::post('/settings', [SellerRegisterController::class, 'store']);
+
+    Route::get('/products', [SellerProductsController::class, 'create'])
+        ->name('seller.products');
+    Route::post('/products', [SellerProductsController::class, 'store']);
 });
 
 Route::get('/', [ProductController::class, 'show'])

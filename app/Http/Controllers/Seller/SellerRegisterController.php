@@ -3,27 +3,20 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller as BaseController;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Seller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
-class RegisterSellerController extends Controller
+class SellerRegisterController extends Controller
 {
 
     public function __construct()
     {
-        // ;
+        $this->middleware([
+            'auth',
+            'not.seller'
+        ]);
     }
     /**
      * Display the registration seller view.
