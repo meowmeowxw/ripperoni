@@ -35,7 +35,6 @@ class SellerProductsController extends Controller
         ]);
     }
 
-
     /**
      * Handle an incoming registration request.
      *

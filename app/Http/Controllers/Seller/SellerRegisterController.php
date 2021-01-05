@@ -18,6 +18,7 @@ class SellerRegisterController extends Controller
             'not.seller'
         ]);
     }
+
     /**
      * Display the registration seller view.
      *
@@ -27,7 +28,6 @@ class SellerRegisterController extends Controller
     {
         return view('seller.register');
     }
-
 
     /**
      * Handle an incoming registration request.

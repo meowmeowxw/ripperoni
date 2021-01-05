@@ -28,7 +28,6 @@ class SellerSettingsController extends Controller
         return view('seller.settings');
     }
 
-
     /**
      * Handle an incoming registration request.
      *
