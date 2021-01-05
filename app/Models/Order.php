@@ -20,8 +20,8 @@ class Order extends \Illuminate\Database\Eloquent\Model
         return $this->belongsToMany(Product::class, 'sub_orders')->withPivot('price', 'quantity');
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Customer::class);
     }
 }

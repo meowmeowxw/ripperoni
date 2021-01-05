@@ -26,6 +26,10 @@ class UserSeeder extends Seeder
                     'company' => Str::random(6),
                     'credit_card' => $faker->creditCardNumber(),
                 ]);
+            } else {
+                $user->customer()->create([
+                    'credit_card' => $faker->creditCardNumber(),
+                ]);
             }
         }
 
@@ -34,12 +38,24 @@ class UserSeeder extends Seeder
             'email' => 'a@a.it',
             'password' => Hash::make('a'),
             'remember_token' => Str::random(10),
-            'is_seller' => True,
+            'is_seller' => true,
         ]);
         $user->save();
         $user->seller()->create([
             'company' => 'A Company',
             'credit_card' => '6666666666666',
+        ]);
+
+        $user = User::create([
+            'name' => 'b',
+            'email' => 'b@b.it',
+            'password' => Hash::make('b'),
+            'remember_token' => Str::random(10),
+            'is_seller' => false,
+        ]);
+        $user->save();
+        $user->customer()->create([
+            'credit_card' => $faker->creditCardNumber(),
         ]);
     }
 }

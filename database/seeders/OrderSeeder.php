@@ -13,6 +13,7 @@ use App\Models\SubOrder;
 class OrderSeeder extends Seeder
 {
     private const NUM_ORDER = 60;
+
     /**
      * Seed the categories table
      *
@@ -27,8 +28,11 @@ class OrderSeeder extends Seeder
                 'price' => rand(3, 10),
                 'created_at' => $created_at,
             ]);
-            $user = User::all()->random();
-            $user->orders()->save($order);
+            $customer = User::all()
+                ->where('is_seller', false)
+                ->random()
+                ->customer;
+            $customer->orders()->save($order);
         }
     }
 }

@@ -41,19 +41,25 @@ Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
 
 Route::get('/orders', function() {
-    $orders = Auth::user()->orders()->get();
-    /*
-     * Example of code to use pivot... https://stackoverflow.com/questions/27038636/laravel-pivot-returning-null
-     * Weird but understandable.
-    $products = Order::find(1)->products;
-    foreach ($products as $product) {
-       echo $product->pivot->quantity."<br>";
+    $user = Auth::user();
+    if (! $user->is_seller) {
+        $orders = $user->customer->orders()->get();
+        /*
+         * Example of code to use pivot... https://stackoverflow.com/questions/27038636/laravel-pivot-returning-null
+         * Weird but understandable.
+        $products = Order::find(1)->products;
+        foreach ($products as $product) {
+           echo $product->pivot->quantity."<br>";
+        }
+         */
+        return view('orders', [
+            'orders' => $orders,
+            'user' => Auth::user(),
+        ]);
+    } else {
+        return redirect('/');
     }
-     */
-    return view('orders', [
-        'orders' => $orders,
-        'user' => Auth::user(),
-    ]);
+
 })->middleware('auth')->name('orders');
 
 Route::get('/sellers', function() {
