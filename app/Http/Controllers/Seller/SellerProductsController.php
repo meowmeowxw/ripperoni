@@ -48,26 +48,26 @@ class SellerProductsController extends Controller
 
     public function add(Request $request)
     {
-        dd($request->file('logo'));
-        $category = Category::where('name', $request->category)->first();
-        dd($category->products);
         $request->validate([
             'name' => 'required|string|max:60',
             'description' => 'required|string|max:1024',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric|integer',
-            'path' => 'required|image',
+            'logo' => 'mimes:jpg,bmp,png|required',
             'category' => 'required|string',
         ]);
 
-        $category->products()->create([
+        $category = Category::where('name', $request->category)->first();
+        $product = new Product([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'quantity' => $request->quantity,
-            'seller_id' => Auth::user()->seller->id,
-            'path' => $request->file('logo')->store(),
+            'path' => "/".$request->file('logo')->store('logos'),
         ]);
+        $product->category_id = $category->id;
+        $product->seller_id = Auth::user()->seller->id;
+        $product->save();
         return redirect(route('seller.products'));
     }
 

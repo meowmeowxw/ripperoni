@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group row">
                         <label for="category">Category</label>
-                        <select class="form-control" id="category">
+                        <select class="form-control" id="category" name="category">
                             <?php
                             $categories = \App\Models\Category::all();
                             ?>
