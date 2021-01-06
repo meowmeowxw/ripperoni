@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Seller\SellerRegisterController;
 use App\Http\Controllers\Seller\SellerSettingsController;
 use App\Http\Controllers\Seller\SellerProductsController;
+use App\Http\Controllers\Seller\SellerOrdersController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -35,6 +36,10 @@ Route::prefix('/seller')->group(function() {
     Route::get('/products', [SellerProductsController::class, 'create'])
         ->name('seller.products');
     Route::post('/products', [SellerProductsController::class, 'store']);
+
+    Route::get('/orders', [SellerOrdersController::class, 'create'])
+        ->name('seller.orders');
+    Route::post('/orders', [SellerOrdersController::class, 'store']);
 });
 
 Route::get('/', [ProductController::class, 'show'])

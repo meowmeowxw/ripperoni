@@ -9523,3 +9523,11 @@ a.text-dark:focus {
   border-color: #e3342f !important;
 }
 
+.card a {
+  color: #f6993f !important;
+}
+
+.card-img-top {
+  width: 40px !important;
+}
+

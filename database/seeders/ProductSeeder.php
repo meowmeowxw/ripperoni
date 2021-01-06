@@ -24,7 +24,7 @@ class ProductSeeder extends Seeder
                     'price' => 2.30,
                     'quantity' => 2,
                     'seller_id' => Seller::all()->random(1)->first()->id,
-                    'path' => 'img/ritual-pale-ale.png',
+                    'path' => '/img/ritual-pale-ale.png',
                 ],
                 [
                     'name' => 'Ghostfish Vanishing Point',
@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
                     'price' => 3.33,
                     'quantity' => 4,
                     'seller_id' => Seller::where('company', 'A Company')->first()->id,
-                    'path' => 'img/ghostfish-vanishing-point.png',
+                    'path' => '/img/ghostfish-vanishing-point.png',
                 ]
             ],
             'Pilsner' => [
@@ -42,7 +42,7 @@ class ProductSeeder extends Seeder
                     'price' => 1,
                     'quantity' => 10,
                     'seller_id' => Seller::all()->random(1)->first()->id,
-                    'path' => 'img/live-oak-pilz.jpg',
+                    'path' => '/img/live-oak-pilz.jpg',
                 ],
                 [
                     'name' => 'Threes Vliet',
@@ -50,7 +50,7 @@ class ProductSeeder extends Seeder
                     'price' => 3,
                     'quantity' => 5,
                     'seller_id' => Seller::all()->random(1)->first()->id,
-                    'path' => 'img/threes-vliet.jpg',
+                    'path' => '/img/threes-vliet.jpg',
                 ]
             ],
             'Lager' => [
@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
                     'price' => 1.10,
                     'quantity' => 4,
                     'seller_id' => Seller::where('company', 'A Company')->first()->id,
-                    'path' => 'img/paulaner-munchner-hell.png',
+                    'path' => '/img/paulaner-munchner-hell.png',
                 ]
             ],
         ];

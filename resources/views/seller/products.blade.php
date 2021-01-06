@@ -6,7 +6,15 @@
             <div class="col-md-8">
                 <h2>{{ $seller->company }}</h2>
                 @foreach ($products as $product)
-                    <li>{{$product->name}}</li>
+                    <x-seller-product>
+                        <x-slot name="path">
+                            {{ $product->path }}
+                        </x-slot>
+                        <x-slot name="title">
+                            {{ $product->name }}
+                        </x-slot>
+                        {{ $product->quantity }}
+                    </x-seller-product>
                 @endforeach
             </div>
         </div>
