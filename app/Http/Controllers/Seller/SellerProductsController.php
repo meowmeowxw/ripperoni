@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Models\Seller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
@@ -45,6 +46,31 @@ class SellerProductsController extends Controller
         return redirect(route('seller.products'));
     }
 
+    public function add(Request $request)
+    {
+        dd($request->file('logo'));
+        $category = Category::where('name', $request->category)->first();
+        dd($category->products);
+        $request->validate([
+            'name' => 'required|string|max:60',
+            'description' => 'required|string|max:1024',
+            'price' => 'required|numeric',
+            'quantity' => 'required|numeric|integer',
+            'path' => 'required|image',
+            'category' => 'required|string',
+        ]);
+
+        $category->products()->create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'seller_id' => Auth::user()->seller->id,
+            'path' => $request->file('logo')->store(),
+        ]);
+        return redirect(route('seller.products'));
+    }
+
     /**
      * Display the registration seller view.
      *
@@ -53,6 +79,7 @@ class SellerProductsController extends Controller
     public function create()
     {
         $seller = Seller::where('user_id', Auth::user()->id)->first();
+        $categories = Category::all();
         $products = $seller->products()->get();
         return view('seller.products', [
             'seller' => $seller,

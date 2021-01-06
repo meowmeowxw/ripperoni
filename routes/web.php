@@ -39,6 +39,8 @@ Route::prefix('/seller')->group(function() {
 
     Route::post('/product/edit', [SellerProductsController::class, 'edit'])
         ->name('seller.product.edit');
+    Route::post('/product/add', [SellerProductsController::class, 'add'])
+        ->name('seller.product.add');
 
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');

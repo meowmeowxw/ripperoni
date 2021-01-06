@@ -4,7 +4,6 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h3>{{ $seller->company }}</h3>
                 @foreach ($products as $product)
                     <x-seller-product>
                         <x-slot name="path">
@@ -31,6 +30,8 @@
                         {{ $product->quantity }}
                     </x-seller-product>
                 @endforeach
+                <x-seller-product-new>
+                </x-seller-product-new>
             </div>
         </div>
     </div>
