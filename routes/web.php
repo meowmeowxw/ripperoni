@@ -33,9 +33,12 @@ Route::prefix('/seller')->group(function() {
         ->name('seller.settings');
     Route::post('/settings', [SellerRegisterController::class, 'store']);
 
-    Route::get('/products', [SellerProductsController::class, 'create'])
+    Route::get('/products/', [SellerProductsController::class, 'create'])
         ->name('seller.products');
-    Route::post('/products', [SellerProductsController::class, 'store']);
+    Route::post('/products/', [SellerProductsController::class, 'store']);
+
+    Route::post('/product/edit', [SellerProductsController::class, 'edit'])
+        ->name('seller.product.edit');
 
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');

@@ -25,6 +25,31 @@ class SellerProductsController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    public function edit(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:60',
+            'description' => 'required|string|max:1024',
+            'price' => 'required|numeric',
+            'quantity' => 'required|numeric|integer',
+            // 'path' => 'required|string|max:1024',
+        ]);
+
+        $product = Auth::user()->seller->products()->find($request->id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        // $product->path = $request->path;
+        $product->save();
+        return redirect(route('seller.products'));
+    }
+
+    /**
+     * Display the registration seller view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function create()
     {
         $seller = Seller::where('user_id', Auth::user()->id)->first();
