@@ -4,7 +4,7 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class formInput extends Component
+class FormInput extends Component
 {
 
     /**
@@ -59,6 +59,6 @@ class formInput extends Component
      */
     public function render()
     {
-        return view('components.formInput');
+        return view('components.form-input');
     }
 }
