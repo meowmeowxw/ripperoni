@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class SellerProductsController extends Controller
 {
@@ -35,6 +36,10 @@ class SellerProductsController extends Controller
             'quantity' => 'required|numeric|integer',
             // 'path' => 'required|string|max:1024',
         ]);
+
+        if (! Gate::allows('edit-product', Product::find($request->id))) {
+            abort(403);
+        }
 
         $product = Auth::user()->seller->products()->find($request->id);
         $product->name = $request->name;

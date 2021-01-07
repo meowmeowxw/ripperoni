@@ -31,12 +31,11 @@ Route::prefix('/seller')->group(function() {
 
     Route::get('/settings', [SellerSettingsController::class, 'create'])
         ->name('seller.settings');
-    Route::post('/settings', [SellerRegisterController::class, 'store']);
+    Route::post('/settings', [SellerSettingsController::class, 'store']);
 
     Route::get('/products/', [SellerProductsController::class, 'create'])
         ->name('seller.products');
     Route::post('/products/', [SellerProductsController::class, 'store']);
-
     Route::post('/product/edit', [SellerProductsController::class, 'edit'])
         ->name('seller.product.edit');
     Route::post('/product/add', [SellerProductsController::class, 'add'])
