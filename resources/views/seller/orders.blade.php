@@ -4,12 +4,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h2>{{ $seller->company }}</h2>
-                @foreach ($products as $product)
-                    <h3> {{ $product->name }} </h3>
-                    @foreach ($product->orders as $order)
-                        <li>{{$order->id}}: {{$order->pivot->quantity}}</li>
+                <h3>{{__('Total Profit')}}: {{$total_profit}} &euro;</h3>
+                @foreach ($orders as $order)
+                    <h4>{{__('Order ID')}}: {{ $order['id'] }}</h4>
+                    @foreach ($order['products'] as $product)
+                        <li>{{$product->name}}: {{$product->pivot->quantity}}</li>
                     @endforeach
+                    <h5>{{__('Earning')}}: {{$order['earning']}}</h5>
                 @endforeach
             </div>
         </div>

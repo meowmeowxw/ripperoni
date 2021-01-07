@@ -39,11 +39,12 @@
                     @if (Auth::user()->is_seller)
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{__('Seller')}}
+                                {{Auth::user()->seller->company}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seller">
                                 <a class="dropdown-item" href="{{route('seller.settings')}}">{{__('Settings')}}</a>
                                 <a class="dropdown-item" href="{{route('seller.products')}}">{{__('My products')}}</a>
+                                <a class="dropdown-item" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
                             </div>
                         </li>
                     @else

@@ -29,11 +29,24 @@ class SellerOrdersController extends Controller
      */
     public function create()
     {
-        $seller = Seller::where('user_id', Auth::user()->id)->first();
-        $products = $seller->products()->get();
+        $seller = Auth::user()->seller;
+        $orders = [];
+        $total_profit = 0;
+        foreach (Order::all() as $order) {
+            $products = $order->products()->where('seller_id', $seller->id)->get();
+            if ($products->count() !== 0) {
+                $profit = 0;
+                foreach ($products as $product) {
+                    $profit += $product->pivot->price;
+                }
+                $total_profit += $profit;
+                $orders[] = ['id' => $order->id, 'products' => $products, 'earning' => $profit];
+            }
+        }
         return view('seller.orders', [
             'seller' => $seller,
-            'products' => $products,
+            'orders' => $orders,
+            'total_profit' => $total_profit,
         ]);
     }
 
