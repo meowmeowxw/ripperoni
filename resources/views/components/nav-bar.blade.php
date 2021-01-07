@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <!-- TODO: or container-fluid ? -->
-    <div class="container">
+    <div class="container-fluid">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Ripperoni') }}
         </a>
@@ -48,12 +48,9 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('seller.register')}}">{{__('Register as seller')}}</a>
+                            <a class="nav-link" href="{{route('orders')}}">{{__('Orders')}}</a>
                         </li>
                     @endif
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('orders')}}">{{__('Orders')}}</a>
-                    </li>
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}

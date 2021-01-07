@@ -18,7 +18,7 @@
 <body>
     <div id="app">
 
-        <x-navBar />
+        <x-nav-bar />
 
         <main class="py-4">
             @yield('content')
