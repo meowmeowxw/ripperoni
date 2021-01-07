@@ -23,17 +23,9 @@
                     <x-FormInput name="price" idAndFor="priceNew" :lblName="__('Price')" type="number"/>
                     <x-FormInput name="quantity" idAndFor="quantityNew" :lblName="__('Quantity')" type="number"/>
 
-                    <div class="form-label-group">
-                        <label for="category">Category</label>
-                        <x-select-foreach-category />
-                    </div>
+                    <x-form.form-category name="category" idAndFor="category" lblValue="Category" />
 
-                    <div class="form-label-group">
-                        <label for="logo" class="col-md-4 col-form-label text-md-right">{{ __('Select Image') }}</label>
-                        <div class="col-md-6">
-                            <input id="logo" type="file" class="form-control-file" @error('logo') is-invalid @enderror name="logo" value=""/>
-                        </div>
-                    </div>
+                    <x-form.form-img name="logo" idAndFor="logoNew" lblValue="{{ __('Select Image') }}" />
 
                     <div class="form-group row mb-0 justify-content-center">
                             <button type="submit" class="btn btn-primary">

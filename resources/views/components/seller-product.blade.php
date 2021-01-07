@@ -20,10 +20,10 @@
                 <form method="POST" action="{{route('seller.product.edit')}}">
                     @csrf
 
-                    <x-FormInput name="name" idAndFor="name{{$id}}" :lblName="__('Name')" :inputValue="$name" type="text"/>
-                    <x-FormInput name="description" idAndFor="description{{$id}}" :lblName="__('Description')" :inputValue="$description" type="text"/>
-                    <x-FormInput name="price" idAndFor="price{{$id}}" :lblName="__('Price')" :inputValue="$price" type="number"/>
-                    <x-FormInput name="quantity" idAndFor="quantity{{$id}}" :lblName="__('Quantity')" :inputValue="$quantity" type="number"/>
+                    <x-FormInput name="name" idAndFor="name{{$id}}" :lblName="__('Name')" :inputValue="$name" type="text" />
+                    <x-FormInput name="description" idAndFor="description{{$id}}" :lblName="__('Description')" :inputValue="$description" type="text" />
+                    <x-FormInput name="price" idAndFor="price{{$id}}" :lblName="__('Price')" :inputValue="$price" type="number" />
+                    <x-FormInput name="quantity" idAndFor="quantity{{$id}}" :lblName="__('Quantity')" :inputValue="$quantity" type="number" />
 
                     <button type="submit" class="btn btn-lg btn-primary btn-block">
                         {{ __('Save') }}
@@ -37,7 +37,6 @@
                             ]) }} />
                 </form>
             </div>
-
         </div>
     </div>
 </div>
