@@ -41,12 +41,20 @@ class SellerSettingsController extends Controller
      */
     public function store(Request $request)
     {
-        Auth::user()->is_seller = true;
-        Auth::user()->save();
-        Auth::user()->seller()->create([
-            'company' => $request->company,
-            'credit_card' => $request->credit_card,
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'company' => 'required|string|max:64',
+            'credit_card' => 'required|string|digits_between:10, 24',
         ]);
-        return redirect(RouteServiceProvider::HOME);
+
+        $user = Auth::user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->seller->company = $request->company;
+        $user->seller->credit_card = $request->credit_card;
+        $user->seller->save();
+        $user->save();
+        return redirect(route('seller.settings'));
     }
 }
