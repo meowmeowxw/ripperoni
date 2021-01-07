@@ -1,6 +1,6 @@
 <div class="form-label-group">
-    <label for="{{$message}}">{{$lblName}}</label>
-    <input type="{{$type}}" id="{{$message}}" class="form-control" placeholder="Email address" required="" autofocus="" name="{{$message}}" value="{{$name}}">
+    <label for="{{$idAndFor}}" class="mb-0">{{$lblName}}</label>
+    <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}" class="form-control mb-2" required="" autofocus="" name="{{$name}}" value="{{$inputValue}}">
 </div>
 
 {{--

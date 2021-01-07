@@ -12,7 +12,7 @@ class FormInput extends Component
      *
      * @var string
      */
-    public $message;
+    public $idAndFor;
 
     /**
      * The currentName.
@@ -26,7 +26,7 @@ class FormInput extends Component
      *
      * @var string
      */
-    public $name;
+    public $inputValue;
 
     /**
      * The currentName.
@@ -36,19 +36,28 @@ class FormInput extends Component
     public $type;
 
     /**
+     * The currentName.
+     *
+     * @var string
+     */
+    public $name;
+
+    /**
      * Create the component instance.
      *
-     * @param string $message
+     * @param string $idAndFor
      * @param string $lblName
-     * @param string $name
+     * @param string $inputValue
      * @param string $type
+     * @param string $name
      */
-    public function __construct(string $message, string $lblName, string $name, string $type)
+    public function __construct(string $idAndFor, string $lblName, string $inputValue = "", string $type, string $name)
     {
-        $this->message = $message;
+        $this->idAndFor = $idAndFor;
         $this->lblName = $lblName;
-        $this->name = $name;
+        $this->inputValue = $inputValue;
         $this->type = $type;
+        $this->name = $name;
     }
 
 
