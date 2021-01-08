@@ -1,4 +1,4 @@
-<div class="card m-1 ">
+<div class="card m-1" id="customer-order.{{$order->id}}">
     <div class="card-header d-flex flex-row">
         <div class="mr-auto">Order Id: <b>{{$order->id}}</b></div>
         <div class="ml-auto">Total Price: <b>{{$order->price}}€</b></div>
@@ -15,7 +15,7 @@
                         <x-public.product :product=$beer :sellBy="TRUE"></x-public.product>
                     </div>
                     <div>
-                        <img src={{$beer->path}} class="card-img-top" alt="{{$beer->name}}"/>
+                        <img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/>
                     </div>
                 </div>
             @endforeach
