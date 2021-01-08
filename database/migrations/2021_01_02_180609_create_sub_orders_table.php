@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,8 +15,9 @@ class CreateSubOrdersTable extends Migration
     public function up()
     {
         Schema::create('sub_orders', function (Blueprint $table) {
-            $table->unsignedDouble('price');
-            $table->unsignedInteger('quantity');
+            $table->unsignedDouble('total_price');
+            $table->unsignedDouble('single_price');
+            $table->unsignedInteger('ordered_quantity');
             $table->unsignedBigInteger('order_id')->index();
             $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();

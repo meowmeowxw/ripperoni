@@ -8,7 +8,7 @@
                 @foreach ($orders as $order)
                     <h4>{{__('Order ID')}}: {{ $order['id'] }}</h4>
                     @foreach ($order['products'] as $product)
-                        <li>{{$product->name}}: {{$product->pivot->quantity}}</li>
+                        <li>{{$product->name}}: {{$product->pivot->ordered_quantity}}</li>
                     @endforeach
                     <h5>{{__('Earning')}}: {{$order['earning']}}</h5>
                 @endforeach

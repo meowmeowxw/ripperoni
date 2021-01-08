@@ -31,10 +31,12 @@ class SubOrderSeeder extends Seeder
                     $quantity = $faker->numberBetween(1, self::MAX_QUANTITY);
                     return [
                         $product->id => [
-                            'quantity' => $quantity,
-                            'price' => $product->price * $quantity,
+                            'ordered_quantity' => $quantity,
+                            'total_price' => $product->price * $quantity,
+                            'single_price' => $product->price,
                             'created_at' => $created_at,
                             'updated_at' => $created_at,
+                            'product_id' => $product->id,
                         ],
                     ];
                 })
@@ -42,7 +44,7 @@ class SubOrderSeeder extends Seeder
             $order->products()->attach($products);
             $order->price = 0.0;
             foreach ($order->products as $product) {
-                $order->price += $product->pivot->price;
+                $order->price += $product->pivot->total_price;
             }
             $order->save();
         }

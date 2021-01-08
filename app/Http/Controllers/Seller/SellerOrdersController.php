@@ -10,6 +10,7 @@ use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SellerOrdersController extends Controller
 {
@@ -32,12 +33,22 @@ class SellerOrdersController extends Controller
         $seller = Auth::user()->seller;
         $orders = [];
         $total_profit = 0;
+        /*
+          Let's not use raw sql...
+        $products = DB::table('products')
+                    ->join('sub_orders', 'products.id', '=', 'sub_orders.product_id')
+                    ->select('*')
+                    ->where('seller_id', $seller->id)
+                    ->get();
+        dd($products);
+        */
+
         foreach (Order::all() as $order) {
             $products = $order->products()->where('seller_id', $seller->id)->get();
             if ($products->count() !== 0) {
                 $profit = 0;
                 foreach ($products as $product) {
-                    $profit += $product->pivot->price;
+                    $profit += $product->pivot->total_price;
                 }
                 $total_profit += $profit;
                 $orders[] = ['id' => $order->id, 'products' => $products, 'earning' => $profit];
