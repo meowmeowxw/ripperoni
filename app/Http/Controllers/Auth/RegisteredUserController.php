@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewEvent;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Mail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,6 +61,8 @@ class RegisteredUserController extends Controller
         if ($request->is_seller) {
             return route('seller.register');
         }
+
+        Mail::to($request->email)->send(new NewEvent());
         return redirect(RouteServiceProvider::HOME);
     }
 }
