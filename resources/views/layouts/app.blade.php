@@ -16,13 +16,31 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
+{{--
+@php
+    $allpath = \App\Models\Product::select('path')->get()
+@endphp
+--}}
 
-        <x-nav-bar />
+<div id="app"
+     {{--
+     style="background-image:
+@foreach($allpath as $path)
+@if($loop->last)
+    url({{substr($path->path, 1)}});
+@else
+    url({{substr($path->path, 1)}}),
+@endif
+@endforeach
+    background-repeat: space fixed; background-size: 50px;"
+     --}}
+>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
+    <x-nav-bar/>
+
+    <main class="m-4">
+        @yield('content')
+    </main>
+</div>
 </body>
 </html>
