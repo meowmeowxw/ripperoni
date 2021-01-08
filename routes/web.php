@@ -8,6 +8,7 @@ use App\Http\Controllers\Seller\SellerRegisterController;
 use App\Http\Controllers\Seller\SellerSettingsController;
 use App\Http\Controllers\Seller\SellerProductsController;
 use App\Http\Controllers\Seller\SellerOrdersController;
+use App\Http\Controllers\Seller\SellerPublicController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -35,7 +36,6 @@ Route::prefix('/seller')->group(function() {
 
     Route::get('/products/', [SellerProductsController::class, 'create'])
         ->name('seller.products');
-    Route::post('/products/', [SellerProductsController::class, 'store']);
     Route::post('/product/edit', [SellerProductsController::class, 'edit'])
         ->name('seller.product.edit');
     Route::post('/product/add', [SellerProductsController::class, 'add'])
@@ -44,6 +44,10 @@ Route::prefix('/seller')->group(function() {
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');
     Route::post('/orders', [SellerOrdersController::class, 'store']);
+
+    Route::get('/{id}', [SellerPublicController::class, 'create'])
+        ->name('seller.public')
+        ->whereNumber('id');
 });
 
 Route::get('/', [ProductController::class, 'show'])
