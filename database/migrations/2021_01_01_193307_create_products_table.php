@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->unsignedDouble('price');
             $table->integer('quantity');
             $table->string('path', 1024);
+            $table->boolean('is_available')->default(true);
             $table->unsignedBigInteger('category_id')->index();
             $table->timestamps();
 

@@ -23,7 +23,28 @@ class SellerProductsController extends Controller
     }
 
     /**
-     * Display the registration seller view.
+     * Delete a product (Set quantity to 0 and is_available to false)
+     *
+     * @return \Illuminate\View\View
+     */
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|numeric|integer',
+        ]);
+
+        if (! Gate::allows('edit-product', Product::find($request->id))) {
+            abort(403);
+        }
+
+        $product = Auth::user()->seller->products()->find($request->id);
+        $product->is_available = false;
+        $product->quantity = 0;
+        $product->save();
+        return redirect(route('seller.products'));
+    }
+    /**
+     * Edit a product
      *
      * @return \Illuminate\View\View
      */
@@ -34,6 +55,7 @@ class SellerProductsController extends Controller
             'description' => 'required|string|max:1024',
             'price' => 'required|numeric',
             'quantity' => 'required|numeric|integer',
+            'id' => 'required|numeric|integer',
             // 'path' => 'required|string|max:1024',
         ]);
 

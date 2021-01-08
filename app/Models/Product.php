@@ -10,6 +10,7 @@ class Product extends \Illuminate\Database\Eloquent\Model
 {
 
     protected $fillable = [
+        'is_available',
         'name',
         'description',
         'price',

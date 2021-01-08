@@ -12,8 +12,18 @@
                 ]) }}>
             {{__('Edit')}}
         </button>
-        <a {{ $attributes->merge(['href' => route('seller.products', $id), 'class' => 'btn btn-primary']) }}>
-            Delete
+        <form id="delete" method="POST" action="{{route('seller.product.delete')}}">
+            @csrf
+            <button type="submit" class="btn btn-primary">
+                {{ __('Delete') }}
+            </button>
+            <input {{ $attributes->merge([
+                            'id' => 'product_id_delete',
+                            'name' => 'id',
+                            'type' => 'hidden',
+                            'value' => $id
+                            ]) }} />
+        </form>
         </a>
         <div {{ $attributes->merge(['class' => 'collapse', 'id' => 'collapse'.$id]) }}>
             <div class="card card-body justify-content-center m-1">
