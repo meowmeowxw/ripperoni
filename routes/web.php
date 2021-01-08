@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Customer\CustomerSettingsController;
 use App\Http\Controllers\Seller\SellerRegisterController;
 use App\Http\Controllers\Seller\SellerSettingsController;
 use App\Http\Controllers\Seller\SellerProductsController;
@@ -51,6 +52,14 @@ Route::prefix('/seller')->group(function() {
         ->name('seller.public')
         ->whereNumber('id');
 });
+
+Route::prefix('/customer')->group(function() {
+    Route::get('/settings', [CustomerSettingsController::class, 'create'])
+        ->name('customer.settings');
+    Route::post('/settings', [CustomerSettingsController::class, 'store']);
+});
+
+Route::get('/search', [ProductController::class, 'search']);
 
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
