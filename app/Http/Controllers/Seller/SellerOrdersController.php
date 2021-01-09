@@ -33,27 +33,35 @@ class SellerOrdersController extends Controller
         $seller = Auth::user()->seller;
         $orders = [];
         $total_profit = 0;
-        /*
-          Let's not use raw sql...
-        $products = DB::table('products')
-                    ->join('sub_orders', 'products.id', '=', 'sub_orders.product_id')
-                    ->select('*')
-                    ->where('seller_id', $seller->id)
-                    ->get();
-        dd($products);
-        */
 
-        foreach (Order::all() as $order) {
+        /*
+         * Take order_id where there are seller products
+         */
+        $orders_id = DB::table('products')
+                    ->join('sub_orders', 'products.id', '=', 'sub_orders.product_id')
+                    ->select('sub_orders.order_id')
+                    ->where('seller_id', $seller->id)
+                    ->get()
+                    ->pluck('order_id')
+                    ->toArray();
+
+        /*
+         * Compute total earning
+         */
+        foreach ($orders_id as $order_id) {
+            $order = Order::find($order_id);
             $products = $order->products()->where('seller_id', $seller->id)->get();
-            if ($products->count() !== 0) {
-                $profit = 0;
-                foreach ($products as $product) {
-                    $profit += $product->pivot->total_price;
-                }
-                $total_profit += $profit;
-                $orders[] = ['id' => $order->id, 'products' => $products, 'earning' => $profit];
+            $profit = 0;
+            foreach ($products as $product) {
+                $profit += $product->pivot->total_price;
             }
+            $total_profit += $profit;
+            $orders[] = ['id' => $order->id, 'products' => $products, 'earning' => $profit];
         }
+
+        /*
+         * Return view
+         */
         return view('seller.orders', [
             'seller' => $seller,
             'orders' => $orders,
