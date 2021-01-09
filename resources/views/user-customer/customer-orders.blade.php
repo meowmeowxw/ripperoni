@@ -1,8 +1,17 @@
+@extends('layouts.app')
 
-        <h3>Order id: {{ $attributes->get(order)->id }} with price: {{ $attributes->get('order')->price }}</h3>
-        <subsection>
-            <h4>Beers</h4>
-            @foreach ($order->products as $beer)
-                <li>{{ $beer->name }} quantity: {{ $beer->pivot->quantity }}</li>
+@section('content')
+    <div class="d-flex justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Hey {{$user->name}}</h1>
+            <h2>You have done {{ count($orders) }} orders</h2>
+            @foreach ($orders as $order)
+                <x-user.customer-order :order=$order/>
             @endforeach
-        </subsection>
+        </div>
+    </div>
+@endsection
+
+{{--
+usare questa view al posto di orders.blade
+--}}
