@@ -41,6 +41,7 @@ class SellerOrdersController extends Controller
                     ->join('sub_orders', 'products.id', '=', 'sub_orders.product_id')
                     ->select('sub_orders.order_id')
                     ->where('seller_id', $seller->id)
+                    ->distinct()
                     ->get()
                     ->pluck('order_id')
                     ->toArray();
