@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('scripts')
+    <script src="{{ asset('js/homeselector.js') }}" defer></script>
+@endsection
 @section('content')
     <div class="container py-2" id="dashboard">
         <div class="row justify-content-center">
@@ -14,8 +17,9 @@
         </div>
         <hr>
         <div class="row justify-content-center">
-            <div class="col justify-content-center text-center">
+            <div id="categoryHomepage" class="col justify-content-center text-center">
                 <h3>All our Beer</h3>
+                <small>Filter by category</small>
                 <div id="categories" class="nav-scroller d-flex justify-content-center">
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
                         @foreach($categories as $category=>$products)
@@ -26,24 +30,31 @@
                         @endforeach
                     </nav>
                 </div>
-                <small>Filter by category</small>
 
-                @foreach($categories as $category=>$products)
-                    <section>
-                        <h2> {{ $category }} </h2>
-                        @foreach($products as $product)
-                            <li>
-                                <b>{{ $product->name }}</b>: {{ $product->description }}
-                            </li>
-                        @endforeach
-                    </section>
-                @endforeach
-                You're logged in!
+                <div class="container m-2">
+                    @foreach($categories as $category=>$products)
+                        <div class="filterDiv {{$category}}">
+                            <h3><b>{{$category}}</b></h3>
+                            <div class="row  justify-content-center">
+
+                                @foreach($products as $product)
+                                    @if($product->is_available)
+                                        <div class="col-4 card bg-transparent border-0">
+                                            <h3 class="card-title">{{ $product->name }}</h3>
+                                            <p><a href="#"><img class="card-img-top" src="{{$product->path ?? '-'}}"
+                                                                alt="Card Beer {{$product->id+1 ?? '0'}}">
+                                                </a></p>
+                                            <p class="card-text">{{ $product->description }}</p>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
             </div>
-
-
         </div>
-
 
 
     </div>

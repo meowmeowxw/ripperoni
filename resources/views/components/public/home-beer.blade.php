@@ -3,7 +3,7 @@
         </a></p>
     <div class="card-footer mt-auto">
         <h5 class="card-title">{{$beer->name ?? '-'}}</h5>
-        <p class="card-text">sell by {{ \App\Models\Seller::where('id', $beer->seller_id)->first()->company }}</p>
+        <p class="card-text">sell by <b>{{ \App\Models\Seller::where('id', $beer->seller_id)->first()->company }}</b></p>
         {{--<b>{{ \App\Models\Seller::find($beer->seller_id)->company }}</b>--}}
     </div>
     {{--<div class="card-footer text-muted">
