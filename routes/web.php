@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Customer\CustomerSettingsController;
+use App\Http\Controllers\Auth\PasswordChangeController;
 use App\Http\Controllers\Seller\SellerRegisterController;
 use App\Http\Controllers\Seller\SellerSettingsController;
 use App\Http\Controllers\Seller\SellerProductsController;
@@ -63,6 +64,9 @@ Route::get('/search', [ProductController::class, 'search']);
 
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
+
+Route::post('/user/password-change', [PasswordChangeController::class, 'edit'])
+    ->name('password.change');
 
 Route::get('/orders', function() {
     $orders = Auth::user()->customer->orders()->get();

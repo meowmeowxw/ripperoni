@@ -37,19 +37,30 @@ class CustomerSettingsController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      *
-     * TODO Credit card
+     * TODO change id to type
      */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email',
+            'id' => 'required|string',
         ]);
 
         $user = Auth::user();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
+        if ($request->id === 'user') {
+            $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|string|email',
+            ]);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+        } elseif ($request->id === 'customer') {
+            $request->validate([
+                'credit_card' => 'required|string|digits_between:10,24',
+            ]);
+            $user->customer->credit_card = $request->credit_card;
+            $user->customer->save();
+        }
         return redirect(route('customer.settings'));
     }
 }
