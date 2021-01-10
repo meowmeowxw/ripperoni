@@ -6,29 +6,10 @@
             <div class="col-md-8">
                 @foreach ($products as $product)
                     @if ($product->is_available)
-                        <x-seller-product>
-                            <x-slot name="path">
-                                {{ $product->path }}
-                            </x-slot>
-                            <x-slot name="title">
-                                {{ $product->name }}
-                            </x-slot>
-                            <x-slot name="id">
-                                {{ $product->id }}
-                            </x-slot>
-                            <x-slot name="name">
-                                {{ $product->name }}
-                            </x-slot>
-                            <x-slot name="description">
-                                {{ $product->description }}
-                            </x-slot>
-                            <x-slot name="price">
-                                {{ $product->price }}
-                            </x-slot>
-                            <x-slot name="quantity">
-                                {{ $product->quantity }}
-                            </x-slot>
-                            {{ $product->quantity }}
+                        <x-seller-product :path="$product->path"
+                                          title="$product->name" id="$product->id"
+                                          name="$product->name" description="$product->description"
+                                          price="$product->price" quantity="$product->quantity" />
                         </x-seller-product>
                     @endif
                 @endforeach
