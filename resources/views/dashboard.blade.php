@@ -5,7 +5,7 @@
             <h3>The latest beer added</h3>
             <div class="d-flex flex-row d-sm-inline-flex flex-sm-row">
                 @php
-                    $homebeers = \App\Models\Product::orderBy('created_at', 'DESC')->take(3)->get();
+                    $homebeers = \App\Models\Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
                 @endphp
                 <x-public.home-beer :beer=$homebeers[0] class="d-block"/>
                 <x-public.home-beer :beer=$homebeers[1] class="d-none d-md-block"/>
