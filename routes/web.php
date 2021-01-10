@@ -37,6 +37,7 @@ Route::prefix('/seller')->group(function() {
 
     Route::get('/products/', [SellerProductsController::class, 'create'])
         ->name('seller.products');
+
     Route::post('/product/delete/', [SellerProductsController::class, 'delete'])
         ->name('seller.product.delete');
     Route::post('/product/edit', [SellerProductsController::class, 'edit'])
@@ -46,7 +47,6 @@ Route::prefix('/seller')->group(function() {
 
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');
-    Route::post('/orders', [SellerOrdersController::class, 'store']);
 
     Route::get('/{id}', [SellerPublicController::class, 'create'])
         ->name('seller.public')

@@ -70,24 +70,4 @@ class SellerOrdersController extends Controller
         ]);
     }
 
-    /**
-     * Handle an incoming registration request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     *
-     * TODO
-     */
-    public function store(Request $request)
-    {
-        Auth::user()->is_seller = true;
-        Auth::user()->save();
-        Auth::user()->seller()->create([
-            'company' => $request->company,
-            'credit_card' => $request->credit_card,
-        ]);
-        return redirect(RouteServiceProvider::HOME);
-    }
 }
