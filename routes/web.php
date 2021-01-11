@@ -60,6 +60,9 @@ Route::prefix('/customer')->group(function() {
     Route::post('/settings', [CustomerSettingsController::class, 'store']);
 });
 
+Route::get('/product/{id}', [ProductController::class, 'view'])
+        ->name('product.id');
+
 Route::get('/search', [ProductController::class, 'search']);
 
 Route::get('/', [ProductController::class, 'show'])
