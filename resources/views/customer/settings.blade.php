@@ -7,7 +7,7 @@
                 <h4 class="card-title">{{__('User settings')}}</h4>
                 <div class="card card-body">
                     <x-form.form action="{{route('customer.settings')}}" btntext="{{ __('Save') }}" btnaddclass="btn-lg btn-block"
-                                 inputid="type" inputvalue="user">
+                                 inputid="type-user" name="type" inputvalue="user">
                         <x-FormInput name="name" idAndFor="name" :lblName="__('Name')" inputValue="{{Auth::user()->name}}" type="text"/>
                         <x-FormInput name="email" idAndFor="email" :lblName="__('Email')" inputValue="{{Auth::user()->email}}" type="text"/>
                     </x-form.form>
@@ -17,7 +17,7 @@
                 <h4 class="card-title">{{__('Customer settings')}}</h4>
                 <div class="card card-body">
                     <x-form.form action="{{route('customer.settings')}}" btntext="{{ __('Save') }}" btnaddclass="btn-lg btn-block"
-                        inputid="type" inputvalue="customer">
+                        inputid="type-customer" name="type" inputvalue="customer">
                         <x-FormInput name="credit_card" idAndFor="credit_card" :lblName="__('Credit Card')" inputValue="{{Auth::user()->customer->credit_card}}" type="text"/>
                     </x-form.form>
                 </div>

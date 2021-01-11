@@ -10,6 +10,6 @@ if it's needed of $enctype, $id
         {{$btntext}}
     </button>
     @isset($inputvalue)
-        <input id="{{$inputid ?? ''}}" value="{{$inputvalue}}" name="id" type="hidden" >
+        <input id="{{$inputid ?? ''}}" value="{{$inputvalue}}" name="{{$name ?? 'id'}}" type="hidden" >
     @endisset
 </form>
