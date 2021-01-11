@@ -1,10 +1,25 @@
 <x-form.form-div>
     <label for="{{$idAndFor}}" class="mb-0">{{$lblName}}</label>
-    <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}" class="form-control mb-2" required="" name="{{$name}}" value="{{$inputValue}}">
+    <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}"
+           class="form-control mb-2 {{$class ?? ''}} @isset($errorname)
+           @error($errorname) is-invalid @enderror
+               @endisset"
+          {{--
+          {{$attributes->merge(['class' => 'form-control mb-2']) }}
+          --}}
+           required="" name="{{$name}}" value="{{$inputValue ?? ''}}" {{$attributes  ?? ''}}>
+
+    @isset($errormessage)
+        @error($errorname)
+        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errormessage }}</strong>
+                                    </span>
+        @enderror
+    @endisset
 </x-form.form-div>
 
 {{--
-<form method="POST" action="{{route('seller.product.edit')}}">
+<form method="POST" action="f">
 @csrf
 <div class="form-group row">
     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
