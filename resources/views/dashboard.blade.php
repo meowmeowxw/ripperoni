@@ -24,9 +24,9 @@
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
                         @foreach($categories as $category=>$products)
                             @if($loop->first)
-                                <a class="nav-link active">All</a>
+                                <a class="nav-link selectcategory active">All</a>
                             @endif
-                            <a class="nav-link">{{$category}}</a>
+                            <a class="nav-link selectcategory">{{$category}}</a>
                         @endforeach
                     </nav>
                 </div>

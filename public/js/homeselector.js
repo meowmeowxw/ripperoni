@@ -1,4 +1,4 @@
-$(".nav-link").click(function () {
+$(".selectcategory").click(function () {
     $(this).parent().find("a.active").removeClass('active');
     $(this).addClass('active');
     let cat = $(this).text();
