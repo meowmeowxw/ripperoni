@@ -1,6 +1,8 @@
 <x-form.form-div>
     <label for="{{$idAndFor}}" class="mb-0">{{$lblName}}</label>
-    <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}" class="form-control mb-2" required="" name="{{$name}}" value="{{$inputValue}}">
+    <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}"
+           {{$attributes->merge(['class' => 'form-control mb-2']) }}
+           required="" name="{{$name}}" value="{{$inputValue ?? ''}}" {{$attributes  ?? ''}}>
 </x-form.form-div>
 
 {{--
