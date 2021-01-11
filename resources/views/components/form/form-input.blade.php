@@ -10,7 +10,7 @@
            required="" name="{{$name}}" value="{{$inputValue ?? ''}}" {{$attributes  ?? ''}}>
 
     @isset($errormessage)
-        @error('err')
+        @error($errorname)
         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errormessage }}</strong>
                                     </span>
