@@ -1,5 +1,17 @@
 @extends('layouts.app')
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->getBags() as $error)
+                @foreach ($error->getMessages() as $key => $message)
+                    <li>{{$key}}: {{$message[0]}}</li>
+                @endforeach
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -18,7 +30,9 @@
                 <div class="card card-body">
                     <x-form.form action="{{route('customer.settings')}}" btntext="{{ __('Save') }}" btnaddclass="btn-lg btn-block"
                         inputid="type-customer" name="type" inputvalue="customer">
-                        <x-FormInput name="credit_card" idAndFor="credit_card" :lblName="__('Credit Card')" inputValue="{{Auth::user()->customer->credit_card}}" type="text"/>
+                        <x-FormInput name="credit_card" idAndFor="credit_card" :lblName="__('Credit Card')"
+                                     inputValue="{{Auth::user()->customer->credit_card}}" errormessage=""
+                                     errorname="credit_card" type="text"/>
                     </x-form.form>
                 </div>
             </div>
