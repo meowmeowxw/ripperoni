@@ -1,21 +1,17 @@
 <x-form.form-div>
     <label for="{{$idAndFor}}" class="mb-0">{{$lblName}}</label>
     <input id="{{$idAndFor}}" placeholder="{{$lblName}}" type="{{$type}}"
-           class="form-control mb-2 {{$class ?? ''}} @isset($errorname)
-           @error($errorname) is-invalid @enderror
-               @endisset"
+           class="form-control mb-2 @error($name) is-invalid @enderror"
           {{--
           {{$attributes->merge(['class' => 'form-control mb-2']) }}
           --}}
            required="" name="{{$name}}" value="{{$inputValue ?? ''}}" {{$attributes  ?? ''}}>
 
-    @isset($errormessage)
-        @error($errorname)
-        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errormessage }}</strong>
-                                    </span>
-        @enderror
-    @endisset
+    @error($name)
+    <span class="invalid-feedback" role="alert">
+        <strong>{{ $message }}</strong>
+    </span>
+    @enderror
 </x-form.form-div>
 
 {{--
