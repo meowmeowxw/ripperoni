@@ -19,7 +19,7 @@
                                  inputid="product_id" inputvalue="{{$id}}">
 
                         <x-FormInput name="name" idAndFor="name{{$id}}" :lblName="__('Name')" :inputValue="$name"
-                                     type="text"/>
+                                     type="text" errormessage="try" errorname="tt"/>
                         <x-FormInput name="description" idAndFor="description{{$id}}" :lblName="__('Description')"
                                      :inputValue="$description" type="text"/>
                         <x-FormInput name="price" idAndFor="price{{$id}}" :lblName="__('Price')" :inputValue="$price"
