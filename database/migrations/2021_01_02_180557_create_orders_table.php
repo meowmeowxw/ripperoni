@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->unsignedDouble('price');
             $table->string('credit_card', 24);
+            $table->string('street', 128);
+            $table->string('city', 128);
             $table->unsignedBigInteger('customer_id')->index();
             $table->timestamps();
 

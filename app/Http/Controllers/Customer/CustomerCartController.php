@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CustomerCartController extends Controller
 {
@@ -36,7 +37,7 @@ class CustomerCartController extends Controller
     {
         $products_order = $request->session()->get('products_order');
 
-        if (! $products_order) {
+        if (!$products_order) {
             return back();
         }
 
@@ -138,6 +139,48 @@ class CustomerCartController extends Controller
      */
     public function buy(Request $request)
     {
-        return back();
+        $request->validate([
+            'credit_card' => 'required|string|digits_between:10,24',
+            'street' => 'required|string|max:128',
+            'city' => 'required|string|max:128',
+        ]);
+
+        $products_order = $request->session()->get('products_order');
+        if (!$products_order) {
+            return back();
+        }
+
+        $customer = Auth::user()->customer;
+        $order = new Order([
+            'credit_card' => $request->credit_card,
+            'street' => $request->street,
+            'city' => $request->city,
+            'price' => 0.0,
+        ]);
+        $customer->orders()->save($order);
+
+        $products = [];
+        foreach ($products_order as $po) {
+            $product = Product::find($po["product_id"]);
+            $products[$product->id] = [
+                'ordered_quantity' => $po["ordered_quantity"],
+                'total_price' => $product->price * $po["ordered_quantity"],
+                'single_price' => $product->price,
+                'product_id' => $product->id,
+            ];
+            $product->quantity -= $po["ordered_quantity"];
+            $product->save();
+        }
+        $order->products()->attach($products);
+
+        $order->price = 0.0;
+        foreach ($order->products as $product) {
+            $order->price += $product->pivot->total_price;
+        }
+        $order->save();
+
+        $request->session()->forget('products_order');
+
+        return redirect(RouteServiceProvider::HOME);
     }
 }

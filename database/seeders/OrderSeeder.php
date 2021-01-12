@@ -25,6 +25,8 @@ class OrderSeeder extends Seeder
             $created_at = $faker->dateTimeThisYear();
             $order = new Order([
                 'credit_card' => Str::random(16),
+                'street' => Str::random(16),
+                'city' => Str::random(16),
                 'price' => rand(3, 10),
                 'created_at' => $created_at,
             ]);

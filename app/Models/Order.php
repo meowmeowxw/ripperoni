@@ -11,6 +11,8 @@ class Order extends \Illuminate\Database\Eloquent\Model
     protected $fillable = [
         'price',
         'credit_card',
+        'street',
+        'city',
     ];
 
     protected $dates = ['deleted_at'];
