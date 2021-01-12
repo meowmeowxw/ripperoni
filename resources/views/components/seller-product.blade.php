@@ -1,8 +1,8 @@
 <div class="col mx-auto">
     <div class="card text-center h-100">
-        <div class="card-body justify-content-center">
+        <div class="card-body d-flex flex-column">
             <h4 class="card-title m-1">{{ $title }}</h4>
-            <div class="row  justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center flex-grow-1">
                 <img src="{{$path}}" class="card-img-top m-1" alt=""/>
 
                 <button class="btn btn-primary m-1" type="button" data-toggle="collapse"
