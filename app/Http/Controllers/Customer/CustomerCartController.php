@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class CustomerCartController extends Controller
 {
 
-    private function errorQuantity() {
+    private function errorQuantity()
+    {
         return back()->withErrors([
             'quantity' => 'The select quantity is not available',
         ]);
@@ -33,8 +34,26 @@ class CustomerCartController extends Controller
      */
     public function create(Request $request)
     {
-        $products_order = collect($request->session()->get('products_order'));
-        return view('customer.cart', ['products_order' => $products_order]);
+        $products_order = $request->session()->get('products_order');
+
+        if (! $products_order) {
+            return back();
+        }
+
+        $final_order = [];
+        foreach ($products_order as $po) {
+            $product_id = $po["product_id"];
+            $ordered_quantity = $po["ordered_quantity"];
+            $product = Product::find($po["product_id"]);
+            $final_order[] = [
+                'product_id' => $product_id,
+                'ordered_quantity' => $ordered_quantity,
+                'total_price' => $ordered_quantity * $product->price,
+                'single_price' => $product->price,
+                'product' => $product,
+            ];
+        }
+        return view('customer.cart', ['final_order' => $final_order]);
     }
 
     /**
@@ -50,12 +69,16 @@ class CustomerCartController extends Controller
     {
         $request->validate([
             'id' => 'required|numeric|integer',
-            'quantity' => 'required|numeric|integer',
+            'quantity' => 'required|numeric|integer|min:1',
         ]);
 
         $customer = Auth::user()->customer;
         $product = Product::find($request->id);
         $session = $request->session();
+
+        if (!$product) {
+            return back();
+        }
 
         $product_id = $request->input('id');
         $ordered_quantity = $request->input('quantity');
@@ -82,7 +105,7 @@ class CustomerCartController extends Controller
             }
         }
 
-        if (! $push_data) {
+        if (!$push_data) {
             $session->push('products_order', [
                 'product_id' => $product_id,
                 'ordered_quantity' => $ordered_quantity,
@@ -90,5 +113,31 @@ class CustomerCartController extends Controller
         }
 
         return redirect(route('product.id', $request->id));
+    }
+
+    /**
+     * Display a view with the customer detail to buy the order
+     *
+     * @param Request $request
+     */
+    public function customerDetails(Request $request)
+    {
+        if ($request->session()->has('products_order')) {
+            $customer = Auth::user()->customer;
+            return view('customer.details', ['customer' => $customer]);
+        } else {
+            return back();
+        }
+    }
+
+    /**
+     * Buy products
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function buy(Request $request)
+    {
+        return back();
     }
 }

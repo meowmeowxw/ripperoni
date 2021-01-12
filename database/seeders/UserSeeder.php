@@ -29,6 +29,8 @@ class UserSeeder extends Seeder
             } else {
                 $user->customer()->create([
                     'credit_card' => $faker->creditCardNumber(),
+                    'street' => $faker->streetAddress,
+                    'city' => $faker->city,
                 ]);
             }
         }
@@ -56,6 +58,8 @@ class UserSeeder extends Seeder
         $user->save();
         $user->customer()->create([
             'credit_card' => $faker->creditCardNumber(),
+            'street' => $faker->streetAddress,
+            'city' => $faker->city,
         ]);
     }
 }

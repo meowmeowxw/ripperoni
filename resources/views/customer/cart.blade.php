@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @isset($products_order)
+    @isset($final_order)
         {{--
         @php
         dd($products_order);
@@ -10,10 +10,12 @@
         @php
             // dd($products_order);
             // $a = $products_order->contains('product_id');
-            // dd($a);
+            // dd($final_order);
         @endphp
-        @foreach ($products_order->all() as $po)
-            <li> {{ $po["product_id"] }} : {{ $po["ordered_quantity"] }}  </li>
+        @foreach ($final_order as $fo)
+            <li> {{ $fo["total_price"] }} : {{ $fo["ordered_quantity"] }}  </li>
         @endforeach
+        <a href="{{route('customer.cart.details')}}">{{__('Proceed')}}</a>
     @endisset
+
 @endsection

@@ -63,6 +63,11 @@ Route::prefix('/customer')->group(function() {
     Route::get('/cart', [CustomerCartController::class, 'create'])
         ->name('customer.cart');
     Route::post('/cart', [CustomerCartController::class, 'store']);
+
+    Route::get('/cart/details', [CustomerCartController::class, 'customerDetails'])
+        ->name('customer.cart.details');
+    Route::post('/cart/buy', [CustomerCartController::class, 'buy'])
+        ->name('customer.cart.buy');
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])

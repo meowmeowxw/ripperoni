@@ -56,8 +56,12 @@ class CustomerSettingsController extends Controller
         } elseif ($request->type === 'customer') {
             $request->validate([
                 'credit_card' => 'required|string|digits_between:10,24',
+                'street' => 'required|string|max:128',
+                'city' => 'required|string|max:128',
             ]);
             $user->customer->credit_card = $request->credit_card;
+            $user->customer->street = $request->street;
+            $user->customer->city = $request->city;
             $user->customer->save();
         }
 

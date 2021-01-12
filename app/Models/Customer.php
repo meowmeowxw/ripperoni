@@ -8,6 +8,8 @@ class Customer extends \Illuminate\Database\Eloquent\Model
 
     protected $fillable = [
         'credit_card',
+        'street',
+        'city',
     ];
 
     protected $dates = ['deleted_at'];
