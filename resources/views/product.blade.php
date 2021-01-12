@@ -11,7 +11,7 @@
             </div>
             <div class="col-6">
                 <div class="card">
-                    <h3 class="card-title">gg</h3>
+                    <h3 class="card-title">{{$product->description}}</h3>
                 </div>
             </div>
             <div class="col">
