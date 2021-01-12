@@ -16,7 +16,7 @@ class CustomerCartController extends Controller
     private function errorQuantity()
     {
         return back()->withErrors([
-            'quantity' => 'The select quantity is not available',
+            'quantity' => 'The selected quantity is not available',
         ]);
     }
 
@@ -118,7 +118,7 @@ class CustomerCartController extends Controller
             ]);
         }
 
-        return redirect(route('product.id', $request->id));
+        return redirect(route('product.id', $product_id));
     }
 
     /**
