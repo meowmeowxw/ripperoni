@@ -27,7 +27,7 @@ Then generate key:
 Create tables and add data:
 
 ```php
-sail php artisan migrate:refresh
+sail php artisan migrate:fresh
 sail php artisan db:seed
 ```
 
