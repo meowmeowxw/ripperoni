@@ -11,37 +11,50 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    @yield('scripts')
+@yield('scripts')
 
-    <!-- Styles -->
+<!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-{{--
-@php
-    $allpath = \App\Models\Product::select('path')->get()
-@endphp
---}}
 
-<div id="app"
-     {{--
-     style="background-image:
+<header>
+    <x-nav-bar/>
+</header>
+<div id="app">
+    {{--
+
+    @php
+   $allpath = \App\Models\Product::select('path')->get()
+@endphp
+
+    style="background-image:
 @foreach($allpath as $path)
 @if($loop->last)
-    url({{substr($path->path, 1)}});
+   url({{substr($path->path, 1)}});
 @else
-    url({{substr($path->path, 1)}}),
+   url({{substr($path->path, 1)}}),
 @endif
 @endforeach
-    background-repeat: space fixed; background-size: 50px;"
-     --}}
->
+   background-repeat: space fixed; background-size: 50px;"
+    --}}
 
-    <x-nav-bar/>
+
 
     <main class="m-4">
         @yield('content')
     </main>
 </div>
+{{--
+<footer class="text-muted bg-dark">
+    <div class="container">
+        <p class="float-right">
+            <a href="#">Back to top</a>
+        </p>
+        <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
+        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+    </div>
+</footer>
+--}}
 </body>
 </html>
