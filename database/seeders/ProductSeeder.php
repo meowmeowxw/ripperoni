@@ -17,13 +17,31 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $beers = [
+            'Weiss' => [
+                [
+                    'name' => 'Weihenstephan',
+                    'description' => 'A cloudy, Bavarian-style wheat brew, tops the list of beers to try. A light, yeasty sweetness (which some liken to bananas or bubblegum) makes it an extremely refreshing beer to drink before a meal or with a light dinner.',
+                    'price' => 3.10,
+                    'quantity' => 30,
+                    'seller_id' => Seller::all()->random()->first()->id,
+                    'path' => '/img/weihenstephan.png',
+                ],
+                [
+                    'name' => 'Erdinger',
+                    'description' => 'Gently spicy wheat and yeast aromas blend with mildly bitter hops. The invigorating carbon dioxide ensures its typical liveliness. A premium beer whose full-bodied yet elegant character leaves a lasting impression of ultimate Bavarian enjoyment',
+                    'price' => 1.3,
+                    'quantity' => 100,
+                    'seller_id' => Seller::all()->random()->first()->id,
+                    'path' => '/img/erdinger.png',
+                ]
+            ],
             'Ale' => [
                 [
                     'name' => 'Ritual Pale Ale',
                     'description' => 'Spicy floral hops (chrysanthemum) hit strong, then medium rich malt, then a solid wall of bitterness to wrap it up. Light bread character in the background',
                     'price' => 2.30,
                     'quantity' => 2,
-                    'seller_id' => Seller::all()->random(1)->first()->id,
+                    'seller_id' => Seller::all()->random()->first()->id,
                     'path' => '/img/ritual-pale-ale.png',
                 ],
                 [
@@ -61,6 +79,30 @@ class ProductSeeder extends Seeder
                     'quantity' => 4,
                     'seller_id' => Seller::where('company', 'A Company')->first()->id,
                     'path' => '/img/paulaner-munchner-hell.png',
+                ],
+                [
+                    'name' => 'Moretti',
+                    'description' => 'Italian beer',
+                    'price' => 1.04,
+                    'quantity' => 20,
+                    'seller_id' => Seller::where('company', 'A Company')->first()->id,
+                    'path' => '/img/moretti.png',
+                ],
+                [
+                    'name' => 'Peroni',
+                    'description' => 'Italian beer from 1846',
+                    'price' => 1.30,
+                    'quantity' => 30,
+                    'seller_id' => Seller::all()->random()->first()->id,
+                    'path' => '/img/peroni.jpg',
+                ],
+                [
+                    'name' => 'Augustiner Hell',
+                    'description' => 'Old Munich beer',
+                    'price' => 2,
+                    'quantity' => 30,
+                    'seller_id' => Seller::all()->random()->first()->id,
+                    'path' => '/img/augustiner.png',
                 ]
             ],
         ];

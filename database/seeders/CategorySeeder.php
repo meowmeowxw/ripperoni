@@ -15,6 +15,7 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $categories = [
+            'Weiss',
             'Ale',
             'Pilsner',
             'Lager',
