@@ -13,7 +13,6 @@ use App\Models\Product;
 
 class SubOrderSeeder extends Seeder
 {
-    private const MAX_PRODUCTS = 5;
     private const MAX_QUANTITY = 3;
     /**
      * Seed the categories table
@@ -25,7 +24,7 @@ class SubOrderSeeder extends Seeder
         foreach (Order::all() as $order) {
             $created_at = $faker->dateTimeThisYear;
             $products = Product::all()->random()
-                ->take($faker->numberBetween(1, self::MAX_PRODUCTS))
+                ->take($faker->numberBetween(1, Product::all()->count()))
                 ->get()
                 ->mapWithKeys(function($product) use ($faker, $created_at) {
                     $quantity = $faker->numberBetween(1, self::MAX_QUANTITY);
