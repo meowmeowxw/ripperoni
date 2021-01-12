@@ -17,7 +17,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedDouble('price');
-            $table->string('card_number', 24);
+            $table->string('credit_card', 24);
             $table->unsignedBigInteger('customer_id')->index();
             $table->timestamps();
 

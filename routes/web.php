@@ -11,6 +11,7 @@ use App\Http\Controllers\Seller\SellerSettingsController;
 use App\Http\Controllers\Seller\SellerProductsController;
 use App\Http\Controllers\Seller\SellerOrdersController;
 use App\Http\Controllers\Seller\SellerPublicController;
+use App\Http\Controllers\Customer\CustomerCartController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -58,6 +59,10 @@ Route::prefix('/customer')->group(function() {
     Route::get('/settings', [CustomerSettingsController::class, 'create'])
         ->name('customer.settings');
     Route::post('/settings', [CustomerSettingsController::class, 'store']);
+
+    Route::get('/cart', [CustomerCartController::class, 'create'])
+        ->name('customer.cart');
+    Route::post('/cart', [CustomerCartController::class, 'store']);
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])

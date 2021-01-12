@@ -18,10 +18,10 @@
                 <div class="card card-body bg-transparent text-center">
 
                     <x-form.form id="add_to_cart"
-                                 action="{{route('seller.product.add')}}"
+                                 action="{{route('customer.cart')}}"
                                  enctype=""
                                  btntext="{{__('Add to cart')}}" btnaddclass="btn-lg btn-block"
-                                 inputid="id_to_add" inputvalue="{{$product->id}}" >
+                                 inputid="id" inputvalue="{{$product->id}}" >
 
                         <x-FormInput name="quantity" idAndFor="quantityNew" inputValue="0" min="1" :lblName="__('Quantity')" type="number"/>
                     </x-form.form>

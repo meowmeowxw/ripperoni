@@ -10,7 +10,7 @@ class Order extends \Illuminate\Database\Eloquent\Model
 {
     protected $fillable = [
         'price',
-        'card_number',
+        'credit_card',
     ];
 
     protected $dates = ['deleted_at'];
