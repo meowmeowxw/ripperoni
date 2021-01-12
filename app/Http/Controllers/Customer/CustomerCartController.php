@@ -42,6 +42,7 @@ class CustomerCartController extends Controller
         }
 
         $final_order = [];
+        $total_price = 0;
         foreach ($products_order as $po) {
             $product_id = $po["product_id"];
             $ordered_quantity = $po["ordered_quantity"];
@@ -53,8 +54,12 @@ class CustomerCartController extends Controller
                 'single_price' => $product->price,
                 'product' => $product,
             ];
+            $total_price += $ordered_quantity * $product->price;
         }
-        return view('customer.cart', ['final_order' => $final_order]);
+        return view('customer.cart', [
+            'final_order' => $final_order,
+            'total_price' => $total_price,
+        ]);
     }
 
     /**
