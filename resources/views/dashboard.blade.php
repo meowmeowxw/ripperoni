@@ -24,9 +24,9 @@
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
                         @foreach($categories as $category=>$products)
                             @if($loop->first)
-                                <a class="nav-link selectcategory active">All</a>
+                                <a class="nav-link selectcategory active" href="#">All</a>
                             @endif
-                            <a class="nav-link selectcategory">{{$category}}</a>
+                            <a class="nav-link selectcategory" href="#">{{$category}}</a>
                         @endforeach
                     </nav>
                 </div>
@@ -34,14 +34,14 @@
                 <div class="container m-2">
                     @foreach($categories as $category=>$products)
                         <div class="filterDiv {{$category}}">
-                            <h3><b>{{$category}}</b></h3>
+                            <h3><strong>{{$category}}</strong></h3>
                             <div class="row  justify-content-center card-deck">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
                                         <div class="col-12 col-md-6 mx-auto card bg-transparent border-0">
-                                            <h3 class="card-title">{{ $product->name }}</h3>
-                                            <p><a href="#"><img class="card-img-top" src="{{$product->path ?? '-'}}"
+                                            <h4 class="card-title">{{ $product->name }}</h4>
+                                            <p><a href="{{route('product.id', ['id' => $product->id])}}"><img class="card-img-top" src="{{$product->path ?? '-'}}"
                                                                 alt="Card Beer {{$product->id+1 ?? '0'}}">
                                                 </a></p>
                                             <p class="card-text">{{ $product->description }}</p>
@@ -49,6 +49,7 @@
                                     @endif
                                 @endforeach
                             </div>
+                            <hr />
                         </div>
                     @endforeach
 
