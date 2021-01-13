@@ -12,9 +12,9 @@
                     @php
                         $homebeers = \App\Models\Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
                     @endphp
-                    <x-public.home-beer :product=$homebeers[0] class="d-block"/>
-                    <x-public.home-beer :product=$homebeers[1] class="d-none d-md-block"/>
-                    <x-public.home-beer :product=$homebeers[2] class="d-none d-lg-block"/>
+                    <x-home-beer :product=$homebeers[0] class="d-block"/>
+                    <x-home-beer :product=$homebeers[1] class="d-none d-md-block"/>
+                    <x-home-beer :product=$homebeers[2] class="d-none d-lg-block"/>
                 </div>
             </div>
         </div>

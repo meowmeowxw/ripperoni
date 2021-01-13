@@ -20,7 +20,7 @@ single_price
                     @php
                     $seller = \App\Models\Seller::find($product->seller_id);
                     @endphp
-                    sell by <a href="{{route('seller.id', $seller->id)}}">{{ $seller->company }}</a>
+                    {{__('sell by')}}<a href="{{route('seller.id', $seller->id)}}"> {{ $seller->company }}</a>
                 @endif
             @endisset
         </div>

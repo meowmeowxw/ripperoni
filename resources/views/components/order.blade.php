@@ -15,7 +15,7 @@
                         <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/></a>
                     </div>
                     <div class="col align-self-center">
-                        <x-public.product :product=$beer :sellBy="TRUE"></x-public.product>
+                        <x-product :product=$beer :sellBy="TRUE"></x-product>
                     </div>
                 </div>
             @endforeach
