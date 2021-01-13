@@ -1,7 +1,7 @@
 <div class="card m-1" id="customer-order.{{$order->id}}">
     <div class="card-header d-flex flex-row">
-        <div class="mr-auto">Order Id: <b>{{$order->id}}</b></div>
-        <div class="ml-auto">Total Price: <b>{{$order->price}}€</b></div>
+        <div class="mr-auto">Order Id: <strong>{{$order->id}}</strong></div>
+        <div class="ml-auto">Total Price: <strong>{{$order->price}} &euro;</strong></div>
     </div>
     <div class="card-body">
 
@@ -10,12 +10,12 @@
         --}}
         <div class="card-text">
             @foreach ($order->products as $beer)
-                <div class="d-flex flex-row">
-                    <div class="align-self-center">
-                        <x-public.product :product=$beer :sellBy="TRUE"></x-public.product>
-                    </div>
-                    <div>
+                <div class="row">
+                    <div class="col-sm-3">
                         <img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/>
+                    </div>
+                    <div class="col align-self-center">
+                        <x-public.product :product=$beer :sellBy="TRUE"></x-public.product>
                     </div>
                 </div>
             @endforeach
