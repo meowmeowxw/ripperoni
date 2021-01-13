@@ -10,6 +10,7 @@
     &:active {
         border-color: $red !important;
     }
+
     &:focus {
         border-color: $red !important;
     }
@@ -21,6 +22,11 @@
     }
 }
 
+.list-group {
+    a {
+        color: $green !important;
+    }
+}
 
 .list-group-item {
     a {

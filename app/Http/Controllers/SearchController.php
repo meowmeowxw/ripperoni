@@ -24,23 +24,23 @@ class SearchController extends Controller
      */
     public function search(Request $request)
     {
-        if ($request->ajax()) {
+        $output = '';
+        if ($request->ajax() && $request->name !== null) {
             $products = Product::where('name', 'like', '%' . $request->name . '%')
                 ->take(5)
                 ->get();
 
-            $output = '';
-            if (count($products)) {
+            if (count($products) > 0) {
                 $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
                 foreach ($products as $product) {
-                    $output .= '<li class="list-group-item"><a href="'.route('product.id', $product->id).'">'.$product->name.'</a></li>';
+                    $output .= '<a href="' . route('product.id', $product->id) . '">' . '<li class="list-group-item">' . $product->name . '</li></a>';
                 }
                 $output .= '</ul>';
             } else {
-                $output .= '<li class="list-group-item">'.'No results'.'</li>';
+                $output .= '<li class="list-group-item">' . 'No results' . '</li>';
             }
-            return $output;
         }
+        return $output;
     }
 
 }
