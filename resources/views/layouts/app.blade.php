@@ -21,7 +21,7 @@
 <header>
     <x-nav-bar/>
 </header>
-<div id="app">
+<div id="app" class="bg-dark">
     {{--
 
     @php
@@ -41,7 +41,7 @@
 
 
 
-    <main class="m-4">
+    <main class="p-4">
         @yield('content')
     </main>
 </div>

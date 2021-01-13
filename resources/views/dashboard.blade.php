@@ -3,7 +3,7 @@
     <script src="{{ asset('js/homeselector.js') }}" defer></script>
 @endsection
 @section('content')
-    <div class="container py-2" id="dashboard">
+    <div class="container py-2 bg-secondary" id="dashboard">
         <div class="row justify-content-center">
             <div class="col text-center">
                 <p class="h3 font-weight-bold">The latest beer</p>
