@@ -7,7 +7,7 @@
                 @isset($final_order)
                     <div class="card mt-3" id="customer-cart">
                         <div class="card-header d-flex flex-row">
-                            {{__('Details')}}
+                            {{__('Total price')}}: {{ $total_price }}
                         </div>
                         <div class="card-body">
                             <div class="card-text">
@@ -31,7 +31,7 @@
                                                 <div class="col">
                                                     {{ $fo["ordered_quantity"] }} x
                                                     {{ $fo["single_price"] }} &euro;
-                                                    = {{ $fo["total_price"] }}
+                                                    = {{ $fo["total_price"] }} &euro;
                                                 </div>
                                             </div>
                                             <div class="row">
