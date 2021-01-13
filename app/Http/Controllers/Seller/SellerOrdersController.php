@@ -57,7 +57,7 @@ class SellerOrdersController extends Controller
                 $profit += $product->pivot->total_price;
             }
             $total_profit += $profit;
-            $orders[] = ['id' => $order->id, 'products' => $products, 'earning' => $profit];
+            $orders[] = ['id' => $order->id, 'products' => $products, 'profit' => $profit];
         }
 
         /*

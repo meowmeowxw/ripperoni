@@ -52,7 +52,7 @@ Route::prefix('/seller')->group(function() {
         ->name('seller.orders');
 
     Route::get('/{id}', [SellerPublicController::class, 'create'])
-        ->name('seller.public')
+        ->name('seller.id')
         ->whereNumber('id');
 });
 
@@ -72,7 +72,9 @@ Route::prefix('/customer')->group(function() {
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])
-        ->name('product.id');
+        ->name('product.id')
+        ->whereNumber('id');
+
 
 Route::get('/search', [SearchController::class, 'search'])
         ->name('search');

@@ -12,7 +12,7 @@
             @foreach ($order->products as $beer)
                 <div class="row mt-4">
                     <div class="col-sm-3">
-                        <img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/>
+                        <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/></a>
                     </div>
                     <div class="col align-self-center">
                         <x-public.product :product=$beer :sellBy="TRUE"></x-public.product>
