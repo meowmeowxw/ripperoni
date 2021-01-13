@@ -69,6 +69,14 @@ Route::prefix('/customer')->group(function() {
         ->name('customer.cart.details');
     Route::post('/cart/buy', [CustomerCartController::class, 'buy'])
         ->name('customer.cart.buy');
+
+    Route::get('/orders', function() {
+        $orders = Auth::user()->customer->orders()->get();
+        return view('customer.orders', [
+            'orders' => $orders,
+            'user' => Auth::user(),
+        ]);
+    })->middleware(['auth', 'customer'])->name('orders');
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])
@@ -85,21 +93,6 @@ Route::get('/', [ProductController::class, 'show'])
 Route::post('/user/password-change', [PasswordChangeController::class, 'edit'])
     ->name('password.change');
 
-Route::get('/orders', function() {
-    $orders = Auth::user()->customer->orders()->get();
-    /*
-     * Example of code to use pivot... https://stackoverflow.com/questions/27038636/laravel-pivot-returning-null
-     * Weird but understandable.
-    $products = Order::find(1)->products;
-    foreach ($products as $product) {
-       echo $product->pivot->quantity."<br>";
-    }
-     */
-    return view('orders', [
-        'orders' => $orders,
-        'user' => Auth::user(),
-    ]);
-})->middleware(['auth', 'customer'])->name('orders');
 
 Route::get('/sellers', function() {
     foreach (Seller::all() as $seller) {
@@ -109,36 +102,6 @@ Route::get('/sellers', function() {
         }
     }
 })->name('sellers');
-
-Route::prefix('/users')->group(function () {
-
-    Route::get('/', function() {
-        return view('users', ['users' => User::all()]);
-    });
-
-    Route::get('/id', function() {
-        foreach(User::all() as $user) {
-            echo $user->id."<br>";
-        }
-    });
-
-    Route::get('/{id?}', function($id) {
-        $user = User::where('id', $id)->first();
-        echo $user->name.", ".$user->email.", ".$user->password;
-    });
-
-    Route::get('/email', function() {
-        foreach(User::all() as $user) {
-            echo $user->email."<br>";
-        }
-    });
-
-    Route::get('/password', function() {
-        foreach(User::all() as $user) {
-            echo $user->password."<br>";
-        }
-    });
-});
 
 Route::prefix('/register')->group(function() {
     Route::get('/', [RegisteredUserController::class, 'create'])

@@ -3,7 +3,7 @@
     <script src="{{ asset('js/homeselector.js') }}" defer></script>
 @endsection
 @section('content')
-    <div class="container py-2 bg-secondary" id="dashboard">
+    <div class="container py-2" id="dashboard">
         <div class="row justify-content-center">
             <div class="col text-center">
                 <p class="h3 font-weight-bold">The latest beer</p>
@@ -38,7 +38,7 @@
                     @foreach($categories as $category=>$products)
                         <div class="filterDiv {{$category}}">
                             <h3>-<strong>{{$category}}</strong>-</h3>
-                            <div class="row  justify-content-center card-deck">
+                            <div class="row justify-content-center">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)

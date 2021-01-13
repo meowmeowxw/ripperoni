@@ -14,7 +14,7 @@
                         {{$product->name}}
                     </strong>
                 </p>
-                <p class="text-light small m-0">sell by {{$seller->company}}</p>
+                <p class="text-light small m-0">{{__('sell by')}} {{$seller->company}}</p>
                 <p class=" bg-light rounded-pill">  {{ $category->name }}  </p>
             </div>
 
@@ -27,7 +27,7 @@
                     <p class="h1 float-left">{{$product->name}}</p>
                     <p class="float-right bg-light rounded-pill m-1 p-1">  {{ $category->name }}  </p>
                 </div>
-                <p class="d-none d-sm-block">sell by {{$seller->company}}</p>
+                <p class="d-none d-sm-block">{{__('sell by')}} {{$seller->company}}</p>
                 <p class="">{{$product->description}}</p>
             </div>
 

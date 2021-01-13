@@ -22,7 +22,7 @@
 <header>
     <x-nav-bar/>
 </header>
-<div id="app" class="bg-dark">
+<div id="app">
     {{--
 
     @php
