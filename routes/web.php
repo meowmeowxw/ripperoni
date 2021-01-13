@@ -12,6 +12,7 @@ use App\Http\Controllers\Seller\SellerProductsController;
 use App\Http\Controllers\Seller\SellerOrdersController;
 use App\Http\Controllers\Seller\SellerPublicController;
 use App\Http\Controllers\Customer\CustomerCartController;
+use App\Http\Controllers\SearchController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
@@ -73,7 +74,8 @@ Route::prefix('/customer')->group(function() {
 Route::get('/product/{id}', [ProductController::class, 'view'])
         ->name('product.id');
 
-Route::get('/search', [ProductController::class, 'search']);
+Route::get('/search', [SearchController::class, 'search'])
+        ->name('search');
 
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');

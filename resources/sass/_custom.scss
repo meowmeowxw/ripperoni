@@ -21,6 +21,13 @@
     }
 }
 
+
+.list-group-item {
+    a {
+        color: $green !important;
+    }
+}
+
 .card-img-top {
     object-fit: contain !important;
     height: 100px !important;
@@ -34,4 +41,9 @@
 .card-header {
     background-color: $beer !important;
     color: $white !important;
+}
+
+.clear {
+    clear: both !important;
+    margin-top: 20px !important;
 }

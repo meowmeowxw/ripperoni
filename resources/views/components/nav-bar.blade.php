@@ -16,7 +16,7 @@
 
             <!-- TODO: implement search ? -->
             <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button>
             </form>
 
@@ -80,3 +80,8 @@
         </div>
     </div>
 </nav>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div id="product_list"></div>
+    </div>
+</div>
