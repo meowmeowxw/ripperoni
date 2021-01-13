@@ -22,8 +22,13 @@
 }
 
 .card-img-top {
-    width: auto !important;
-    max-height: 200px !important;
+    object-fit: contain !important;
+    height: 100px !important;
+}
+
+.card-img-top-xl {
+    object-fit: contain !important;
+    height: 200px !important;
 }
 
 .card-header {
