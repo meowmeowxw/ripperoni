@@ -26,6 +26,11 @@
     height: 100px !important;
 }
 
+.card-img-top-xl {
+    object-fit: contain !important;
+    height: 200px !important;
+}
+
 .card-header {
     background-color: $beer !important;
     color: $white !important;

@@ -1,13 +1,16 @@
-<div class="align-self-end card bg-transparent text-center col border-0 mx-auto {{$class ?? ''}}" >
-    <p><a href="{{route('product.id', ['id' => $beer->id])}}"><img style="max-height:200px; width:auto; max-width:250px; height:auto;" class="card-img fixed" src="{{$beer->path ?? '-'}}" alt="Card Beer {{$beer->id+1 ?? '0'}}">
-        </a></p>
+<div class="card bg-transparent col border-0 {{$class ?? ''}}">
+
+    <a href="{{route('product.id', ['id' => $product->id])}}">
+        <img class="card-img-top-xl" src="{{$product->path ?? '-'}}" alt="Card Beer {{$product->id+1 ?? '0'}}">
+    </a>
     <div class="card-footer mt-auto">
-        <h5 class="card-title">{{$beer->name ?? '-'}}</h5>
-        <p class="card-text">sell by <strong>{{ \App\Models\Seller::where('id', $beer->seller_id)->first()->company }}</strong></p>
+        <div class="card-title">
+            <strong>{{$product->name ?? '-'}}</strong>
+        </div>
+        <p class="card-text">sell by
+            <strong>{{ \App\Models\Seller::where('id', $product->seller_id)->first()->company }}</strong>
+        </p>
         {{--<b>{{ \App\Models\Seller::find($beer->seller_id)->company }}</b>--}}
     </div>
-    {{--<div class="card-footer text-muted">
-        2 days ago
-    </div>--}}
 </div>
 
