@@ -10,7 +10,7 @@
         --}}
         <div class="card-text">
             @foreach ($order->products as $beer)
-                <div class="row">
+                <div class="row mt-4">
                     <div class="col-sm-3">
                         <img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/>
                     </div>
