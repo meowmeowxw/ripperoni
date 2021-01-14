@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Providers\RouteServiceProvider;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\Status;
+use App\Models\SellerOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -165,17 +167,37 @@ class CustomerCartController extends Controller
         $customer->orders()->save($order);
 
         $products = [];
+        $sellers = collect([]);
         foreach ($products_order as $po) {
             $product = Product::find($po["product_id"]);
-            $products[$product->id] = [
-                'ordered_quantity' => $po["ordered_quantity"],
-                'total_price' => $product->price * $po["ordered_quantity"],
-                'single_price' => $product->price,
-                'product_id' => $product->id,
-            ];
+            $seller = $product->seller;
+            if (!$sellers->has($seller->id)) {
+                $sellerOrder = new SellerOrder;
+                $sellerOrder->status_id = Status::where('name', 'waiting')->first()->id;
+                $sellerOrder->seller_id = $seller->id;
+                $sellerOrder->order_id = $order->id;
+                $sellerOrder->profit = 0.0;
+                $seller->orders()->save($sellerOrder);
+                $sellerOrder->save();
+                $sellers->put($seller->id, $sellerOrder);
+            }
             $product->quantity -= $po["ordered_quantity"];
             $product->save();
+            $sellerOrder = $sellers[$seller->id];
+            $profit = $product->price * $po["ordered_quantity"];
+            $sellerOrder->products()->attach([$products[$product->id] = [
+                'ordered_quantity' => $po["ordered_quantity"],
+                'total_price' => $profit,
+                'single_price' => $product->price,
+                'product_id' => $product->id,
+            ]]);
+            $sellerOrder->profit += $profit;
+            $sellerOrder->save();
+            $order->price += $profit;
         }
+
+        $order->save();
+        /*
         $order->products()->attach($products);
 
         $order->price = 0.0;
@@ -183,6 +205,7 @@ class CustomerCartController extends Controller
             $order->price += $product->pivot->total_price;
         }
         $order->save();
+        */
 
         $request->session()->forget('products_order');
 
