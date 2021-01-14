@@ -17,7 +17,7 @@
             <!-- TODO: implement search ? -->
             <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
                 <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button>
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
             </form>
 
             <!-- Right Side Of Navbar -->
@@ -35,6 +35,9 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register Seller') }}</a>
+                        </li>
                 @else
                     @if (Auth::user()->is_seller)
                         <li class="nav-item dropdown">

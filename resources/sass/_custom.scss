@@ -45,11 +45,11 @@
 }
 
 .card-header {
-    background-color: $beer !important;
+    background-color: $orange-alloy !important;
     color: $white !important;
 }
 
-.clear {
-    clear: both !important;
-    margin-top: 20px !important;
+.nav-link.active {
+    background-color: $yellow !important;
+    color: $black !important;
 }
