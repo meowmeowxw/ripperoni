@@ -7,10 +7,11 @@ use Illuminate\Database\Seeder;
 use App\Models\Seller;
 use App\Models\SellerOrder;
 use App\Models\Status;
+use App\Models\Order;
 
 class SellerOrderSeeder extends Seeder
 {
-    private const NUM_ORDERS = 60;
+    private const NUM_SELLER_ORDERS = 7;
 
     /**
      * Seed the seller_orders table
@@ -19,18 +20,23 @@ class SellerOrderSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        foreach (range(1, self::NUM_ORDERS) as $i) {
-            $seller = Seller::inRandomOrder()->first();
-            $created_at = $faker->dateTimeThisYear();
+        foreach (Order::all() as $order) {
+            $seller_orders = [];
+            foreach (range(1, rand(1, self::NUM_SELLER_ORDERS)) as $i) {
+                $seller = Seller::inRandomOrder()->first();
+                $created_at = $faker->dateTimeThisYear();
 
-            $seller_order = new SellerOrder([
-                'profit' => 0.0,
-                'status_id' => Status::inRandomOrder()->first()->id,
-                'seller_id' => $seller->id,
-                'created_at' => $created_at,
-                'updated_at' => $created_at,
-            ]);
-            $seller->orders()->save($seller_order);
+                $seller_order = new SellerOrder([
+                    'profit' => 0.0,
+                    'status_id' => Status::inRandomOrder()->first()->id,
+                    'seller_id' => $seller->id,
+                    'order_id' => $order->id,
+                    'created_at' => $created_at,
+                    'updated_at' => $created_at,
+                ]);
+                $seller->orders()->save($seller_order);
+                $seller_orders[] = $seller_order;
+            }
         }
     }
 }

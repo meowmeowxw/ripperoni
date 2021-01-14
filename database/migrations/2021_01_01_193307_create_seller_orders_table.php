@@ -18,7 +18,14 @@ class CreateSellerOrdersTable extends Migration
             $table->unsignedDouble('profit');
             $table->unsignedBigInteger('status_id')->index();
             $table->unsignedBigInteger('seller_id')->index();
+            $table->unsignedBigInteger('order_id')->index();
             $table->timestamps();
+
+            $table->foreign('order_id')
+                ->references('id')
+                ->on('orders')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
 
             $table->foreign('status_id')
                 ->references('id')
