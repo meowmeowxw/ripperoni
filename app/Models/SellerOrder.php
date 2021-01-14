@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class SellerOrder extends Model
 {
-    protected $fillable = [];
+    protected $fillable = [
+        'profit'
+    ];
 
     protected $dates = ['deleted_at'];
 

@@ -9,6 +9,8 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\SubOrder;
+use App\Models\Seller;
+use App\Models\SellerOrder;
 use App\Models\Product;
 
 class SubOrderSeeder extends Seeder
@@ -21,11 +23,13 @@ class SubOrderSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        foreach (Order::all() as $order) {
+        foreach (SellerOrder::all() as $order) {
             $created_at = $faker->dateTimeThisYear;
-            $products = Product::all()->random()
-                ->take($faker->numberBetween(1, Product::all()->count()))
+            $seller = Seller::find($order->seller_id);
+            // dd(Product::where('seller_id', $seller->id)->get()));
+            $products = Product::where('seller_id', $seller->id)
                 ->get()
+                ->take($faker->numberBetween(1, $seller->products->count()))
                 ->mapWithKeys(function($product) use ($faker, $created_at) {
                     $quantity = $faker->numberBetween(1, self::MAX_QUANTITY);
                     return [
@@ -41,9 +45,9 @@ class SubOrderSeeder extends Seeder
                 })
                 ->all();
             $order->products()->attach($products);
-            $order->price = 0.0;
+            $order->profit = 0.0;
             foreach ($order->products as $product) {
-                $order->price += $product->pivot->total_price;
+                $order->profit += $product->pivot->total_price;
             }
             $order->save();
         }

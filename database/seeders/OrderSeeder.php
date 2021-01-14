@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use Faker\Generator as Faker;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
@@ -12,7 +13,7 @@ use App\Models\SubOrder;
 
 class OrderSeeder extends Seeder
 {
-    private const NUM_ORDER = 60;
+    private const NUM_ORDERS = 60;
 
     /**
      * Seed the categories table
@@ -21,7 +22,7 @@ class OrderSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        foreach (range(1, self::NUM_ORDER) as $i) {
+        foreach (range(1, self::NUM_ORDERS) as $i) {
             $created_at = $faker->dateTimeThisYear();
             $order = new Order([
                 'credit_card' => Str::random(16),
@@ -30,10 +31,9 @@ class OrderSeeder extends Seeder
                 'price' => rand(3, 10),
                 'created_at' => $created_at,
             ]);
-            $customer = User::all()
-                ->where('is_seller', false)
+            $customer = Customer::all()
                 ->random()
-                ->customer;
+                ->first();
             $customer->orders()->save($order);
         }
     }

@@ -15,12 +15,20 @@ class CreateSellerOrdersTable extends Migration
     {
         Schema::create('seller_orders', function (Blueprint $table) {
             $table->id();
+            $table->unsignedDouble('profit');
             $table->unsignedBigInteger('status_id')->index();
+            $table->unsignedBigInteger('seller_id')->index();
             $table->timestamps();
 
             $table->foreign('status_id')
                 ->references('id')
                 ->on('status')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreign('seller_id')
+                ->references('id')
+                ->on('sellers')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });
