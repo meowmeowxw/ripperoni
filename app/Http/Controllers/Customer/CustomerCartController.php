@@ -22,6 +22,46 @@ class CustomerCartController extends Controller
         ]);
     }
 
+    private function updateQuantity(Request $request, $add = true)
+    {
+        $request->validate([
+            'id' => 'required|numeric|integer',
+            'quantity' => 'required|numeric|integer|min:1',
+        ]);
+
+        $product = Product::find($request->id);
+        $session = $request->session();
+
+        $product_id = $request->input('id');
+        $ordered_quantity = $request->input('quantity');
+
+        if ($ordered_quantity > $product->quantity) {
+            return $this->errorQuantity();
+        }
+
+        if ($session->has('products_order')) {
+            $products_order = $session->get('products_order');
+            foreach ($products_order as $i => $po) {
+                if ($po["product_id"] === $product_id) {
+                    if ($po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
+                        return $this->errorQuantity();
+                    } else {
+                        $session->forget('products_order');
+                        if ($add) {
+                            $products_order[$i]["ordered_quantity"] += $ordered_quantity;
+                        } else {
+                            $products_order[$i]["ordered_quantity"] = $ordered_quantity;
+                        }
+                        $session->put('products_order', $products_order);
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function __construct()
     {
         $this->middleware([
@@ -75,52 +115,15 @@ class CustomerCartController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'id' => 'required|numeric|integer',
-            'quantity' => 'required|numeric|integer|min:1',
-        ]);
-
-        $customer = Auth::user()->customer;
-        $product = Product::find($request->id);
-        $session = $request->session();
-
-        if (!$product) {
-            return back();
-        }
-
-        $product_id = $request->input('id');
-        $ordered_quantity = $request->input('quantity');
-        $push_data = false;
-
-        if ($ordered_quantity > $product->quantity) {
-            return $this->errorQuantity();
-        }
-
-        if ($session->has('products_order')) {
-            $products_order = $session->get('products_order');
-            foreach ($products_order as $i => $po) {
-                if ($po["product_id"] === $product_id) {
-                    if ($po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
-                        return $this->errorQuantity();
-                    } else {
-                        $session->forget('products_order');
-                        $products_order[$i]["ordered_quantity"] += $ordered_quantity;
-                        $session->put('products_order', $products_order);
-                        $push_data = true;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (!$push_data) {
+        if (!$this->updateQuantity($request)) {
+            $session = $request->session();
             $session->push('products_order', [
-                'product_id' => $product_id,
-                'ordered_quantity' => $ordered_quantity,
+                'product_id' => $request->id,
+                'ordered_quantity' => $request->quantity,
             ]);
         }
 
-        return redirect(route('product.id', $product_id));
+        return redirect(route('product.id', $request->id));
     }
 
     /**
@@ -181,12 +184,20 @@ class CustomerCartController extends Controller
                 $sellerOrder->save();
                 $sellers->put($seller->id, $sellerOrder);
             }
-            $product->quantity -= $po["ordered_quantity"];
+            $ordered_quantity = $po["ordered_quantity"];
+            if ($product->quantity - $ordered_quantity < 0) {
+                foreach ($sellers as $s) {
+                    $s->delete();
+                }
+                $order->delete();
+                return $this->errorQuantity();
+            }
+            $product->quantity -= $ordered_quantity;
             $product->save();
             $sellerOrder = $sellers[$seller->id];
-            $profit = $product->price * $po["ordered_quantity"];
+            $profit = $product->price * $ordered_quantity;
             $sellerOrder->products()->attach([$products[$product->id] = [
-                'ordered_quantity' => $po["ordered_quantity"],
+                'ordered_quantity' => $ordered_quantity,
                 'total_price' => $profit,
                 'single_price' => $product->price,
                 'product_id' => $product->id,
@@ -210,5 +221,12 @@ class CustomerCartController extends Controller
         $request->session()->forget('products_order');
 
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function update(Request $request)
+    {
+        if (!$this->updateQuantity($request, $add=false)) {
+            return back();
+        }
     }
 }

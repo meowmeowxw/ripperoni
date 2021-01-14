@@ -54,11 +54,13 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_seller' => false,
         ]));
 
         event(new Registered($user));
         Mail::to($request->email)->send(new NewUser($user));
 
+        $user->customer()->create([]);
         return redirect(RouteServiceProvider::HOME);
     }
 }
