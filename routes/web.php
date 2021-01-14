@@ -71,10 +71,9 @@ Route::prefix('/customer')->group(function() {
         ->name('customer.cart.buy');
 
     Route::get('/orders', function() {
-        $orders = Auth::user()->customer->orders()->get();
+        $orders = Auth::user()->customer->orders;
         return view('customer.orders', [
             'orders' => $orders,
-            'user' => Auth::user(),
         ]);
     })->middleware(['auth', 'customer'])->name('orders');
 });

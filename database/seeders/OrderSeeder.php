@@ -32,7 +32,7 @@ class OrderSeeder extends Seeder
                 'created_at' => $created_at,
             ]);
             $customer = Customer::all()
-                ->random()
+                ->random(1)
                 ->first();
             $customer->orders()->save($order);
         }

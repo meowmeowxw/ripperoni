@@ -9,15 +9,18 @@
         <h4 class="card-title"> Price:{{$order->price}}€ </h4>
         --}}
         <div class="card-text">
-            @foreach ($order->products as $beer)
-                <div class="row mt-4">
-                    <div class="col-sm-3">
-                        <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}" class="card-img-top" alt="{{$beer->name}}"/></a>
+            @foreach ($order->sellerOrders as $sellerOrder)
+                @foreach($sellerOrder->products as $beer)
+                    <div class="row mt-4">
+                        <div class="col-sm-3">
+                            <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}" class="card-img-top"
+                                                                              alt="{{$beer->name}}"/></a>
+                        </div>
+                        <div class="col align-self-center">
+                            <x-product :product=$beer></x-product>
+                        </div>
                     </div>
-                    <div class="col align-self-center">
-                        <x-product :product=$beer :sellBy="TRUE"></x-product>
-                    </div>
-                </div>
+                @endforeach
             @endforeach
         </div>
     </div>

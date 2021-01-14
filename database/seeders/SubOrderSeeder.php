@@ -51,5 +51,13 @@ class SubOrderSeeder extends Seeder
             }
             $order->save();
         }
+
+        foreach (Order::all() as $order) {
+            $order->price = 0;
+            foreach ($order->sellerOrders as $sellerOrder) {
+                $order->price += $sellerOrder->profit;
+            }
+            $order->save();
+        }
     }
 }
