@@ -13,6 +13,11 @@ class Seller extends \Illuminate\Database\Eloquent\Model
 
     protected $dates = ['deleted_at'];
 
+    public function orders()
+    {
+        return $this->hasMany(SellerOrder::class);
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

@@ -17,9 +17,9 @@ class Order extends \Illuminate\Database\Eloquent\Model
 
     protected $dates = ['deleted_at'];
 
-    public function products()
+    public function sellerOrders()
     {
-        return $this->belongsToMany(Product::class, 'sub_orders')->withPivot('total_price', 'single_price', 'ordered_quantity');
+        return $this->hasMany(SellerOrder::class);
     }
 
     public function customer()

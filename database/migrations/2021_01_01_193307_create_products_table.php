@@ -22,11 +22,18 @@ class CreateProductsTable extends Migration
             $table->string('path', 1024);
             $table->boolean('is_available')->default(true);
             $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('seller_id')->index();
             $table->timestamps();
 
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+
+            $table->foreign('seller_id')
+                ->references('id')
+                ->on('sellers')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
         });

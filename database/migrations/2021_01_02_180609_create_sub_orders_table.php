@@ -18,15 +18,15 @@ class CreateSubOrdersTable extends Migration
             $table->unsignedDouble('total_price');
             $table->unsignedDouble('single_price');
             $table->unsignedInteger('ordered_quantity');
-            $table->unsignedBigInteger('order_id')->index();
+            $table->unsignedBigInteger('seller_order_id')->index();
             $table->unsignedBigInteger('product_id')->index();
             $table->timestamps();
 
-            $table->primary(['order_id', 'product_id']);
+            $table->primary(['seller_order_id', 'product_id']);
 
-            $table->foreign('order_id')
+            $table->foreign('seller_order_id')
                 ->references('id')
-                ->on('orders')
+                ->on('seller_orders')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
 
