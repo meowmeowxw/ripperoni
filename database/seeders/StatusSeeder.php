@@ -15,10 +15,10 @@ class StatusSeeder extends Seeder
     public function run()
     {
         DB::table('status')->insert([
-            ['name' => 'delivered'],
-            ['name' => 'shipped'],
-            ['name' => 'confirmed'],
-            ['name' => 'waiting'],
+            ['name' => 'delivered', 'description' => 'The order has been delivered'],
+            ['name' => 'shipped', 'description' => 'The order has been shipped and it will arrive in the following days'],
+            ['name' => 'confirmed', 'description' => 'The order has been confirmed by the seller'],
+            ['name' => 'waiting', 'description' => 'The order is waiting the seller\'s confirmation'],
         ]);
     }
 }

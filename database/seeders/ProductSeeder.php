@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
     public function run()
     {
         $beers = [
-            'Weiss' => [
+            'Wheat' => [
                 [
                     'name' => 'Weihenstephan',
                     'description' => 'A cloudy, Bavarian-style wheat brew, tops the list of beers to try. A light, yeasty sweetness (which some liken to bananas or bubblegum) makes it an extremely refreshing beer to drink before a meal or with a light dinner.',

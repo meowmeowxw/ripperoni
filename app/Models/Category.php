@@ -9,6 +9,7 @@ class Category extends \Illuminate\Database\Eloquent\Model
 {
     protected $fillable = [
         'name',
+        'description',
     ];
 
     protected $dates = ['deleted_at'];
