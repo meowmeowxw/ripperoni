@@ -80,6 +80,16 @@ Route::prefix('/customer')->group(function() {
             'orders' => $orders,
         ]);
     })->middleware(['auth', 'customer'])->name('orders');
+    Route::get('/order/{id}', function($id) {
+        $order = Order::find($id);
+        if ($order->customer_id !== Auth::user()->customer->id) {
+            abort(403);
+        }
+        return view('customer.order', [
+            'order' => $order,
+        ]);
+    })->middleware(['auth', 'customer'])->name('customer.order.id');
+
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])
