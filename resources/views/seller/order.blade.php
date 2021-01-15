@@ -27,7 +27,7 @@
                     </div>
                     <div class="card-footer text-muted text-center">
                         <h5>{{__('Current status')}}:
-                            <span class="badge badge-pill badge-primary"> {{$currentStatus->name}} </span>
+                            <x-status :status="$sellerOrder->status->name"></x-status>
                         </h5>
                         <x-form.form action="{{route('seller.order.update')}}" enctype="multipart/form-data"
                                      btntext="{{ __('Save') }}" btnaddclass="btn-lg btn-block" inputid="status"

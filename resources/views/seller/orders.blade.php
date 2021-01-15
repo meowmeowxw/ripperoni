@@ -33,7 +33,7 @@
                         </div>
                         <div class="card-footer text-muted text-center">
                             <h5>{{__('Current status')}}:
-                                <span class="badge badge-pill badge-primary"> {{$sellerOrder->status->name}} </span>
+                                <x-status :status="$sellerOrder->status->name"></x-status>
                             </h5>
                             <a class="btn" href="{{route('seller.order.id', $sellerOrder->id)}}">{{__('Details')}}</a>
                         </div>
