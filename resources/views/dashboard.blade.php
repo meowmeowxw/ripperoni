@@ -34,13 +34,13 @@
                 <div class="container m-2">
                     @foreach($categories as $category=>$products)
                         <div class="filterDiv {{$category}}">
-                            <h3>-<strong>{{$category}}</strong>-</h3>
+                            <h4 class="d-inline text-capitalize bg-warning">-<strong>{{$category}}</strong>-</h4>
                             <div class="row justify-content-center">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
-                                        <div class="col-12 col-md-6 mx-auto card bg-transparent border-0">
-                                            <p class="h3 card-title">{{ $product->name }}</p>
+                                        <div class="col-12 col-md-6 mx-auto">
+                                            <p class="h4 card-title">{{ $product->name }}</p>
                                             <p><a href="{{route('product.id', ['id' => $product->id])}}"><img
                                                         class="card-img-top" src="{{$product->path ?? '-'}}"
                                                         alt="Card Beer {{$product->id+1 ?? '0'}}">
