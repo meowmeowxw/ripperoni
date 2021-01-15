@@ -6,7 +6,8 @@
             <div class="col-md-8">
                 <div class="card mt-3" id="customer-order.{{$sellerOrder->order}}">
                     <div class="card-header d-flex flex-row">
-                        <div class="mr-auto">Order Id: <strong>{{$sellerOrder->id}}</strong></div>
+                        <div class="mr-auto">Order Id: <strong>{{$sellerOrder->order_id}}</strong></div>
+                        <div class="mx-auto">Seller Order Id: <strong>{{$sellerOrder->id}}</strong></div>
                         <div class="ml-auto">Total Price: <strong>{{$sellerOrder->profit}} &euro;</strong></div>
                     </div>
                     <div class="card-body">
