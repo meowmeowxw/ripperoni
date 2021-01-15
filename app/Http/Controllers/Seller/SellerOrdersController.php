@@ -3,15 +3,13 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Models\Seller;
-use App\Models\Product;
-use App\Models\Order;
+use App\Models\Status;
 use App\Models\SellerOrder;
-use App\Providers\RouteServiceProvider;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 
 class SellerOrdersController extends Controller
 {
@@ -25,24 +23,70 @@ class SellerOrdersController extends Controller
     }
 
     /**
-     * Display the registration seller view.
+     * Display all the ordes view.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function create()
     {
         $seller = Auth::user()->seller;
-        $seller_orders = SellerOrder::where('seller_id', $seller->id)->get();
+        $sellerOrders = SellerOrder::where('seller_id', $seller->id)->get();
         $total_profit = 0;
-        foreach ($seller_orders as $seller_order) {
+        foreach ($sellerOrders as $seller_order) {
             $total_profit += $seller_order->profit;
         }
 
         return view('seller.orders', [
             'seller' => $seller,
-            'seller_orders' => $seller_orders,
+            'sellerOrders' => $sellerOrders,
             'total_profit' => $total_profit,
         ]);
+    }
+
+    /**
+     * Display order id view.
+     *
+     * @return View;
+     */
+    public function show($id)
+    {
+        $sellerOrder = SellerOrder::find($id);
+        if (!Gate::allows('seller-order', $sellerOrder)) {
+            abort(403);
+        }
+
+        return view('seller.order', [
+            'sellerOrder' => $sellerOrder,
+            'allStatus' => Status::all(),
+            'currentStatus' => $sellerOrder->status,
+        ]);
+    }
+
+    /**
+     * Update order status
+     *
+     * @return View
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|numeric|integer',
+            'status' => 'required|string',
+        ]);
+
+        $sellerOrder = SellerOrder::find($request->id);
+        if (!Gate::allows('seller-order', $sellerOrder)) {
+            abort(403);
+        }
+
+        $newStatus = Status::where('name', $request->status)->first();
+        if (!$newStatus) {
+            back();
+        }
+
+        $sellerOrder->status_id = $newStatus->id;
+        $sellerOrder->save();
+        return back();
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\SellerOrder;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
@@ -33,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('edit-product', function (User $user, Product $product) {
             return $user->seller->id === $product->seller_id;
+        });
+
+        Gate::define('seller-order', function (User $user, SellerOrder $sellerOrder) {
+            return $user->seller->id === $sellerOrder->seller->id;
         });
     }
 }

@@ -16,9 +16,14 @@
     }
 }
 
+
 .card {
     a {
         color: $orange !important;
+    }
+    .btn {
+        background-color: $green !important;
+        color: $white !important;
     }
 }
 

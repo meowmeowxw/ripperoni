@@ -50,6 +50,10 @@ Route::prefix('/seller')->group(function() {
 
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');
+    Route::get('/order/{id}', [SellerOrdersController::class, 'show'])
+        ->name('seller.order.id');
+    Route::post('/order/update', [SellerOrdersController::class, 'update'])
+        ->name('seller.order.update');
 
     Route::get('/{id}', [SellerPublicController::class, 'create'])
         ->name('seller.id')
