@@ -25,7 +25,7 @@ class ProductSeeder extends Seeder
                     'quantity' => 100,
                     'alcohol' => 5.4,
                     'cl' => 33,
-                    'seller_id' => Seller::all()->random()->first()->id,
+                    'seller_id' => Seller::all()->random(1)->first()->id,
                     'path' => '/img/weihenstephan.png',
                 ],
                 [
@@ -35,7 +35,7 @@ class ProductSeeder extends Seeder
                     'quantity' => 100,
                     'alcohol' => 4.7,
                     'cl' => 66,
-                    'seller_id' => Seller::all()->random()->first()->id,
+                    'seller_id' => Seller::all()->random(1)->first()->id,
                     'path' => '/img/erdinger.png',
                 ]
             ],
@@ -47,7 +47,7 @@ class ProductSeeder extends Seeder
                     'quantity' => 40,
                     'alcohol' => 5.4,
                     'cl' => 75,
-                    'seller_id' => Seller::all()->random()->first()->id,
+                    'seller_id' => Seller::all()->random(1)->first()->id,
                     'path' => '/img/ritual-pale-ale.png',
                 ],
                 [
@@ -111,7 +111,7 @@ class ProductSeeder extends Seeder
                     'quantity' => 30,
                     'alcohol' => 4.5,
                     'cl' => 66,
-                    'seller_id' => Seller::all()->random()->first()->id,
+                    'seller_id' => Seller::all()->random(1)->first()->id,
                     'path' => '/img/peroni.jpg',
                 ],
                 [
@@ -121,7 +121,7 @@ class ProductSeeder extends Seeder
                     'quantity' => 30,
                     'alcohol' => 5.0,
                     'cl' => 50,
-                    'seller_id' => Seller::all()->random()->first()->id,
+                    'seller_id' => Seller::all()->random(1)->first()->id,
                     'path' => '/img/augustiner.png',
                 ]
             ],

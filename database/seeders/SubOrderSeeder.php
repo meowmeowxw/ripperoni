@@ -23,10 +23,9 @@ class SubOrderSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        foreach (SellerOrder::all() as $order) {
+        foreach (SellerOrder::all() as $key => $order) {
             $created_at = $faker->dateTimeThisYear;
             $seller = Seller::find($order->seller_id);
-            // dd(Product::where('seller_id', $seller->id)->get()));
             $products = Product::where('seller_id', $seller->id)
                 ->get()
                 ->take($faker->numberBetween(1, $seller->products->count()))

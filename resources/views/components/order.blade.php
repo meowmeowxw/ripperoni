@@ -21,6 +21,9 @@
                         </div>
                     </div>
                 @endforeach
+                <h5>{{__('Current status')}}:
+                    <x-status :status="$sellerOrder->status->name"></x-status>
+                </h5>
             @endforeach
         </div>
     </div>

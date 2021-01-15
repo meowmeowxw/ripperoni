@@ -22,8 +22,11 @@ class SellerOrderSeeder extends Seeder
     {
         foreach (Order::all() as $order) {
             $seller_orders = [];
-            foreach (range(1, rand(1, self::NUM_SELLER_ORDERS)) as $i) {
+            foreach (range(3, rand(1, self::NUM_SELLER_ORDERS)) as $i) {
                 $seller = Seller::inRandomOrder()->first();
+                if ($seller->products->count() === 0) {
+                    continue;
+                }
                 $created_at = $faker->dateTimeThisYear();
 
                 $seller_order = new SellerOrder([
