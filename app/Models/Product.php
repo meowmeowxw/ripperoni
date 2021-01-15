@@ -15,6 +15,8 @@ class Product extends \Illuminate\Database\Eloquent\Model
         'description',
         'price',
         'quantity',
+        'alcohol',
+        'cl',
         'path',
     ];
 

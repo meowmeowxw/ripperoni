@@ -16,6 +16,9 @@
                 <x-FormInput name="description" idAndFor="descriptionNew" :lblName="__('Description')" type="text"/>
                 <x-FormInput name="price" idAndFor="priceNew" :lblName="__('Price')" type="number" step="0.01"/>
                 <x-FormInput name="quantity" idAndFor="quantityNew" :lblName="__('Quantity')" type="number"/>
+                <x-FormInput name="alcohol" idAndFor="alcoholNew" :lblName="__('Alcohol level')" type="number"
+                             step="0.01"/>
+                <x-FormInput name="cl" idAndFor="cl" :lblName="__('Cl')" type="number"/>
 
                 <x-form.form-category name="category" idAndFor="category" lblValue="Category"/>
 

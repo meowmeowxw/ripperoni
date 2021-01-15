@@ -19,6 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('description', 1024);
             $table->unsignedDouble('price');
             $table->integer('quantity');
+            $table->unsignedDouble('alcohol');
+            $table->unsignedInteger('cl');
             $table->string('path', 1024);
             $table->boolean('is_available')->default(true);
             $table->unsignedBigInteger('category_id')->index();

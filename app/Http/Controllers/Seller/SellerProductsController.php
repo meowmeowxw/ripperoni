@@ -56,6 +56,8 @@ class SellerProductsController extends Controller
             'price' => 'required|numeric',
             'quantity' => 'required|numeric|integer',
             'id' => 'required|numeric|integer',
+            'cl' => 'required|numeric|integer',
+            'alcohol' => 'required|numeric',
             // 'path' => 'required|string|max:1024',
         ]);
 
@@ -68,6 +70,8 @@ class SellerProductsController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->quantity = $request->quantity;
+        $product->cl = $request->cl;
+        $product->alcohol = $request->alcohol;
         // $product->path = $request->path;
         $product->save();
         return redirect(route('seller.products'));
@@ -82,6 +86,8 @@ class SellerProductsController extends Controller
             'quantity' => 'required|numeric|integer',
             'logo' => 'mimes:jpg,bmp,png|required',
             'category' => 'required|string',
+            'cl' => 'required|numeric|integer',
+            'alcohol' => 'required|numeric',
         ]);
 
         $category = Category::where('name', $request->category)->first();
@@ -90,6 +96,8 @@ class SellerProductsController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'quantity' => $request->quantity,
+            'cl' => $request->cl,
+            'alcohol' => $request->alcohol,
             'path' => "/".$request->file('logo')->store('logos'),
         ]);
         $product->category_id = $category->id;
