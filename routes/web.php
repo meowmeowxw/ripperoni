@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\CustomerSettingsController;
 use App\Http\Controllers\Auth\PasswordChangeController;
 use App\Http\Controllers\Seller\SellerRegisterController;
@@ -83,6 +84,9 @@ Route::get('/product/{id}', [ProductController::class, 'view'])
         ->name('product.id')
         ->whereNumber('id');
 
+Route::get('/category/{id}', [CategoryController::class, 'view'])
+    ->name('category.id')
+    ->whereNumber('id');
 
 Route::get('/search', [SearchController::class, 'search'])
         ->name('search');
