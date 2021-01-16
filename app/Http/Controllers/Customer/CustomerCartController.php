@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Mail\NewCustomerOrder;
+use App\Mail\NewSellerOrder;
 use App\Mail\NewUser;
 use App\Providers\RouteServiceProvider;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\Status;
+use App\Models\User;
 use App\Models\SellerOrder;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -222,6 +224,10 @@ class CustomerCartController extends Controller
         */
 
         Mail::to(Auth::user()->email)->send(new NewCustomerOrder(Auth::user(), $order));
+        foreach ($order->sellerOrders as $sellerOrder) {
+            $email = User::find($sellerOrder->seller->user->id)->email;
+            Mail::to($email)->send(new NewSellerOrder($sellerOrder));
+        }
         $request->session()->forget('products_order');
 
         return redirect(RouteServiceProvider::HOME);

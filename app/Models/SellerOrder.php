@@ -25,7 +25,7 @@ class SellerOrder extends Model
 
     public function seller()
     {
-        return $this->belongsTo(SellerOrder::class);
+        return $this->belongsTo(Seller::class);
     }
 
 }
