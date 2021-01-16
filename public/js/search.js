@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     $('#search').on('keyup', function () {
 
-        var query = $(this).val();
+        const query = $(this).val();
         if (query === '') {
             $('#product_list').html('');
         }
