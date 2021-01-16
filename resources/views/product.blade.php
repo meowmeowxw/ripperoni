@@ -49,8 +49,9 @@
                 <div class="col-8 align-content-center">
                     <div class="card bg-transparent text-center">
                         <div class="card-body">
-                            <x-form.form id="add_to_cart"
-                                         action="{{route('customer.cart')}}"
+                            {{--da fare if seller e if not seller per edit--}}
+
+                            <x-form.form id="add_to_cart" action="{{route('customer.cart')}}"
                                          btntext="{{__('Add to cart')}}" btnaddclass="btn-lg btn-block"
                                          inputid="id" inputvalue="{{$product->id}}">
 
@@ -59,7 +60,7 @@
                                              :lblName="__('Quantity')" type="number"/>
 
                                 <div class="row row-cols-3 justify-content-center m-1">
-                                    <button id="btn-minus" type="button" class="col btn btn-danger">
+                                    <button id="btn-minus" type="button" class="col btn btn-danger " >
                                         -
                                     </button>
                                     <button id="btn-plus" type="button" class="col btn btn-info">
