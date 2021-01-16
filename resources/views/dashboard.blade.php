@@ -9,12 +9,9 @@
                 <p class="h3 font-weight-bold">The latest beer</p>
 
                 <div class="d-flex flex-row ">
-                    @php
-                        $homebeers = \App\Models\Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
-                    @endphp
-                    <x-home-beer :product=$homebeers[0] class="d-block"/>
-                    <x-home-beer :product=$homebeers[1] class="d-none d-md-block"/>
-                    <x-home-beer :product=$homebeers[2] class="d-none d-lg-block"/>
+                    <x-product-vertical :product=$latest[0] class="d-block"/>
+                    <x-product-vertical :product=$latest[1] class="d-none d-md-block"/>
+                    <x-product-vertical :product=$latest[2] class="d-none d-lg-block"/>
                 </div>
             </div>
         </div>
@@ -37,13 +34,13 @@
                 <div class="container m-2">
                     @foreach($categories as $category=>$products)
                         <div class="filterDiv {{$category}}">
-                            <h3>-<strong>{{$category}}</strong>-</h3>
+                            <h4 class="d-inline text-capitalize bg-warning">-<strong>{{$category}}</strong>-</h4>
                             <div class="row justify-content-center">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
-                                        <div class="col-12 col-md-6 mx-auto card bg-transparent border-0">
-                                            <p class="h3 card-title">{{ $product->name }}</p>
+                                        <div class="col-12 col-md-6 mx-auto">
+                                            <p class="h4 card-title">{{ $product->name }}</p>
                                             <p><a href="{{route('product.id', ['id' => $product->id])}}"><img
                                                         class="card-img-top" src="{{$product->path ?? '-'}}"
                                                         alt="Card Beer {{$product->id+1 ?? '0'}}">

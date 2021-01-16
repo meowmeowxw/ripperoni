@@ -46,6 +46,10 @@ class ProductController extends Controller
             $array += [$category->name => $products];
             // dd($array);
         }
-        return view('dashboard', ['categories' => $array]);
+        $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->get();
+        return view('dashboard', [
+            'latest' => $latest,
+            'categories' => $array,
+            ]);
     }
 }

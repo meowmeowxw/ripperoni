@@ -4,21 +4,43 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Ripperoni') }}
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav mr-auto">
+            <!-- center Side Of Navbar -->
+            <ul class="navbar-nav mx-auto">
 
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link container-fluid" href="#"
+                       data-toggle="dropdown" aria-expanded="false" v-pre>
+                        <form class="form-inline text-center" autocomplete="off">
+                            <input class="form-control" type="search" id="search" name="search" placeholder="Search"
+                                   aria-label="Search" >
+                        </form>
+                    </a>
+                    <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0" aria-labelledby="search-item">
+                    </div>
+                </li>
             </ul>
 
             <!-- TODO: implement search ? -->
-            <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
-                <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search" aria-label="Search">
-                <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
-            </form>
+            {{--
+            <a data-toggle="dropdown" aria-expanded="false">
+                <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
+                    <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search"
+                           aria-label="Search" data-bs>
+                    <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
+                </form>
+            </a>
+            <div class="nav-item dropdown">
+                <div class="dropdown-menu">
+
+                </div>
+            </div>
+            --}}
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
@@ -35,13 +57,14 @@
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         </li>
                     @endif
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register Seller') }}</a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register Seller') }}</a>
+                    </li>
                 @else
                     @if (Auth::user()->is_seller)
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{Auth::user()->seller->company}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seller">
@@ -58,11 +81,14 @@
                             <a class="nav-link" href="{{route('customer.settings')}}">{{__('Settings')}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{route('customer.cart')}}">{{__('Cart')}}@if(Session::has('products_order')):{{count(Session::get('products_order'))}} @endif</a>
+                            <a class="nav-link"
+                               href="{{route('customer.cart')}}">{{__('Cart')}}@if(Session::has('products_order'))
+                                    :{{count(Session::get('products_order'))}} @endif</a>
                         </li>
                     @endif
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>
 
@@ -83,8 +109,4 @@
         </div>
     </div>
 </nav>
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div id="product_list"></div>
-    </div>
-</div>
+

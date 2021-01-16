@@ -5,28 +5,39 @@ $.ajaxSetup({
 });
 
 const searchPath = window.location.origin
-        ? window.location.origin + '/'
-        : window.location.protocol + '/' + window.location.host + '/';
+    ? window.location.origin + '/'
+    : window.location.protocol + '/' + window.location.host + '/';
 
 $(document).ready(function () {
 
-    $('#search').on('keyup',function() {
+    $('#search').on('keyup', function () {
+
         var query = $(this).val();
+        if (query === '') {
+            $('#product_list').html('');
+        }
         $.ajax({
             url: searchPath + "search",
             type: "GET",
-            data: {'name':query},
-            success:function (data) {
-                $('#product_list').html(data);
+            data: {'name': query},
+            success: function (data) {
+                if (data != '') {
+                    $('#product_list').html(data);
+                }
             }
+
         })
         // end of ajax call
     });
 
-
-    $(document).on('click', 'li', function() {
-        var value = $(this).text();
-        $('#search').val(value);
-        $('#product_list').html("");
+    $("#search").focusin(function () {
+        $('#product_list').addClass('show');
     });
+
+    $("#search").focusout(function () {
+        window.setTimeout(function () {
+            $('#product_list').removeClass('show');
+        }, 100);
+    });
+
 });
