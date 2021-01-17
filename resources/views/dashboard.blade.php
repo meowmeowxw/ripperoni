@@ -22,25 +22,29 @@
                 <small>Filter by category</small>
                 <div id="categories" class="nav-scroller d-flex justify-content-center m-1">
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
-                        @foreach($categories as $category=>$products)
+                        @foreach($categories as $id=>$name)
                             @if($loop->first)
                                 <a class="nav-link selectcategory active" href="#">All</a>
                             @endif
-                            <a class="nav-link selectcategory" href="#">{{$category}}</a>
+                            <a class="nav-link selectcategory" href="#">{{$name}}</a>
                         @endforeach
                     </nav>
                 </div>
 
                 <div class="container mt-2">
-                    @foreach($categories as $category=>$products)
-                        <div class="filterDiv {{$category}}">
-                            <h4 class="d-inline text-uppercase bg-warning">-<strong>{{$category}}</strong>-</h4>
+                    @foreach($all_product as $id_category=>$products)
+                        <div class="filterDiv {{$categories[$id_category]}}">
+                            <a href="{{route('category.id', ['id' => $id_category])}}" class="text-dark">
+                                <h4 class="d-inline text-uppercase bg-warning">
+                                    -<strong>{{$categories[$id_category]}}</strong>-
+                                </h4>
+                            </a>
                             <div class="row justify-content-center ">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
 
-                                        <x-product-square :product=$product />
+                                        <x-product-square :product=$product/>
 
                                     @endif
                                 @endforeach

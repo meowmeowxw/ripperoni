@@ -41,15 +41,18 @@ class ProductController extends Controller
     public function show()
     {
         $array = [];
+        $categories = [];
         foreach (Category::all() as $category) {
             $products = Product::where('category_id', $category->id)->get();
-            $array += [$category->name => $products];
+            $array += [$category->id => $products];
             // dd($array);
+            $categories += [$category->id => $category->name];
         }
         $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->get();
         return view('dashboard', [
             'latest' => $latest,
-            'categories' => $array,
+            'all_product' => $array,
+            'categories' => $categories,
             ]);
     }
 }
