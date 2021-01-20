@@ -51,24 +51,15 @@
                         <div class="card-body">
                             {{--da fare if seller e if not seller per edit--}}
 
-                            <x-form.form id="add_to_cart" action="{{route('customer.cart')}}"
-                                         btntext="{{__('Add to cart')}}" btnaddclass="btn-lg btn-block"
-                                         inputid="id" inputvalue="{{$product->id}}">
-
-
-                                <x-FormInput name="quantity" idAndFor="quantityNew" inputValue="1" min="1"
-                                             :lblName="__('Quantity')" type="number"/>
-
-                                <div class="row row-cols-3 justify-content-center m-1">
-                                    <button id="btn-minus" type="button" class="col btn btn-danger " >
-                                        -
-                                    </button>
-                                    <button id="btn-plus" type="button" class="col btn btn-info">
-                                        +
-                                    </button>
-                                </div>
-
-                            </x-form.form>
+                            @guest
+                                <p class="small">Login needed to buy</p>
+                            @else
+                                @if (Auth::user()->is_seller)
+                                    <x-form.row-edit-product :product=$product ></x-form.row-edit-product>
+                                @else
+                                    <x-form.add-to-cart :product=$product></x-form.add-to-cart>
+                                @endif
+                            @endguest
                         </div>
                     </div>
                 </div>
