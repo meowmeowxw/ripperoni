@@ -18,35 +18,34 @@
         <hr/>
         <div class="row justify-content-center">
             <div id="categoryHomepage" class="col justify-content-center text-center">
-                <h3>All our Beer</h3>
+                <p class="h3 font-weight-bold">All our Beer</p>
                 <small>Filter by category</small>
-                <div id="categories" class="nav-scroller d-flex justify-content-center">
+                <div id="categories" class="nav-scroller d-flex justify-content-center m-1">
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
-                        @foreach($categories as $category=>$products)
+                        @foreach($categories as $id=>$name)
                             @if($loop->first)
                                 <a class="nav-link selectcategory active" href="#">All</a>
                             @endif
-                            <a class="nav-link selectcategory" href="#">{{$category}}</a>
+                            <a class="nav-link selectcategory" href="#">{{$name}}</a>
                         @endforeach
                     </nav>
                 </div>
 
-                <div class="container m-2">
-                    @foreach($categories as $category=>$products)
-                        <div class="filterDiv {{$category}}">
-                            <h4 class="d-inline text-capitalize bg-warning">-<strong>{{$category}}</strong>-</h4>
-                            <div class="row justify-content-center">
+                <div class="container mt-2">
+                    @foreach($all_product as $id_category=>$products)
+                        <div class="filterDiv {{$categories[$id_category]}}">
+                            <a href="{{route('category.id', ['id' => $id_category])}}" class="text-dark">
+                                <h4 class="d-inline text-uppercase bg-warning">
+                                    -<strong>{{$categories[$id_category]}}</strong>-
+                                </h4>
+                            </a>
+                            <div class="row justify-content-center ">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
-                                        <div class="col-12 col-md-6 mx-auto">
-                                            <p class="h4 card-title">{{ $product->name }}</p>
-                                            <p><a href="{{route('product.id', ['id' => $product->id])}}"><img
-                                                        class="card-img-top" src="{{$product->path ?? '-'}}"
-                                                        alt="Card Beer {{$product->id+1 ?? '0'}}">
-                                                </a></p>
-                                            <p class="card-text">{{ $product->description }}</p>
-                                        </div>
+
+                                        <x-product-square :product=$product/>
+
                                     @endif
                                 @endforeach
                             </div>
