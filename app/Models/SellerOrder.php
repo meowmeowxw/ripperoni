@@ -13,6 +13,11 @@ class SellerOrder extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
+
     public function status()
     {
         return $this->belongsTo(Status::class);

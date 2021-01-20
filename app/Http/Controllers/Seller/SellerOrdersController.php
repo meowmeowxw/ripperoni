@@ -3,8 +3,10 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Mail\ChangeOrderStatus;
 use App\Models\Status;
 use App\Models\SellerOrder;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -84,6 +86,7 @@ class SellerOrdersController extends Controller
             back();
         }
 
+        Mail::to($sellerOrder->order->customer->user->email)->send(new ChangeOrderStatus($sellerOrder));
         $sellerOrder->status_id = $newStatus->id;
         $sellerOrder->save();
         return back();

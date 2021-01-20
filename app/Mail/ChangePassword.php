@@ -31,6 +31,7 @@ class ChangePassword extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.change-password');
+        return $this->subject('Password Changed')
+                    ->view('mail.change-password');
     }
 }

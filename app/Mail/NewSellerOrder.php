@@ -33,8 +33,9 @@ class NewSellerOrder extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mail.seller-order', [
-            'url' => route('seller.order.id', $this->order->id),
-        ]);
+        return $this->subject('New Order Arrived')
+                    ->markdown('mail.seller-order', [
+                        'url' => route('seller.order.id', $this->order->id),
+                    ]);
     }
 }
