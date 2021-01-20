@@ -82,8 +82,8 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                               href="{{route('customer.cart')}}">{{__('Cart')}}@if(Session::has('products_order'))
-                                    :{{count(Session::get('products_order'))}} @endif</a>
+                               href="{{route('customer.cart')}}">{{__('Cart')}}@if(Session::has('productsOrder'))
+                                    :{{count(Session::get('productsOrder'))}} @endif</a>
                         </li>
                     @endif
                     <li class="nav-item dropdown">

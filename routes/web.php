@@ -74,6 +74,8 @@ Route::prefix('/customer')->group(function() {
         ->name('customer.cart.details');
     Route::post('/cart/buy', [CustomerCartController::class, 'buy'])
         ->name('customer.cart.buy');
+    Route::post('/cart/delete-product', [CustomerCartController::class, 'deleteProduct'])
+        ->name('customer.cart.delete-product');
 
     Route::get('/orders', function() {
         $orders = Auth::user()->customer->orders;

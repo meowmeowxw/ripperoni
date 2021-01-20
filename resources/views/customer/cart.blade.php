@@ -37,7 +37,7 @@
                                             <div class="row">
                                                 <div class="col">
                                                     @php
-                                                        $seller = \App\Models\Seller::find($product->seller_id);
+                                                        $seller = $product->seller;
                                                     @endphp
                                                     sell by <a
                                                         href="{{route('seller.id', $seller->id)}}">{{ $seller->company }}</a>
@@ -46,11 +46,17 @@
                                             </p>
                                         </div>
                                     </div>
+                                    <x-form.form action="{{route('customer.cart.delete-product')}}" btntext="{{ __('Delete') }}"
+                                                 btnaddclass="btn"
+                                                 inputid="{{'product'.$product->id}}" name="id" inputvalue="{{$product->id}}">
+                                    </x-form.form>
                                 @endforeach
                             </div>
                             <a class="btn btn-primary" href="{{route('customer.cart.details')}}">{{__('Proceed')}}</a>
                         </div>
                     </div>
+                @else
+                    {{__('The cart is empty')}}
                 @endisset
             </div>
         </div>

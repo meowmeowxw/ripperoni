@@ -44,20 +44,20 @@ class CustomerCartController extends Controller
             return $this->errorQuantity();
         }
 
-        if ($session->has('products_order')) {
-            $products_order = $session->get('products_order');
-            foreach ($products_order as $i => $po) {
+        if ($session->has('productsOrder')) {
+            $productsOrder = $session->get('productsOrder');
+            foreach ($productsOrder as $i => $po) {
                 if ($po["product_id"] === $product_id) {
                     if ($po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
                         return $this->errorQuantity();
                     } else {
-                        $session->forget('products_order');
+                        $session->forget('productsOrder');
                         if ($add) {
-                            $products_order[$i]["ordered_quantity"] += $ordered_quantity;
+                            $productsOrder[$i]["ordered_quantity"] += $ordered_quantity;
                         } else {
-                            $products_order[$i]["ordered_quantity"] = $ordered_quantity;
+                            $productsOrder[$i]["ordered_quantity"] = $ordered_quantity;
                         }
-                        $session->put('products_order', $products_order);
+                        $session->put('productsOrder', $productsOrder);
                         return true;
                     }
                 }
@@ -82,15 +82,15 @@ class CustomerCartController extends Controller
      */
     public function create(Request $request)
     {
-        $products_order = $request->session()->get('products_order');
+        $productsOrder = $request->session()->get('productsOrder');
 
-        if (!$products_order) {
-            return back();
+        if (!$productsOrder) {
+            return view('customer.cart');
         }
 
         $final_order = [];
         $total_price = 0;
-        foreach ($products_order as $po) {
+        foreach ($productsOrder as $po) {
             $product_id = $po["product_id"];
             $ordered_quantity = $po["ordered_quantity"];
             $product = Product::find($po["product_id"]);
@@ -122,7 +122,7 @@ class CustomerCartController extends Controller
     {
         if (!$this->updateQuantity($request)) {
             $session = $request->session();
-            $session->push('products_order', [
+            $session->push('productsOrder', [
                 'product_id' => $request->id,
                 'ordered_quantity' => $request->quantity,
             ]);
@@ -138,7 +138,7 @@ class CustomerCartController extends Controller
      */
     public function customerDetails(Request $request)
     {
-        if ($request->session()->has('products_order')) {
+        if ($request->session()->has('productsOrder')) {
             $customer = Auth::user()->customer;
             return view('customer.details', ['customer' => $customer]);
         } else {
@@ -160,8 +160,8 @@ class CustomerCartController extends Controller
             'city' => 'required|string|max:128',
         ]);
 
-        $products_order = $request->session()->get('products_order');
-        if (!$products_order) {
+        $productsOrder = $request->session()->get('productsOrder');
+        if (!$productsOrder) {
             return back();
         }
 
@@ -176,7 +176,7 @@ class CustomerCartController extends Controller
 
         $products = [];
         $sellers = collect([]);
-        foreach ($products_order as $po) {
+        foreach ($productsOrder as $po) {
             $product = Product::find($po["product_id"]);
             $seller = $product->seller;
             if (!$sellers->has($seller->id)) {
@@ -228,15 +228,42 @@ class CustomerCartController extends Controller
             $email = User::find($sellerOrder->seller->user->id)->email;
             Mail::to($email)->send(new NewSellerOrder($sellerOrder));
         }
-        $request->session()->forget('products_order');
+        $request->session()->forget('productsOrder');
 
         return redirect(RouteServiceProvider::HOME);
     }
 
     public function update(Request $request)
     {
-        if (!$this->updateQuantity($request, $add=false)) {
+        if (!$this->updateQuantity($request, $add = false)) {
             return back();
         }
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|numeric|integer',
+        ]);
+
+        $session = $request->session();
+        if ($session->has('productsOrder')) {
+            $index = -1;
+            $productsOrder = $session->get('productsOrder');
+            foreach ($productsOrder as $i => $po) {
+                if ($po["product_id"] === $request->id) {
+                    $index = $i;
+                    break;
+                }
+            }
+            if ($index !== -1) {
+                $session->forget('productsOrder');
+                array_splice($productsOrder, $index, 1);
+                if (!empty($productsOrder)) {
+                    $session->put('productsOrder', $productsOrder);
+                }
+            }
+        }
+        return back();
     }
 }
