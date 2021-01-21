@@ -20,9 +20,7 @@
                 </div>
                 <div class="row row-cols-md-2 justify-content-center">
                     @foreach($products as $product)
-                        @if($product->is_available)
-                            <x-product-square :product=$product />
-                        @endif
+                        <x-product-square :product=$product />
                     @endforeach
                 </div>
             </div>
