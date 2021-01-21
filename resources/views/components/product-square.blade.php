@@ -1,4 +1,4 @@
-<div class="col-sm-6 col-md-4  services-box hoverServices p-1">
+<div class="col-sm-6 col-md-4 services-box hoverServices p-1">
     <a href="{{route('product.id', ['id' => $product->id])}}" class="text-dark">
         <p class="h4 text-center">{{ $product->name }}</p>
 

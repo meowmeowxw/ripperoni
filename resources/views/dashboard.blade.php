@@ -39,7 +39,7 @@
                                     -<strong>{{$categories[$id_category]}}</strong>-
                                 </h4>
                             </a>
-                            <div class="row justify-content-center ">
+                            <div class="row justify-content-center">
 
                                 @foreach($products as $product)
                                     @if($product->is_available)
