@@ -18,13 +18,13 @@
         <hr/>
         <div class="row justify-content-center">
             <div id="categoryHomepage" class="col justify-content-center text-center">
-                <p class="h3 font-weight-bold">All our Beer</p>
-                <small>Filter by category</small>
+                <p class="h3 font-weight-bold">{{__('Beers')}}</p>
+                <small>{{__('Filter by category')}}</small>
                 <div id="categories" class="nav-scroller d-flex justify-content-center m-1">
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
                         @foreach($categories as $id=>$name)
                             @if($loop->first)
-                                <a class="nav-link selectcategory active" href="#">All</a>
+                                <a class="nav-link selectcategory active" href="#">{{__('All')}}</a>
                             @endif
                             <a class="nav-link selectcategory" href="#">{{$name}}</a>
                         @endforeach
