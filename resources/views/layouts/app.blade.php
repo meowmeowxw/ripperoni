@@ -17,6 +17,8 @@
 <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/img-box.css') }}" rel="stylesheet">
+    @yield('styles')
+
 </head>
 <body>
 
