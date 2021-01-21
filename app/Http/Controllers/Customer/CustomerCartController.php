@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\Mail;
 class CustomerCartController extends Controller
 {
 
-    private function errorQuantity()
+    private function errorQuantity($id = null)
     {
         return back()->withErrors([
-            'quantity' => 'The selected quantity is not available',
+            'quantity' . $id => 'The selected quantity is not available',
         ]);
     }
 
@@ -41,7 +41,7 @@ class CustomerCartController extends Controller
         $ordered_quantity = $request->input('quantity');
 
         if ($ordered_quantity > $product->quantity) {
-            return $this->errorQuantity();
+            return $add ? $this->errorQuantity() : $this->errorQuantity($product_id);
         }
 
         if ($session->has('productsOrder')) {
@@ -49,7 +49,7 @@ class CustomerCartController extends Controller
             foreach ($productsOrder as $i => $po) {
                 if ($po["product_id"] === $product_id) {
                     if ($po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
-                        return $this->errorQuantity();
+                        return $add ? $this->errorQuantity() : $this->errorQuantity($po["ordered_quantity"]);
                     } else {
                         $session->forget('productsOrder');
                         if ($add) {
@@ -195,7 +195,7 @@ class CustomerCartController extends Controller
                     $s->delete();
                 }
                 $order->delete();
-                return $this->errorQuantity();
+                return $this->errorQuantity($product->id);
             }
             $product->quantity -= $ordered_quantity;
             $product->save();
@@ -235,7 +235,7 @@ class CustomerCartController extends Controller
 
     public function update(Request $request)
     {
-        if (!$this->updateQuantity($request, $add = false)) {
+        if ($this->updateQuantity($request, add: false)) {
             return back();
         }
     }

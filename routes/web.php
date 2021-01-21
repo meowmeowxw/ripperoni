@@ -76,6 +76,8 @@ Route::prefix('/customer')->group(function () {
         ->name('customer.cart.details');
     Route::post('/cart/buy', [CustomerCartController::class, 'buy'])
         ->name('customer.cart.buy');
+    Route::post('/cart/update', [CustomerCartController::class, 'update'])
+        ->name('customer.cart.update');
     Route::post('/cart/delete-product', [CustomerCartController::class, 'deleteProduct'])
         ->name('customer.cart.delete-product');
 

@@ -12,7 +12,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-7">
+            <div class="col-md-8">
                 @isset($final_order)
                     <div class="card mt-3" id="customer-cart">
                         <div class="card-header">
@@ -36,10 +36,23 @@
                                                 <a href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
                                             </div>
                                             <div class="row mt-2 align-items-center">
-                                                <input id="{{'quantity'.$product->id}}" type="number" name="quantity"
-                                                       value="{{$fo["ordered_quantity"]}}"/> x
-                                                {{ $fo["single_price"] }} &euro;
-                                                = {{ $fo["total_price"] }} &euro;
+                                                <form id="{{'update'.$product->id}}"
+                                                      action="{{route('customer.cart.update')}}" method="POST">
+                                                    @csrf
+                                                    <input id="{{'product'.$product->id}}" value="{{$product->id}}"
+                                                           name="id"
+                                                           type="hidden">
+                                                    <input id="{{'quantity'.$product->id}}" type="number"
+                                                           name="quantity" class="@error("quantity".$product->id) is-invalid @enderror"
+                                                           value="{{$fo["ordered_quantity"]}}"/> x
+                                                    {{ $fo["single_price"] }} &euro;
+                                                    = {{ $fo["total_price"] }} &euro;
+                                                    @error("quantity".$product->id)
+                                                    <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="col col-4 align-self-center">
