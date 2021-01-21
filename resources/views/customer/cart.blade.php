@@ -13,7 +13,7 @@
                             <div class="card-text">
                                 @foreach ($final_order as $fo)
                                     @php
-                                    $product = $fo["product"];
+                                        $product = $fo["product"];
                                     @endphp
                                     <div class="row mt-4">
                                         <div class="col-sm-3">
@@ -43,16 +43,26 @@
                                                         href="{{route('seller.id', $seller->id)}}">{{ $seller->company }}</a>
                                                 </div>
                                             </div>
-                                            </p>
+                                            <div class="row">
+                                               <div class="col">
+                                                   <form id="{{'delete'.$product->id}}" action="{{route('customer.cart.delete-product')}}" method="POST">
+                                                       @csrf
+                                                       <input id="{{'product'.$product->id}}" value="{{$product->id}}" name="id"
+                                                              type="hidden">
+                                                   </form>
+                                                   <a href="#"
+                                                      onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
+                                               </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <x-form.form action="{{route('customer.cart.delete-product')}}" btntext="{{ __('Delete') }}"
-                                                 btnaddclass="btn"
-                                                 inputid="{{'product'.$product->id}}" name="id" inputvalue="{{$product->id}}">
-                                    </x-form.form>
                                 @endforeach
+                                <div class="row mt-3">
+                                    <a class="btn btn-primary btn-block"
+                                       href="{{route('customer.cart.details')}}">{{__('Proceed')}}
+                                    </a>
+                                </div>
                             </div>
-                            <a class="btn btn-primary" href="{{route('customer.cart.details')}}">{{__('Proceed')}}</a>
                         </div>
                     </div>
                 @else
