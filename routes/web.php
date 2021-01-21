@@ -13,12 +13,14 @@ use App\Http\Controllers\Seller\SellerProductsController;
 use App\Http\Controllers\Seller\SellerOrdersController;
 use App\Http\Controllers\Seller\SellerPublicController;
 use App\Http\Controllers\Customer\CustomerCartController;
+use App\Http\Controllers\Customer\CustomerOrderController;
 use App\Http\Controllers\SearchController;
 use App\Models\User;
 use App\Models\Seller;
 use App\Models\Order;
 use App\Models\Category;
 use App\Models\Product;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +32,7 @@ use App\Models\Product;
 |
 */
 
-Route::prefix('/seller')->group(function() {
+Route::prefix('/seller')->group(function () {
     Route::get('/register', [SellerRegisterController::class, 'create'])
         ->name('seller.register');
     Route::post('/register', [SellerRegisterController::class, 'store']);
@@ -61,7 +63,7 @@ Route::prefix('/seller')->group(function() {
         ->whereNumber('id');
 });
 
-Route::prefix('/customer')->group(function() {
+Route::prefix('/customer')->group(function () {
     Route::get('/settings', [CustomerSettingsController::class, 'create'])
         ->name('customer.settings');
     Route::post('/settings', [CustomerSettingsController::class, 'store']);
@@ -77,34 +79,23 @@ Route::prefix('/customer')->group(function() {
     Route::post('/cart/delete-product', [CustomerCartController::class, 'deleteProduct'])
         ->name('customer.cart.delete-product');
 
-    Route::get('/orders', function() {
-        $orders = Auth::user()->customer->orders;
-        return view('customer.orders', [
-            'orders' => $orders,
-        ]);
-    })->middleware(['auth', 'customer'])->name('orders');
-    Route::get('/order/{id}', function($id) {
-        $order = Order::find($id);
-        if ($order->customer_id !== Auth::user()->customer->id) {
-            abort(403);
-        }
-        return view('customer.order', [
-            'order' => $order,
-        ]);
-    })->middleware(['auth', 'customer'])->name('customer.order.id');
+    Route::get('/orders', [CustomerOrderController::class, 'create'])
+        ->name('orders');
+    Route::get('/order/{id}', [CustomerOrderController::class, 'create'])
+        ->name('customer.order.id');
 
 });
 
 Route::get('/product/{id}', [ProductController::class, 'view'])
-        ->name('product.id')
-        ->whereNumber('id');
+    ->name('product.id')
+    ->whereNumber('id');
 
 Route::get('/category/{id}', [CategoryController::class, 'view'])
     ->name('category.id')
     ->whereNumber('id');
 
 Route::get('/search', [SearchController::class, 'search'])
-        ->name('search');
+    ->name('search');
 
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
@@ -113,23 +104,23 @@ Route::post('/user/password-change', [PasswordChangeController::class, 'edit'])
     ->name('password.change');
 
 
-Route::get('/sellers', function() {
+Route::get('/sellers', function () {
     foreach (Seller::all() as $seller) {
-        echo "<h2>".$seller->company."</h2>";
+        echo "<h2>" . $seller->company . "</h2>";
         foreach ($seller->products as $product) {
-            echo "<li>".$product->name."</li>";
+            echo "<li>" . $product->name . "</li>";
         }
     }
 })->name('sellers');
 
-Route::prefix('/register')->group(function() {
+Route::prefix('/register')->group(function () {
     Route::get('/', [RegisteredUserController::class, 'create'])
         ->name('register');
 
     Route::post('/', [RegisteredUserController::class, 'store']);
 });
 
-Route::prefix('/login')->group(function() {
+Route::prefix('/login')->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create'])
         ->middleware('guest')
         ->name('login');
@@ -138,7 +129,7 @@ Route::prefix('/login')->group(function() {
         ->middleware('guest');
 });
 
-Route::prefix('/confirm-password')->group(function() {
+Route::prefix('/confirm-password')->group(function () {
     Route::get('/', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
