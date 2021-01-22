@@ -29,13 +29,22 @@
             @foreach ($selectors as $selector)
             $("{{'#quantity'.$selector}}").on("change keyup", function () {
                 let val = parseInt($(this)[0].value);
-                if (val) {
-                    // $(this)[0].innerHTML = "x" + (val * $("{{'#single-price'.$selector}}"))
+                if (val && val >= 1) {
+                    /*
+                    $.ajax({
+                        url: searchPath + "customer/update",
+                        type: "GET",
+                        data: {"id": $selector, "quantity": val},
+                        success: function (data) {
+                            if (data !== '') {
+                                ;
+                            }
+                        }
+                    })
+                    */
                     const singlePrice = parseFloat($("{{'#single-price'.$selector}}")[0].innerText);
-                    // console.log(val, singlePrice);
                     const totalPrice = $("{{'#total-price'.$selector}}")[0];
                     let tot = parseFloat($('#total-price')[0].innerText);
-                    console.log(tot);
                     tot -= parseFloat(totalPrice.innerText);
                     newTotalPrice = (val * singlePrice);
                     totalPrice.innerText = newTotalPrice.toFixed(1);
