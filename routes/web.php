@@ -13,7 +13,7 @@ use App\Http\Controllers\Seller\SellerProductsController;
 use App\Http\Controllers\Seller\SellerOrdersController;
 use App\Http\Controllers\Seller\SellerPublicController;
 use App\Http\Controllers\Customer\CustomerCartController;
-use App\Http\Controllers\Customer\CustomerOrderController;
+use App\Http\Controllers\Customer\CustomerOrdersController;
 use App\Http\Controllers\SearchController;
 use App\Models\User;
 use App\Models\Seller;
@@ -79,9 +79,9 @@ Route::prefix('/customer')->group(function () {
     Route::post('/cart/delete-product', [CustomerCartController::class, 'deleteProduct'])
         ->name('customer.cart.delete-product');
 
-    Route::get('/orders', [CustomerOrderController::class, 'create'])
+    Route::get('/orders', [CustomerOrdersController::class, 'create'])
         ->name('orders');
-    Route::get('/order/{id}', [CustomerOrderController::class, 'create'])
+    Route::get('/order/{id}', [CustomerOrdersController::class, 'create'])
         ->name('customer.order.id');
 
 });

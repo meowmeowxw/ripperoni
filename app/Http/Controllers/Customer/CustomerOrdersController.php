@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use Illuminate\Support\Facades\Gate;
 
-class CustomerOrderController extends Controller
+class CustomerOrdersController extends Controller
 {
 
     public function __construct()
@@ -39,7 +39,7 @@ class CustomerOrderController extends Controller
         }
         $customer = Auth::user()->customer;
         return view('customer.orders', [
-            'orders' => $customer->orders
+            'orders' => $customer->orders()->orderBy('id', 'DESC')->get()
         ]);
     }
 

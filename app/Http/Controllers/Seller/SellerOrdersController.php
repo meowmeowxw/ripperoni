@@ -32,16 +32,18 @@ class SellerOrdersController extends Controller
     public function create()
     {
         $seller = Auth::user()->seller;
-        $sellerOrders = SellerOrder::where('seller_id', $seller->id)->get();
-        $total_profit = 0;
-        foreach ($sellerOrders as $seller_order) {
-            $total_profit += $seller_order->profit;
+        $sellerOrders = $seller->orders()
+                               ->orderBy('id', 'DESC')
+                               ->get();
+        $totalProfit = 0;
+        foreach ($sellerOrders as $sellerOrder) {
+            $totalProfit += $sellerOrder->profit;
         }
 
         return view('seller.orders', [
             'seller' => $seller,
             'sellerOrders' => $sellerOrders,
-            'total_profit' => $total_profit,
+            'totalProfit' => $totalProfit,
         ]);
     }
 
