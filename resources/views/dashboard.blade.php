@@ -6,7 +6,9 @@
     <div class="container py-2" id="dashboard">
         <div class="row justify-content-center">
             <div class="col text-center">
-                <p class="h3 font-weight-bold">The latest beer</p>
+                 <div class="pb-2 mt-4 mb-2 page-header border-bottom">
+                     <h3 class="font-weight-bold">{{__('The latest beers')}}</h3>
+                 </div>
 
                 <div class="d-flex flex-row ">
                     <x-product-vertical :product=$latest[0] class="d-block"/>
