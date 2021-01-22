@@ -4,17 +4,22 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Seller;
+use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
+
+    private const ADDITIONAL_PRODUCTS = 100;
+
     /**
      * Seed the categories table
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         $beers = [
             'Wheat' => [
@@ -126,14 +131,34 @@ class ProductSeeder extends Seeder
                 ]
             ],
         ];
+
+        foreach (range(1, self::ADDITIONAL_PRODUCTS) as $i) {
+            $category = Category::inRandomOrder()->first();
+            $description = '';
+            foreach (range(1, rand(4, 40)) as $_) {
+                $description .= Str::random(rand(8, 20)) . ' ';
+            }
+            $category->products()->create([
+                'name' => Str::random(rand(5, 15)),
+                'description' => $description,
+                'price' => $faker->randomFloat(2, 1, 20),
+                'quantity' => rand(1, 100),
+                'alcohol' => $faker->randomFloat(2, 4, 13),
+                'cl' => rand(30, 1000),
+                'seller_id' => Seller::inRandomOrder()->first()->id,
+                'path' => '/img/placeholder.jpg',
+            ]);
+        }
+
         foreach ($beers as $categoryName => $products) {
             $category = Category::where('name', $categoryName)->first();
             $category->products()->createMany($products);
         }
 
-        foreach(Product::all() as $product) {
+        foreach (Product::all() as $product) {
             $seller = Seller::find($product->seller_id);
             $seller->products()->save($product);
         }
+
     }
 }

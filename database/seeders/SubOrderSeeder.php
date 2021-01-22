@@ -28,7 +28,7 @@ class SubOrderSeeder extends Seeder
             $seller = Seller::find($order->seller_id);
             $products = Product::where('seller_id', $seller->id)
                 ->get()
-                ->take($faker->numberBetween(1, $seller->products->count()))
+                ->take($faker->numberBetween(1, 6))
                 ->mapWithKeys(function($product) use ($faker, $created_at) {
                     $quantity = $faker->numberBetween(1, self::MAX_QUANTITY);
                     return [
