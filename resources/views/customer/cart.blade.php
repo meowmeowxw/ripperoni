@@ -19,7 +19,7 @@
                 $selectors = [];
                 foreach ($final_order as $fo) {
                     $product = $fo["product"];
-                    $selectors[] = 'quantity'.$product->id;
+                    $selectors[] = $product->id;
                 }
             @endphp
             $("#proceed").click(function () {
@@ -27,8 +27,21 @@
                 $(this)[0].innerText = proceed[i];
             });
             @foreach ($selectors as $selector)
-            $("{{'#'.$selector}}").on("change keyup", function () {
-                console.log($(this)[0]);
+            $("{{'#quantity'.$selector}}").on("change keyup", function () {
+                let val = parseInt($(this)[0].value);
+                if (val) {
+                    // $(this)[0].innerHTML = "x" + (val * $("{{'#single-price'.$selector}}"))
+                    const singlePrice = parseFloat($("{{'#single-price'.$selector}}")[0].innerText);
+                    // console.log(val, singlePrice);
+                    const totalPrice = $("{{'#total-price'.$selector}}")[0];
+                    let tot = parseFloat($('#total-price')[0].innerText);
+                    console.log(tot);
+                    tot -= parseFloat(totalPrice.innerText);
+                    newTotalPrice = (val * singlePrice);
+                    totalPrice.innerText = newTotalPrice.toFixed(1);
+                    tot += newTotalPrice;
+                    $('#total-price')[0].innerText = tot.toFixed(1);
+                }
             });
             @endforeach
         })
@@ -42,7 +55,7 @@
                 @isset($final_order)
                     <div class="card mt-3" id="customer-cart">
                         <div class="card-header">
-                            {{__('Total price')}}: {{ $total_price }}
+                            {{__('Total price')}}: <label id="total-price">{{ $total_price }}</label>
                         </div>
                         <div class="card-body">
                             <div class="card-text">
@@ -72,8 +85,14 @@
                                                            name="quantity"
                                                            class="@error("quantity".$product->id) is-invalid @enderror"
                                                            value="{{$fo["ordered_quantity"]}}"/> x
-                                                    {{ $fo["single_price"] }} &euro;
-                                                    = {{ $fo["total_price"] }} &euro;
+                                                    <label id="{{'single-price'.$product->id}}">
+                                                        {{ $fo["single_price"] }}
+                                                    </label> &euro;
+                                                    =
+                                                    <label id="{{'total-price'.$product->id}}">
+                                                        {{ $fo["total_price"] }}
+                                                    </label>
+                                                    &euro;
                                                     @error("quantity".$product->id)
                                                     <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
