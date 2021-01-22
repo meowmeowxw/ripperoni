@@ -16,7 +16,7 @@ use Illuminate\View\View;
 class ProductController extends Controller
 {
 
-    private const NUM_ITEMS = 10;
+    private const NUM_ITEMS = 9;
     /**
      * Return the view of a product
      * @param id of the product
@@ -43,10 +43,10 @@ class ProductController extends Controller
     public function show(Request $request)
     {
         if ($request->ajax() && $request->category !== null) {
-            $category = Category::find($request->category);
+            $category = Category::where('name', $request->category)->first();
             if ($category) {
                 $products = $category
-                    ->products
+                    ->products()
                     ->where('is_available', true)
                     ->paginate(self::NUM_ITEMS);
 

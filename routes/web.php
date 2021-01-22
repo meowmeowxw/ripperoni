@@ -97,9 +97,6 @@ Route::get('/category/{id}', [CategoryController::class, 'view'])
 Route::get('/search', [SearchController::class, 'search'])
     ->name('search');
 
-Route::get('/getprod', [ProductController::class, 'show'])
-    ->name('getprod');
-
 Route::get('/', [ProductController::class, 'show'])
     ->name('dashboard');
 
