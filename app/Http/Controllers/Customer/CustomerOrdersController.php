@@ -39,7 +39,7 @@ class CustomerOrdersController extends Controller
         }
         $customer = Auth::user()->customer;
         return view('customer.orders', [
-            'orders' => $customer->orders()->orderBy('id', 'DESC')->get()
+            'orders' => $customer->orders()->orderBy('id', 'DESC')->paginate(10)
         ]);
     }
 

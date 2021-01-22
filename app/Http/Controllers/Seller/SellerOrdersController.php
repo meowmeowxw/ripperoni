@@ -33,12 +33,10 @@ class SellerOrdersController extends Controller
     {
         $seller = Auth::user()->seller;
         $sellerOrders = $seller->orders()
-                               ->orderBy('id', 'DESC')
-                               ->get();
-        $totalProfit = 0;
-        foreach ($sellerOrders as $sellerOrder) {
-            $totalProfit += $sellerOrder->profit;
-        }
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+        $totalProfit = $seller->orders()
+            ->sum('profit');
 
         return view('seller.orders', [
             'seller' => $seller,
