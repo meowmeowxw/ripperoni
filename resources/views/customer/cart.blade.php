@@ -14,10 +14,23 @@
         const proceed = ["{{__('Proceed')}}", "^"];
         let i = 0;
         window.addEventListener('load', function () {
+            let selector = [];
+            @php
+                $selectors = [];
+                foreach ($final_order as $fo) {
+                    $product = $fo["product"];
+                    $selectors[] = 'quantity'.$product->id;
+                }
+            @endphp
             $("#proceed").click(function () {
                 i = (i + 1) % 2;
                 $(this)[0].innerText = proceed[i];
             });
+            @foreach ($selectors as $selector)
+            $("{{'#'.$selector}}").on("change keyup", function () {
+                console.log($(this)[0]);
+            });
+            @endforeach
         })
     </script>
 @endsection
