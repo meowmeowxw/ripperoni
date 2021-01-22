@@ -50,6 +50,14 @@ class ProductController extends Controller
                     ->where('is_available', true)
                     ->paginate(self::NUM_ITEMS);
 
+
+                $output = '<div class="row justify-content-center">';
+                foreach ($products as $product)
+                {
+                    $output .= view('components.product-square', ['product' => $product]);
+                }
+                $output .= '</div>';
+                return $output;
             } else {
                 abort(404);
             }
