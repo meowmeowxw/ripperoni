@@ -78,7 +78,7 @@ class CustomerCartController extends Controller
     /**
      * Display the customer cart view
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\View\View
      */
     public function create(Request $request)
     {
@@ -104,6 +104,7 @@ class CustomerCartController extends Controller
             $total_price += $ordered_quantity * $product->price;
         }
         return view('customer.cart', [
+            'customer' => Auth::user()->customer,
             'final_order' => $final_order,
             'total_price' => $total_price,
         ]);
@@ -129,21 +130,6 @@ class CustomerCartController extends Controller
         }
 
         return redirect(route('product.id', $request->id));
-    }
-
-    /**
-     * Display a view with the customer detail to buy the order
-     *
-     * @param Request $request
-     */
-    public function customerDetails(Request $request)
-    {
-        if ($request->session()->has('productsOrder')) {
-            $customer = Auth::user()->customer;
-            return view('customer.details', ['customer' => $customer]);
-        } else {
-            return back();
-        }
     }
 
     /**
@@ -235,7 +221,8 @@ class CustomerCartController extends Controller
 
     public function update(Request $request)
     {
-        if ($this->updateQuantity($request, add: false)) {
+        // ($request, add: false) php 8
+        if ($this->updateQuantity($request, false)) {
             return back();
         }
     }

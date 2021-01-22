@@ -9,6 +9,19 @@
     </style>
 @endsection
 
+@section('scripts')
+    <script>
+        const proceed = ["{{__('Proceed')}}", "^"];
+        let i = 0;
+        window.addEventListener('load', function () {
+            $("#proceed").click(function () {
+                i = (i + 1) % 2;
+                $(this)[0].innerText = proceed[i];
+            });
+        })
+    </script>
+@endsection
+
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -43,7 +56,8 @@
                                                            name="id"
                                                            type="hidden">
                                                     <input id="{{'quantity'.$product->id}}" type="number"
-                                                           name="quantity" class="@error("quantity".$product->id) is-invalid @enderror"
+                                                           name="quantity"
+                                                           class="@error("quantity".$product->id) is-invalid @enderror"
                                                            value="{{$fo["ordered_quantity"]}}"/> x
                                                     {{ $fo["single_price"] }} &euro;
                                                     = {{ $fo["total_price"] }} &euro;
@@ -76,9 +90,34 @@
                                     </div>
                                 @endforeach
                                 <div class="row mt-4">
-                                    <a class="btn btn-primary btn-block"
-                                       href="{{route('customer.cart.details')}}">{{__('Proceed')}}
-                                    </a>
+                                    <div class="col">
+                                        <button class="btn btn-primary btn-block" type="button" data-toggle="collapse"
+                                                data-target="#collapse" aria-expanded="false"
+                                                id="proceed"
+                                                aria-controls="collapseButton">
+                                            {{__('Proceed')}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="collapse" id="collapse">
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <x-form.form action="{{route('customer.cart.buy')}}"
+                                                         btntext="{{ __('Buy') }}"
+                                                         btnaddclass="btn-block">
+                                                <x-FormInput name="credit_card" idAndFor="credit_card"
+                                                             :lblName="__('Credit Card')"
+                                                             inputValue="{{Auth::user()->customer->credit_card}}"
+                                                             type="text"/>
+                                                <x-FormInput name="street" idAndFor="street"
+                                                             :lblName="__('Street Address')"
+                                                             inputValue="{{Auth::user()->customer->street}}"
+                                                             type="text"/>
+                                                <x-FormInput name="city" idAndFor="city" :lblName="__('City')"
+                                                             inputValue="{{Auth::user()->customer->city}}" type="text"/>
+                                            </x-form.form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -90,5 +129,5 @@
         </div>
     </div>
     </div>
-
 @endsection
+
