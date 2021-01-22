@@ -27,6 +27,7 @@
                 $(this)[0].innerText = proceed[i];
             });
             @foreach ($selectors as $selector)
+            $("{{'#error'.$selector}}").hide();
             $("{{'#quantity'.$selector}}").on("change keyup", function () {
                 let val = parseInt($(this)[0].value);
                 if (val && val >= 1) {
@@ -34,14 +35,22 @@
                         url: `${searchPath}customer/cart/update`,
                         type: "POST",
                         data: {"id": {{$selector}}, "quantity": val},
-                        success: function (values) {
-                            if (values !== '') {
-                                const data = JSON.parse(values);
-                                $("{{'#total-price'.$selector}}")[0].innerText = data.new_price.toFixed(2);
-                                let tot = parseFloat($('#total-price')[0].innerText);
-                                tot -= data.old_price;
-                                tot += data.new_price;
-                                $('#total-price')[0].innerText = tot.toFixed(2);
+                        success: function (data) {
+                            if (data !== '') {
+                                console.log(data);
+                                if (data.hasOwnProperty('new_price')) {
+                                    $("{{'#quantity'.$selector}}").attr("class", "");
+                                    $("{{'#error'.$selector}}").hide();
+                                    $("{{'#total-price'.$selector}}")[0].innerText = data.new_price.toFixed(2);
+                                    let tot = parseFloat($('#total-price')[0].innerText);
+                                    tot -= data.old_price;
+                                    tot += data.new_price;
+                                    $('#total-price')[0].innerText = tot.toFixed(2);
+                                } else {
+                                    $("{{'#quantity'.$selector}}").attr("class", "form-control mb-2 is-invalid");
+                                    $("{{'#error'.$selector}}").html("<strong>" + data.error + "</strong>");
+                                    $("{{'#error'.$selector}}").show();
+                                }
                             }
                         }
                     })
@@ -53,6 +62,15 @@
 @endsection
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -87,7 +105,7 @@
                                                            type="hidden">
                                                     <input id="{{'quantity'.$product->id}}" type="number"
                                                            name="quantity"
-                                                           class="@error("quantity".$product->id) is-invalid @enderror"
+                                                           class=""
                                                            value="{{$fo["ordered_quantity"]}}"/> x
                                                     <label id="{{'single-price'.$product->id}}">
                                                         {{ $fo["single_price"] }}
@@ -97,11 +115,11 @@
                                                         {{ $fo["total_price"] }}
                                                     </label>
                                                     &euro;
-                                                    @error("quantity".$product->id)
-                                                    <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
+                                                    <div class="row">
+                                                        <span id="{{'error'.$product->id}}" class="invalid-feedback"
+                                                              role="alert">
                                                         </span>
-                                                    @enderror
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>

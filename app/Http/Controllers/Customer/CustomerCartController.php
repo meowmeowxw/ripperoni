@@ -28,6 +28,12 @@ class CustomerCartController extends Controller
         ]);
     }
 
+    private function errorQuantityAjax() {
+        return response()->json([
+            'error' => 'The selected quantity is not available',
+        ]);
+    }
+
     private function updateQuantity(Request $request, $add = true)
     {
         $request->validate([
@@ -42,33 +48,37 @@ class CustomerCartController extends Controller
         $ordered_quantity = $request->input('quantity');
 
         if ($ordered_quantity > $product->quantity) {
-            return $add ? $this->errorQuantity() : $this->errorQuantity($product_id);
+            if ($request->ajax()) {
+                return $this->errorQuantityAjax();
+            }
+            return $this->errorQuantity();
         }
 
         if ($session->has('productsOrder')) {
             $productsOrder = $session->get('productsOrder');
             foreach ($productsOrder as $i => $po) {
                 if ($po["product_id"] === $product_id) {
-                    if ($po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
-                        return $add ? $this->errorQuantity() : $this->errorQuantity($po["ordered_quantity"]);
-                    } else {
-                        $session->forget('productsOrder');
-                        $precedentQuantity = 0;
-                        if ($add) {
-                            $productsOrder[$i]["ordered_quantity"] += $ordered_quantity;
-                        } else {
-                            $precedentQuantity = $productsOrder[$i]["ordered_quantity"];
-                            $productsOrder[$i]["ordered_quantity"] = $ordered_quantity;
-                        }
-                        $session->put('productsOrder', $productsOrder);
-                        if ($request->ajax()) {
-                            return json_encode([
-                                'old_price' => $product->price * $precedentQuantity,
-                                'new_price' => $product->price * $ordered_quantity,
-                            ]);
-                        }
-                        return true;
+                    if ($add && $po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
+                        return $this->errorQuantity();
                     }
+
+                    $session->forget('productsOrder');
+                    $precedentQuantity = 0;
+                    if ($add) {
+                        $productsOrder[$i]["ordered_quantity"] += $ordered_quantity;
+                    } else {
+                        $precedentQuantity = $productsOrder[$i]["ordered_quantity"];
+                        $productsOrder[$i]["ordered_quantity"] = $ordered_quantity;
+                    }
+
+                    $session->put('productsOrder', $productsOrder);
+                    if ($request->ajax()) {
+                        return response()->json([
+                            'old_price' => $product->price * $precedentQuantity,
+                            'new_price' => $product->price * $ordered_quantity,
+                        ]);
+                    }
+                    return true;
                 }
             }
         }
@@ -230,10 +240,7 @@ class CustomerCartController extends Controller
 
     public function update(Request $request)
     {
-        $json = $this->updateQuantity($request, false);
-        if ($json) {
-            return response()->json($json);
-        }
+        return $this->updateQuantity($request, false);
     }
 
     public function deleteProduct(Request $request)
