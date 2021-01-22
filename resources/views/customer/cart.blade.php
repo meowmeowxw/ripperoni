@@ -30,26 +30,21 @@
             $("{{'#quantity'.$selector}}").on("change keyup", function () {
                 let val = parseInt($(this)[0].value);
                 if (val && val >= 1) {
-                    /*
                     $.ajax({
-                        url: searchPath + "customer/update",
-                        type: "GET",
-                        data: {"id": $selector, "quantity": val},
-                        success: function (data) {
-                            if (data !== '') {
-                                ;
+                        url: `${searchPath}customer/cart/update`,
+                        type: "POST",
+                        data: {"id": {{$selector}}, "quantity": val},
+                        success: function (values) {
+                            if (values !== '') {
+                                const data = JSON.parse(values);
+                                $("{{'#total-price'.$selector}}")[0].innerText = data.new_price.toFixed(2);
+                                let tot = parseFloat($('#total-price')[0].innerText);
+                                tot -= data.old_price;
+                                tot += data.new_price;
+                                $('#total-price')[0].innerText = tot.toFixed(2);
                             }
                         }
                     })
-                    */
-                    const singlePrice = parseFloat($("{{'#single-price'.$selector}}")[0].innerText);
-                    const totalPrice = $("{{'#total-price'.$selector}}")[0];
-                    let tot = parseFloat($('#total-price')[0].innerText);
-                    tot -= parseFloat(totalPrice.innerText);
-                    newTotalPrice = (val * singlePrice);
-                    totalPrice.innerText = newTotalPrice.toFixed(1);
-                    tot += newTotalPrice;
-                    $('#total-price')[0].innerText = tot.toFixed(1);
                 }
             });
             @endforeach
@@ -122,10 +117,6 @@
                                                 </form>
                                                 <a href="#"
                                                    onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
-                                            </div>
-                                            <div class="row mt-2">
-                                                <a href="#"
-                                                   onclick="document.getElementById('{{"update".$product->id}}').submit();">{{__('Update')}}</a>
                                             </div>
                                         </div>
                                     </div>

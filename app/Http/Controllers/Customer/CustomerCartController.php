@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Response;
 
 class CustomerCartController extends Controller
 {
@@ -52,12 +53,20 @@ class CustomerCartController extends Controller
                         return $add ? $this->errorQuantity() : $this->errorQuantity($po["ordered_quantity"]);
                     } else {
                         $session->forget('productsOrder');
+                        $precedentQuantity = 0;
                         if ($add) {
                             $productsOrder[$i]["ordered_quantity"] += $ordered_quantity;
                         } else {
+                            $precedentQuantity = $productsOrder[$i]["ordered_quantity"];
                             $productsOrder[$i]["ordered_quantity"] = $ordered_quantity;
                         }
                         $session->put('productsOrder', $productsOrder);
+                        if ($request->ajax()) {
+                            return json_encode([
+                                'old_price' => $product->price * $precedentQuantity,
+                                'new_price' => $product->price * $ordered_quantity,
+                            ]);
+                        }
                         return true;
                     }
                 }
@@ -221,9 +230,9 @@ class CustomerCartController extends Controller
 
     public function update(Request $request)
     {
-        // ($request, add: false) php 8
-        if ($this->updateQuantity($request, false)) {
-            return back();
+        $json = $this->updateQuantity($request, false);
+        if ($json) {
+            return response()->json($json);
         }
     }
 
