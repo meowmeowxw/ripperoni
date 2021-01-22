@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use App\Models\Seller;
@@ -15,6 +16,7 @@ use Illuminate\View\View;
 class ProductController extends Controller
 {
 
+    private const NUM_ITEMS = 10;
     /**
      * Return the view of a product
      * @param id of the product
@@ -36,22 +38,30 @@ class ProductController extends Controller
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      *
-     * TODO Remove this function
+     *
      */
-    public function show()
+    public function show(Request $request)
     {
-        $array = [];
-        $categories = [];
-        foreach (Category::all() as $category) {
-            $products = $category->products->where('is_available', true);
-            $array += [$category->id => $products];
-            $categories += [$category->id => $category->name];
+        if ($request->ajax() && $request->category !== null) {
+            $category = Category::find($request->category);
+            if ($category) {
+                $products = $category
+                    ->products
+                    ->where('is_available', true)
+                    ->paginate(self::NUM_ITEMS);
+
+            } else {
+                abort(404);
+            }
+        } else {
+            $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
         }
-        $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->get();
+
+        $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
         return view('dashboard', [
             'latest' => $latest,
-            'all_product' => $array,
-            'categories' => $categories,
+            'products' => $products,
+            'categories' => Category::all(),
             ]);
     }
 }

@@ -24,37 +24,31 @@
                 <small>{{__('Filter by category')}}</small>
                 <div id="categories" class="nav-scroller d-flex justify-content-center m-1">
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
-                        @foreach($categories as $id=>$name)
+                        @foreach($categories as $category)
                             @if($loop->first)
                                 <a class="nav-link selectcategory active" href="#">{{__('All')}}</a>
                             @endif
-                            <a class="nav-link selectcategory" href="#">{{$name}}</a>
+                            <a class="nav-link selectcategory" href="#">{{$category->name}}</a>
                         @endforeach
                     </nav>
                 </div>
 
                 <div class="container mt-2">
-                    @foreach($all_product as $id_category=>$products)
-                        <div class="filterDiv {{$categories[$id_category]}}">
-                            <a href="{{route('category.id', ['id' => $id_category])}}" class="text-dark">
+                    @foreach($categories as $category)
+                        <div class="filterDiv {{$category->name}}">
+                            <a href="{{route('category.id', ['id' => $category->id])}}" class="text-dark">
                                 <h4 class="d-inline text-uppercase bg-warning">
-                                    -<strong>{{$categories[$id_category]}}</strong>-
+                                    -<strong>{{$category->name}}</strong>-
                                 </h4>
                             </a>
                             <div class="row justify-content-center">
-
-                                @foreach($products as $product)
-                                    @if($product->is_available)
-
-                                        <x-product-square :product=$product/>
-
-                                    @endif
+                                @foreach($category->products as $product)
+                                    <x-product-square :product=$product/>
                                 @endforeach
                             </div>
                             <hr/>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>
