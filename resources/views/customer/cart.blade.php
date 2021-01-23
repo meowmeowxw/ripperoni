@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="col col-3 align-self-center">
                                             <div class="row">
-                                                <a href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
+                                                <a title="{{'Product detail'}}" class="text-break" href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
                                             </div>
                                             <div class="row">
                                                 <form id="{{'delete'.$product->id}}"
