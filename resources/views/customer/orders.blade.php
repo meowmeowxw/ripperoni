@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-center">
-            <div class="col-md-8">
+            <div class="col" style="max-width: 768px;">
                 @foreach ($orders as $order)
                     <x-order :order="$order"/>
                 @endforeach

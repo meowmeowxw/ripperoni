@@ -11,25 +11,20 @@
         <div class="card-text">
             @foreach ($order->sellerOrders as $sellerOrder)
                 <div class="row">
-                    <div class="col-4">
-                        <p>{{__('Seller Order ID')}}: {{$sellerOrder->id}}</p>
-                    </div>
-                    <div class="col-4">
-                        <p>{{__('Ordered from')}}: <a
+                    <div class="col">
+                        <p>{{__('From')}}: <a
                                 href="{{route('seller.id', $sellerOrder->seller->id)}}">{{$sellerOrder->seller->company}}</a>
                         </p>
                     </div>
-                    <div class="col-4">
-                        <p>{{__('Status')}}:
-                            <x-status :status="$sellerOrder->status->name"></x-status>
-                        </p>
+                    <div class="col">
+                        <x-status :status="$sellerOrder->status->name"></x-status>
                     </div>
                 </div>
 
                 <div class="container-fluid border">
                 @foreach($sellerOrder->products as $beer)
                     <div class="row mt-2">
-                        <div class="d-none d-lg-block col-sm-3">
+                        <div class="col-4">
                             <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}"
                                                                               class="card-img-top"
                                                                               alt="{{$beer->name}}"/></a>
@@ -39,6 +34,8 @@
                         </div>
                     </div>
                 @endforeach
+                </div>
+                <div class="row mt-4">
                 </div>
             @endforeach
         </div>
