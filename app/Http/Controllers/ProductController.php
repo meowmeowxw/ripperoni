@@ -16,7 +16,7 @@ use Illuminate\View\View;
 class ProductController extends Controller
 {
 
-    private const NUM_ITEMS = 10;
+    private const NUM_ITEMS = 9;
     /**
      * Return the view of a product
      * @param id of the product
@@ -40,23 +40,33 @@ class ProductController extends Controller
      *
      *
      */
-    public function show(Request $request)
+    public function show()
     {
+        /*
         if ($request->ajax() && $request->category !== null) {
-            $category = Category::find($request->category);
+            $category = Category::where('name', $request->category)->first();
             if ($category) {
                 $products = $category
-                    ->products
+                    ->products()
                     ->where('is_available', true)
                     ->paginate(self::NUM_ITEMS);
 
+
+                $output = '<div class="row justify-content-center">';
+                foreach ($products as $product)
+                {
+                    $output .= view('components.product-square', ['product' => $product]);
+                }
+                $output .= '</div>';
+                return $output;
             } else {
                 abort(404);
             }
         } else {
             $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
-        }
+        }*/
 
+        $products = Product::where('is_available', true)->simplePaginate(self::NUM_ITEMS);
         $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
         return view('dashboard', [
             'latest' => $latest,
