@@ -13,50 +13,54 @@
     <script>
         const proceed = ["{{__('Proceed')}}", "^"];
         let i = 0;
+        function computePrice(id, data) {
+            if (data.hasOwnProperty('new_price')) {
+                $(`#quantity${id}`).attr("class", "");
+                $(`#error${id}`).hide();
+                $(`#total-price${id}`).html(data.new_price.toFixed(2) + "&euro;");
+                let tot = parseFloat($('#total-price').text());
+                tot -= data.old_price;
+                tot += data.new_price;
+                $('#total-price').text(tot.toFixed(2));
+            } else {
+                $(`#quantity${id}`).attr("class", "form-control mb-2 is-invalid");
+                $(`#error${id}`).html("<strong>" + data.error + "</strong>");
+                $(`#error${id}`).show();
+            }
+        }
         window.addEventListener('load', function () {
             let selector = [];
-            @php
-                $selectors = [];
-                foreach ($final_order as $fo) {
-                    $product = $fo["product"];
-                    $selectors[] = $product->id;
-                }
-            @endphp
-            $("#proceed").click(function () {
-                i = (i + 1) % 2;
-                $(this)[0].innerText = proceed[i];
-            });
-            @foreach ($selectors as $selector)
-            $("{{'#error'.$selector}}").hide();
-            $("{{'#quantity'.$selector}}").on("change keyup", function () {
-                let val = parseInt($(this)[0].value);
-                if (val && val >= 1) {
-                    $.ajax({
-                        url: `${searchPath}customer/cart/update`,
-                        type: "POST",
-                        data: {"id": {{$selector}}, "quantity": val},
-                        success: function (data) {
-                            if (data !== '') {
-                                console.log(data);
-                                if (data.hasOwnProperty('new_price')) {
-                                    $("{{'#quantity'.$selector}}").attr("class", "");
-                                    $("{{'#error'.$selector}}").hide();
-                                    $("{{'#total-price'.$selector}}")[0].innerText = data.new_price.toFixed(2);
-                                    let tot = parseFloat($('#total-price')[0].innerText);
-                                    tot -= data.old_price;
-                                    tot += data.new_price;
-                                    $('#total-price')[0].innerText = tot.toFixed(2);
-                                } else {
-                                    $("{{'#quantity'.$selector}}").attr("class", "form-control mb-2 is-invalid");
-                                    $("{{'#error'.$selector}}").html("<strong>" + data.error + "</strong>");
-                                    $("{{'#error'.$selector}}").show();
+            @isset($finalOrder)
+                @php
+                    $selectors = [];
+                    foreach ($finalOrder as $fo) {
+                        $product = $fo["product"];
+                        $selectors[] = $product->id;
+                    }
+                @endphp
+                $("#proceed").click(function () {
+                    i = (i + 1) % 2;
+                    $(this).text(proceed[i]);
+                });
+                @foreach ($selectors as $selector)
+                $("{{'#error'.$selector}}").hide();
+                $("{{'#quantity'.$selector}}").on("change keyup", function () {
+                    let val = parseInt($(this)[0].value);
+                    if (val && val >= 1) {
+                        $.ajax({
+                            url: `${searchPath}customer/cart/update`,
+                            type: "POST",
+                            data: {"id": {{$selector}}, "quantity": val},
+                            success: function (data) {
+                                if (data !== '') {
+                                    computePrice({{$selector}}, data);
                                 }
                             }
-                        }
-                    })
-                }
-            });
-            @endforeach
+                        })
+                    }
+                });
+                @endforeach
+            @endisset
         })
     </script>
 @endsection
@@ -74,14 +78,14 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                @isset($final_order)
+                @isset($finalOrder)
                     <div class="card mt-3" id="customer-cart">
                         <div class="card-header">
                             {{__('Total price')}}: <label id="total-price">{{ $total_price }}</label>
                         </div>
                         <div class="card-body">
                             <div class="card-text">
-                                @foreach ($final_order as $fo)
+                                @foreach ($finalOrder as $fo)
                                     @php
                                         $product = $fo["product"];
                                     @endphp
@@ -92,38 +96,10 @@
                                                     class="card-img-top"
                                                     alt="{{$product->name}}"/></a>
                                         </div>
-                                        <div class="col col-5 align-self-center">
+                                        <div class="col col-4 align-self-center">
                                             <div class="row">
                                                 <a href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
                                             </div>
-                                            <div class="row mt-2 align-items-center">
-                                                <form id="{{'update'.$product->id}}"
-                                                      action="{{route('customer.cart.update')}}" method="POST">
-                                                    @csrf
-                                                    <input id="{{'product'.$product->id}}" value="{{$product->id}}"
-                                                           name="id"
-                                                           type="hidden">
-                                                    <input id="{{'quantity'.$product->id}}" type="number"
-                                                           name="quantity"
-                                                           class=""
-                                                           value="{{$fo["ordered_quantity"]}}"/> x
-                                                    <label id="{{'single-price'.$product->id}}">
-                                                        {{ $fo["single_price"] }}
-                                                    </label> &euro;
-                                                    =
-                                                    <label id="{{'total-price'.$product->id}}">
-                                                        {{ $fo["total_price"] }}
-                                                    </label>
-                                                    &euro;
-                                                    <div class="row">
-                                                        <span id="{{'error'.$product->id}}" class="invalid-feedback"
-                                                              role="alert">
-                                                        </span>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="col col-4 align-self-center">
                                             <div class="row">
                                                 <form id="{{'delete'.$product->id}}"
                                                       action="{{route('customer.cart.delete-product')}}"
@@ -135,6 +111,28 @@
                                                 </form>
                                                 <a href="#"
                                                    onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
+                                            </div>
+                                        </div>
+                                        <div class="col col-5 align-self-center">
+                                            <div class="row mt-2 align-items-center align-content-center align-self-center">
+                                                <input id="{{'product'.$product->id}}" value="{{$product->id}}"
+                                                       name="id"
+                                                       type="hidden">
+                                                <input id="{{'quantity'.$product->id}}" type="number"
+                                                       name="quantity"
+                                                       class=""
+                                                       value="{{$fo["ordered_quantity"]}}"/>
+                                                <label id="{{'single-price'.$product->id}}">
+                                                    x {{ $fo["single_price"] }} &euro; = &nbsp;
+                                                </label>
+                                                <label id="{{'total-price'.$product->id}}">
+                                                    {{ $fo["total_price"] }} &euro;
+                                                </label>
+                                                <div class="row">
+                                                    <span id="{{'error'.$product->id}}" class="invalid-feedback"
+                                                          role="alert">
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

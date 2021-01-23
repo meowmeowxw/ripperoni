@@ -107,13 +107,13 @@ class CustomerCartController extends Controller
             return view('customer.cart');
         }
 
-        $final_order = [];
+        $finalOrder = [];
         $total_price = 0;
         foreach ($productsOrder as $po) {
             $product_id = $po["product_id"];
             $ordered_quantity = $po["ordered_quantity"];
             $product = Product::find($po["product_id"]);
-            $final_order[] = [
+            $finalOrder[] = [
                 'product_id' => $product_id,
                 'ordered_quantity' => $ordered_quantity,
                 'total_price' => $ordered_quantity * $product->price,
@@ -124,7 +124,7 @@ class CustomerCartController extends Controller
         }
         return view('customer.cart', [
             'customer' => Auth::user()->customer,
-            'final_order' => $final_order,
+            'finalOrder' => $finalOrder,
             'total_price' => $total_price,
         ]);
     }
