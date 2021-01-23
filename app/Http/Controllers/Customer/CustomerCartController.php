@@ -45,13 +45,14 @@ class CustomerCartController extends Controller
         $session = $request->session();
 
         $product_id = $request->input('id');
+        $id = $add ? null : $product_id;
         $ordered_quantity = $request->input('quantity');
 
         if ($ordered_quantity > $product->quantity) {
             if ($request->ajax()) {
                 return $this->errorQuantityAjax();
             }
-            return $this->errorQuantity();
+            return $this->errorQuantity($id);
         }
 
         if ($session->has('productsOrder')) {
@@ -59,7 +60,7 @@ class CustomerCartController extends Controller
             foreach ($productsOrder as $i => $po) {
                 if ($po["product_id"] === $product_id) {
                     if ($add && $po["ordered_quantity"] + $ordered_quantity > $product->quantity) {
-                        return $this->errorQuantity();
+                        return $this->errorQuantity($id);
                     }
 
                     $session->forget('productsOrder');

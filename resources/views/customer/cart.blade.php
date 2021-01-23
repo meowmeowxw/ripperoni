@@ -13,6 +13,7 @@
     <script>
         const proceed = ["{{__('Proceed')}}", "^"];
         let i = 0;
+
         function computePrice(id, data) {
             if (data.hasOwnProperty('new_price')) {
                 $(`#quantity${id}`).attr("class", "");
@@ -23,58 +24,51 @@
                 tot += data.new_price;
                 $('#total-price').text(tot.toFixed(2));
             } else {
+                $(`#error-${id}`).hide();
                 $(`#quantity${id}`).attr("class", "form-control mb-2 is-invalid");
                 $(`#error${id}`).html("<strong>" + data.error + "</strong>");
                 $(`#error${id}`).show();
             }
         }
+
         window.addEventListener('load', function () {
             let selector = [];
             @isset($finalOrder)
-                @php
-                    $selectors = [];
-                    foreach ($finalOrder as $fo) {
-                        $product = $fo["product"];
-                        $selectors[] = $product->id;
-                    }
-                @endphp
-                $("#proceed").click(function () {
-                    i = (i + 1) % 2;
-                    $(this).text(proceed[i]);
-                });
-                @foreach ($selectors as $selector)
-                $("{{'#error'.$selector}}").hide();
-                $("{{'#quantity'.$selector}}").on("change keyup", function () {
-                    let val = parseInt($(this)[0].value);
-                    if (val && val >= 1) {
-                        $.ajax({
-                            url: `${searchPath}customer/cart/update`,
-                            type: "POST",
-                            data: {"id": {{$selector}}, "quantity": val},
-                            success: function (data) {
-                                if (data !== '') {
-                                    computePrice({{$selector}}, data);
-                                }
+            @php
+                $selectors = [];
+                foreach ($finalOrder as $fo) {
+                    $product = $fo["product"];
+                    $selectors[] = $product->id;
+                }
+            @endphp
+            $("#proceed").click(function () {
+                i = (i + 1) % 2;
+                $(this).text(proceed[i]);
+            });
+            @foreach ($selectors as $selector)
+            $("{{'#error'.$selector}}").hide();
+            $("{{'#quantity'.$selector}}").on("change keyup", function () {
+                let val = parseInt($(this)[0].value);
+                if (val && val >= 1) {
+                    $.ajax({
+                        url: `${searchPath}customer/cart/update`,
+                        type: "POST",
+                        data: {"id": {{$selector}}, "quantity": val},
+                        success: function (data) {
+                            if (data !== '') {
+                                computePrice({{$selector}}, data);
                             }
-                        })
-                    }
-                });
-                @endforeach
+                        }
+                    })
+                }
+            });
+            @endforeach
             @endisset
         })
     </script>
 @endsection
 
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -114,13 +108,14 @@
                                             </div>
                                         </div>
                                         <div class="col col-6 align-self-center">
-                                            <div class="row mt-2 align-items-center align-content-center align-self-center">
+                                            <div
+                                                class="row mt-2 align-items-center align-content-center align-self-center">
                                                 <input id="{{'product'.$product->id}}" value="{{$product->id}}"
                                                        name="id"
                                                        type="hidden">
                                                 <input id="{{'quantity'.$product->id}}" type="number"
                                                        name="quantity"
-                                                       class=""
+                                                       class="@error('quantity'.$product->id) form-control is-invalid @enderror"
                                                        value="{{$fo["ordered_quantity"]}}"/>
                                                 <label id="{{'single-price'.$product->id}}">
                                                     x {{ $fo["single_price"] }} &euro; = &nbsp;
@@ -133,6 +128,11 @@
                                                           role="alert">
                                                     </span>
                                                 </div>
+                                                @error('quantity'.$product->id)
+                                                <span id="{{'error-'.$product->id}}" class="invalid-feedback">
+                                                    <strong>{{$message}}</strong>
+                                                </span>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
