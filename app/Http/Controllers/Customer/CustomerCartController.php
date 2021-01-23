@@ -184,6 +184,17 @@ class CustomerCartController extends Controller
         $sellers = collect([]);
         foreach ($productsOrder as $po) {
             $product = Product::find($po["product_id"]);
+            $ordered_quantity = $po["ordered_quantity"];
+            $seller = $product->seller;
+            if ($product->quantity - $ordered_quantity < 0) {
+                $order->delete();
+                return $this->errorQuantity($product->id);
+            }
+        }
+
+        foreach ($productsOrder as $po) {
+            $product = Product::find($po["product_id"]);
+            $ordered_quantity = $po["ordered_quantity"];
             $seller = $product->seller;
             if (!$sellers->has($seller->id)) {
                 $sellerOrder = new SellerOrder;
@@ -194,14 +205,6 @@ class CustomerCartController extends Controller
                 $seller->orders()->save($sellerOrder);
                 $sellerOrder->save();
                 $sellers->put($seller->id, $sellerOrder);
-            }
-            $ordered_quantity = $po["ordered_quantity"];
-            if ($product->quantity - $ordered_quantity < 0) {
-                foreach ($sellers as $s) {
-                    $s->delete();
-                }
-                $order->delete();
-                return $this->errorQuantity($product->id);
             }
             $product->quantity -= $ordered_quantity;
             $product->save();
