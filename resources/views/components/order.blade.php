@@ -1,7 +1,8 @@
 <div class="card m-1" id="customer-order.{{$order->id}}">
     <div class="card-header d-flex flex-row">
-        <div class="mr-auto">Order Id: <strong>{{$order->id}}</strong></div>
-        <div class="ml-auto">Total Price: <strong>{{$order->price}} &euro;</strong></div>
+        <div class="mr-auto">{{__('Order ID')}}: <strong>{{$order->id}}</strong></div>
+        <div class="m-auto">{{__('Date')}}: <strong>{{date('d-m-Y', strtotime($order->created_at))}}</strong></div>
+        <div class="ml-auto">{{__('Total Price')}}:<strong>{{$order->price}} &euro;</strong></div>
     </div>
     <div class="card-body">
 
@@ -17,7 +18,9 @@
                         </p>
                     </div>
                     <div class="col">
-                        <x-status :status="$sellerOrder->status->name"></x-status>
+                        <p class="h5">
+                            <x-status :status="$sellerOrder->status->name"></x-status>
+                        </p>
                     </div>
                 </div>
 
@@ -34,6 +37,8 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="row mt-2">
+                </div>
                 </div>
                 <div class="row mt-4">
                 </div>
