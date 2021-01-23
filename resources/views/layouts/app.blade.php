@@ -14,9 +14,10 @@
     <script src="{{ asset('js/search.js') }}" defer></script>
     @yield('scripts')
 
-<!-- Styles -->
+    <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/img-box.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/page.css') }}" rel="stylesheet">
     @yield('styles')
 
 </head>
