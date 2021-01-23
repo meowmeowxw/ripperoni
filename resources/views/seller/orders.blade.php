@@ -2,9 +2,11 @@
 
 @section('content')
     <div class="container">
+        <div class="page-header text-center">
+            <h3>{{__('Total Profit')}}: {{$totalProfit}} &euro;</h3>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h3>{{__('Total Profit')}}: {{$totalProfit}} &euro;</h3>
                 @foreach ($sellerOrders as $sellerOrder)
                     <div class="card text-center mt-3" id="customer-order.{{$sellerOrder->order}}">
                         <a titlte="{{__('Order details')}}" href="{{route('seller.order.id', $sellerOrder->id)}}">
