@@ -1,16 +1,14 @@
 @extends('layouts.app')
-@section('scripts')
-    <script src="{{ asset('js/homeselector.js') }}" defer></script>
-@endsection
+
 @section('content')
-    <div class="container py-2" id="dashboard">
+    <div class="container-fluid py-2" id="dashboard">
         <div class="row justify-content-center">
             <div class="col text-center">
-                <div class="pb-2 mt-4 mb-2 page-header border-bottom">
+                <div class="pb-2 my-2 page-header border-bottom">
                     <h3 class="font-weight-bold">{{__('The latest beers')}}</h3>
                 </div>
 
-                <div class="d-flex flex-row ">
+                <div class="d-flex flex-row p-2 ">
                     <x-product-vertical :product=$latest[0] class="d-block"/>
                     <x-product-vertical :product=$latest[1] class="d-none d-md-block"/>
                     <x-product-vertical :product=$latest[2] class="d-none d-lg-block"/>
@@ -19,10 +17,18 @@
         </div>
         <hr/>
         <div class="row justify-content-center">
-            <div id="categoryHomepage" class="col justify-content-center text-center">
-                <p class="h3 font-weight-bold">{{__('Beers')}}</p>
-                <small>{{__('Filter by category')}}</small>
-                <div id="categories" class="nav-scroller d-flex justify-content-center m-1">
+            <div id="all" class="text-center">
+                <p class="h3 font-weight-bold">{{__('All Beers')}}</p>
+                <small>{{__('or select a category')}}</small>
+                <div id="categories" class="d-flex flex-row justify-content-center m-1">
+                    @foreach($categories as $category)
+                        <div class="btn-group">
+                            <a class="btn-lg btn-success m-1"
+                               href="{{route('category.id', ['id' => $category->id])}}">  {{ $category->name }}  </a>
+                        </div>
+                    @endforeach
+
+                    {{--
                     <nav class="nav nav-pills nav-justified bg-dark rounded shadow-sm">
                         @foreach($categories as $category)
                             @if($loop->first)
@@ -31,28 +37,28 @@
                             <a class="nav-link selectcategory" href="#">{{$category->name}}</a>
                         @endforeach
                     </nav>
+                    --}}
                 </div>
 
-                <div class="container mt-2">
-                    <div class="filterDiv">
-                        <div class="row justify-content-center">
-                            @foreach($categories as $category)
+                <div id="products" class="container mt-2">
+                    <div class="row justify-content-center">
 
-                                {{--
-                                <a href="{{route('category.id', ['id' => $category->id])}}" class="text-dark">
-                                    <h4 class="d-inline text-uppercase bg-warning">
-                                        -<strong>{{$category->name}}</strong>-
-                                    </h4>
-                                </a>
-                                --}}
+                        {{--
+                        <a href="{{route('category.id', ['id' => $category->id])}}" class="text-dark">
+                            <h4 class="d-inline text-uppercase bg-warning">
+                                -<strong>{{$category->name}}</strong>-
+                            </h4>
+                        </a>
+                        --}}
 
-                                @foreach($category->products as $product)
-                                    <x-product-square :product=$product/>
-                                @endforeach
+                        @foreach($products as $product)
+                            <x-product-square :product=$product/>
+                        @endforeach
 
-                            @endforeach
-                        </div>
                     </div>
+                </div>
+
+                <div id="pagination" class="d-inline-block">
                     {!! $products->links() !!}
                 </div>
             </div>

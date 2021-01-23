@@ -40,8 +40,9 @@ class ProductController extends Controller
      *
      *
      */
-    public function show(Request $request)
+    public function show()
     {
+        /*
         if ($request->ajax() && $request->category !== null) {
             $category = Category::where('name', $request->category)->first();
             if ($category) {
@@ -63,8 +64,9 @@ class ProductController extends Controller
             }
         } else {
             $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
-        }
+        }*/
 
+        $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
         $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
         return view('dashboard', [
             'latest' => $latest,
