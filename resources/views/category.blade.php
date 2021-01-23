@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="jumbotron">
+                <div class="jumbotron py-4">
                     <h3 class="display-4 text-center text-uppercase border-bottom">{{$category->name}}</h3>
                     <p class="lead">
                         {{$category->description}}

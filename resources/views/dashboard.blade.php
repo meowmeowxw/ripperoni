@@ -2,7 +2,7 @@
 @section('styles')
 @endsection
 @section('content')
-    <div class="container-fluid py-2" id="dashboard">
+    <div class="container py-2" id="dashboard">
         <div class="row justify-content-center">
             <div class="col text-center">
                 <div class="pb-2 my-2 page-header border-bottom">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <div id="pagination" class="d-inline-block">
+                <div id="pagination" class="d-inline-block mt-3">
                     {!! $products->links() !!}
                 </div>
             </div>

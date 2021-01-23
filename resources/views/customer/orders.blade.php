@@ -9,7 +9,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="justify-content-center row">
+        <div class="justify-content-center row mt-2">
             <div class="justify-content-center">
                 {!! $orders->links() !!}
             </div>
