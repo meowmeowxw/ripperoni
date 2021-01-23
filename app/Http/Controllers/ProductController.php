@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -15,8 +16,6 @@ use Illuminate\View\View;
 
 class ProductController extends Controller
 {
-
-    private const NUM_ITEMS = 9;
     /**
      * Return the view of a product
      * @param id of the product
@@ -42,36 +41,12 @@ class ProductController extends Controller
      */
     public function show()
     {
-        /*
-        if ($request->ajax() && $request->category !== null) {
-            $category = Category::where('name', $request->category)->first();
-            if ($category) {
-                $products = $category
-                    ->products()
-                    ->where('is_available', true)
-                    ->paginate(self::NUM_ITEMS);
-
-
-                $output = '<div class="row justify-content-center">';
-                foreach ($products as $product)
-                {
-                    $output .= view('components.product-square', ['product' => $product]);
-                }
-                $output .= '</div>';
-                return $output;
-            } else {
-                abort(404);
-            }
-        } else {
-            $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
-        }*/
-
-        $products = Product::where('is_available', true)->paginate(self::NUM_ITEMS);
+        $products = Product::where('is_available', true)->paginate(Config::get('constants.numProducts'));
         $latest = Product::orderBy('created_at', 'DESC')->where('is_available', true)->take(3)->get();
         return view('dashboard', [
             'latest' => $latest,
             'products' => $products,
             'categories' => Category::all(),
-            ]);
+        ]);
     }
 }

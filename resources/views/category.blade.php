@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container py-2">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col text-center">
                 <div class="jumbotron py-4">
                     <h3 class="display-4 text-center text-uppercase border-bottom">{{$category->name}}</h3>
                     <p class="lead">
@@ -15,6 +15,11 @@
                         <x-product-square :product=$product/>
                     @endforeach
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div id="pagination" class="d-inline-block mt-3">
+                {!! $products->links() !!}
             </div>
         </div>
     </div>
