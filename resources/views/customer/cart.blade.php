@@ -3,7 +3,7 @@
 @section('styles')
     <style>
         input[type=number] {
-            width: 80px;
+            width: 90px;
             padding: 5px;
         }
     </style>
@@ -96,7 +96,7 @@
                                                     class="card-img-top"
                                                     alt="{{$product->name}}"/></a>
                                         </div>
-                                        <div class="col col-4 align-self-center">
+                                        <div class="col col-3 align-self-center">
                                             <div class="row">
                                                 <a href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
                                             </div>
@@ -113,7 +113,7 @@
                                                    onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
                                             </div>
                                         </div>
-                                        <div class="col col-5 align-self-center">
+                                        <div class="col col-6 align-self-center">
                                             <div class="row mt-2 align-items-center align-content-center align-self-center">
                                                 <input id="{{'product'.$product->id}}" value="{{$product->id}}"
                                                        name="id"
