@@ -7,25 +7,23 @@
                 <h3>{{__('Total Profit')}}: {{$totalProfit}} &euro;</h3>
                 @foreach ($sellerOrders as $sellerOrder)
                     <div class="card text-center mt-3" id="customer-order.{{$sellerOrder->order}}">
-                        <a href="{{route('seller.order.id', $sellerOrder->id)}}">
+                        <a titlte="{{__('Order details')}}" href="{{route('seller.order.id', $sellerOrder->id)}}">
                             <div class="card-header d-flex flex-row">
-                                <div class="mr-auto">Order Id: <strong>{{$sellerOrder->id}}</strong></div>
-                                <div class="ml-auto">Total Price: <strong>{{$sellerOrder->profit}} &euro;</strong></div>
+                                <div class="mr-auto">{{__('Order ID')}}: <strong>{{$sellerOrder->id}}</strong></div>
+                                <div class="ml-auto">{{__('Profit')}}: <strong>{{$sellerOrder->profit}} &euro;</strong></div>
                         </div>
                         </a>
                         <div class="card-body">
                             <div class="card-text">
-                                @foreach ($sellerOrder->products as $beer)
-                                    <div class="row mt-4">
-                                        {{--
-                                        <div class="col-sm-3">
-                                            <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}"
+                                @foreach ($sellerOrder->products as $product)
+                                    <div class="row mt-2">
+                                        <div class="col-4">
+                                            <a href="{{route('product.id', $product->id)}}"><img src="{{$product->path}}"
                                                                                               class="card-img-top"
-                                                                                              alt="{{$beer->name}}"/></a>
+                                                                                              alt="{{$product->name}}"/></a>
                                         </div>
-                                        --}}
                                         <div class="col align-self-center">
-                                            <x-product :product=$beer></x-product>
+                                            <x-product :product=$product></x-product>
                                         </div>
                                     </div>
                                 @endforeach

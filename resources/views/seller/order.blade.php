@@ -3,18 +3,18 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8" style="max-width: 768px;">
                 <div class="card mt-3" id="customer-order.{{$sellerOrder->order}}">
                     <div class="card-header d-flex flex-row">
-                        <div class="mr-auto">Order Id: <strong>{{$sellerOrder->order_id}}</strong></div>
-                        <div class="mx-auto">Seller Order Id: <strong>{{$sellerOrder->id}}</strong></div>
-                        <div class="ml-auto">Total Price: <strong>{{$sellerOrder->profit}} &euro;</strong></div>
+                        <div class="mr-auto">{{__('Order ID')}}: <strong>{{$sellerOrder->order_id}}</strong></div>
+                        <div class="mx-auto">{{__('Seller Order ID')}}: <strong>{{$sellerOrder->id}}</strong></div>
+                        <div class="ml-auto">{{__('Profit')}}: <strong>{{$sellerOrder->profit}} &euro;</strong></div>
                     </div>
                     <div class="card-body">
                         <div class="card-text">
                             @foreach ($sellerOrder->products as $beer)
-                                <div class="row mt-4">
-                                    <div class="col-sm-3">
+                                <div class="row mt-2">
+                                    <div class="col-4">
                                         <a href="{{route('product.id', $beer->id)}}"><img src="{{$beer->path}}"
                                                                                           class="card-img-top"
                                                                                           alt="{{$beer->name}}"/></a>
