@@ -15,10 +15,7 @@
     background-color: #cbaa81; /*#f2f2f2*/
 }
 
-@media (min-width: 978px) {
     .services-box {
-        margin-right: 0;
-        border: 1px solid #e5e5e5; /*#e5e5e5*/
+        border: 1px solid #b0a2a2; /*#e5e5e5*/
         height: 310px;
     }
-}
