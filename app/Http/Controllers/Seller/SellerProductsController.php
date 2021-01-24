@@ -41,7 +41,7 @@ class SellerProductsController extends Controller
         $product->active = false;
         $product->quantity = 0;
         $product->save();
-        return redirect(route('seller.products'));
+        return back();
     }
     /**
      * Edit a product
@@ -74,7 +74,7 @@ class SellerProductsController extends Controller
         $product->alcohol = $request->alcohol;
         // $product->path = $request->path;
         $product->save();
-        return redirect(route('seller.products'));
+        return back();
     }
 
     public function add(Request $request)
@@ -103,7 +103,7 @@ class SellerProductsController extends Controller
         $product->category_id = $category->id;
         $product->seller_id = Auth::user()->seller->id;
         $product->save();
-        return redirect(route('seller.products'));
+        return back();
     }
 
     /**

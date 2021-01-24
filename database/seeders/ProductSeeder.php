@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class ProductSeeder extends Seeder
 {
 
-    private const ADDITIONAL_PRODUCTS = 100;
+    private const ADDITIONAL_PRODUCTS = 200;
 
     /**
      * Seed the categories table
