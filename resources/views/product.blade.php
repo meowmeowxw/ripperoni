@@ -27,7 +27,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 col-md-5 align-self-center">
+                <div class="col-12 col-md-5 ">
                     <div class="product-img">
                         <img src="{{$product->path}}" class="" alt="Beer {{$product->id ?? '0'}}"/>
                     </div>
@@ -50,7 +50,7 @@
                             </p>
                         </div>
 
-                        <div class="my-3 jumbotron p-4">
+                        <div class=" jumbotron p-3">
                             <h4 class="border-bottom text-center">
                                     {{__('Description')}}:
                             </h4>
