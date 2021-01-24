@@ -27,7 +27,7 @@
         </ul>
 
         <!-- Right Side Of Navbar -->
-        <ul class="nav navbar-nav ml-auto w-100 justify-content-end align-items-center">
+        <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
             <!-- Authentication Links -->
             @guest
                 @if (Route::has('login'))
@@ -42,27 +42,21 @@
                     </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register Seller') }}</a>
+                    <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register as seller') }}</a>
                 </li>
             @else
                 @if (Auth::user()->is_seller)
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{Auth::user()->seller->company}}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu" aria-labelledby="seller">
-                            <a class="dropdown-item" href="{{route('seller.settings')}}">{{__('Settings')}}</a>
-                            <a class="dropdown-item" href="{{route('seller.products')}}">{{__('My products')}}</a>
-                            <a class="dropdown-item" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('seller.products')}}">{{__('My products')}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
                     </li>
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('orders')}}">{{__('Orders')}}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('customer.settings')}}">{{__('Settings')}}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
@@ -75,8 +69,14 @@
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
+                    <div class="text-center dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        @if (Auth::user()->is_seller)
+                            <a class="dropdown-item" href="{{route('seller.settings')}}">{{__('Settings')}}</a>
+                        @else
+                            <a class="dropdown-item" href="{{route('customer.settings')}}">{{__('Settings')}}</a>
+                        @endif
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

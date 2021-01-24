@@ -6,6 +6,13 @@
     background-color: $yellow !important;
 }
 
+.navbar-nav {
+    .dropdown-menu {
+        background-color: $yellow !important;
+        border: 0 !important;
+    }
+}
+
 .form-control {
     &:active {
         border-color: $red !important;
