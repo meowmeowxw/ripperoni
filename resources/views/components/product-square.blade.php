@@ -8,21 +8,30 @@
         </div>
     </a>
     <div class="row">
-        <div class="col-4">
-            <p class="font-weight-bold text-center">
-                {{ $product->cl }} cl
-            </p>
-        </div>
-        <div class="col-4">
-            <p class="font-weight-bold text-center">
-                {{ $product->alcohol }} % {{__('alcohol')}}
-            </p>
-        </div>
-        <div class="col-4">
-            <p class="font-weight-bold text-center">
-                {{ $product->price }} &euro;
-            </p>
-        </div>
+        @if ($product->isAvailable())
+            <div class="col-4">
+                <p class="font-weight-bold text-center">
+                    {{ $product->cl }} cl
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="font-weight-bold text-center">
+                    {{ $product->alcohol }} % {{__('alcohol')}}
+                </p>
+            </div>
+            <div class="col-4">
+                <p class="font-weight-bold text-center">
+                    {{ $product->price }} &euro;
+                </p>
+            </div>
+        @else
+            <div class="col">
+                <p class="font-weight-bold text-center">
+                    {{__('Not Available')}}
+                </p>
+            </div>
+        @endif
+
     </div>
 
 </div>

@@ -26,7 +26,8 @@ class SearchController extends Controller
     {
         $output = '';
         if ($request->ajax() && $request->name !== null) {
-            $products = Product::where('name', 'like', '%' . $request->name . '%')
+            $products = Product::where('active', true)
+                ->where('name', 'like', '%' . $request->name . '%')
                 ->take(5)
                 ->get();
 

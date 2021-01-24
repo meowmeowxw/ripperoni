@@ -24,7 +24,7 @@ class CategoryController extends Controller
     public function view($id = 1): View
     {
         $category = Category::find($id);
-        $products = $category->products()->where('is_available', true)->paginate(Config::get('constants.numProducts.'));
+        $products = $category->products()->where('active', true)->paginate(Config::get('constants.numProducts.'));
 
         return view('category', [
             'products' => $products,

@@ -23,7 +23,7 @@ class SellerProductsController extends Controller
     }
 
     /**
-     * Delete a product (Set quantity to 0 and is_available to false)
+     * Delete a product (Set quantity to 0 and active to false)
      *
      * @return \Illuminate\View\View
      */
@@ -38,7 +38,7 @@ class SellerProductsController extends Controller
         }
 
         $product = Auth::user()->seller->products()->find($request->id);
-        $product->is_available = false;
+        $product->active = false;
         $product->quantity = 0;
         $product->save();
         return redirect(route('seller.products'));

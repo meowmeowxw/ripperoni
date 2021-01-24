@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->unsignedDouble('alcohol');
             $table->unsignedInteger('cl');
             $table->string('path', 1024);
-            $table->boolean('is_available')->default(true);
+            $table->boolean('active')->default(true);
             $table->unsignedBigInteger('category_id')->index();
             $table->unsignedBigInteger('seller_id')->index();
             $table->timestamps();

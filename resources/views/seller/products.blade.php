@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row row-cols-2 justify-content-center">
             @foreach ($products as $product)
-                @if ($product->is_available)
+                @if ($product->active)
                     <x-seller-product :path="$product->path"
                                       :title="$product->name" :id="$product->id"
                                       :name="$product->name" :description="$product->description"

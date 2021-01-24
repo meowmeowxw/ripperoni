@@ -10,7 +10,7 @@ class Product extends \Illuminate\Database\Eloquent\Model
 {
 
     protected $fillable = [
-        'is_available',
+        'active',
         'name',
         'description',
         'price',
@@ -35,5 +35,10 @@ class Product extends \Illuminate\Database\Eloquent\Model
     public function seller()
     {
         return $this->belongsTo(Seller::class);
+    }
+
+    public function isAvailable()
+    {
+        return $this->quantity > 0;
     }
 }
