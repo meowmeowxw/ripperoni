@@ -33,7 +33,9 @@ class SellerPublicController extends Controller
     public function create($id)
     {
         $seller = Seller::find($id);
-        $products = $seller->products()->paginate(Config::get('constants.numProducts', 15));
+        $products = $seller->products()
+            ->where('active', true)
+            ->paginate(Config::get('constants.numProducts', 15));
         return view('seller.public', [
             'seller' => $seller,
             'products' => $products,

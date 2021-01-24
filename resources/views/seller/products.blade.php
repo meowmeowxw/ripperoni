@@ -1,3 +1,4 @@
+{{-- NOT USED ANYMORE --}}
 @extends('layouts.app')
 
 @section('content')

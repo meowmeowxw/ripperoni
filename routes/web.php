@@ -48,8 +48,9 @@ Route::prefix('/seller')->group(function () {
         ->name('seller.product.delete');
     Route::post('/product/edit', [SellerProductsController::class, 'edit'])
         ->name('seller.product.edit');
-    Route::post('/product/add', [SellerProductsController::class, 'add'])
+    Route::get('/product/add', [SellerProductsController::class, 'createAdd'])
         ->name('seller.product.add');
+    Route::post('/product/add', [SellerProductsController::class, 'add']);
 
     Route::get('/orders', [SellerOrdersController::class, 'create'])
         ->name('seller.orders');

@@ -109,17 +109,21 @@ class SellerProductsController extends Controller
     /**
      * Display the registration seller view.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function create()
     {
-        $seller = Seller::where('user_id', Auth::user()->id)->first();
-        $categories = Category::all();
-        $products = $seller->products()->get();
-        return view('seller.products', [
-            'seller' => $seller,
-            'products' => $products,
-        ]);
+        return redirect(route('seller.id', Auth::user()->seller->id));
+    }
+
+    /**
+     * Display Add product view.
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function createAdd()
+    {
+        return view('seller.product-add');
     }
 
     /**
