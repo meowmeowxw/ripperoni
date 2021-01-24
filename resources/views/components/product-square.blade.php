@@ -7,7 +7,7 @@
                  alt="Card Beer {{$product->id+1 ?? '0'}}">
         </div>
     </a>
-    <div class="row">
+    <div class="container row">
         @if ($product->isAvailable())
             <div class="col-4">
                 <p class="font-weight-bold text-center">
