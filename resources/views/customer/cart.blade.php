@@ -18,13 +18,12 @@
             if (data.hasOwnProperty('new_price')) {
                 $(`#quantity${id}`).attr("class", "");
                 $(`#error${id}`).hide();
-                $(`#total-price${id}`).html(data.new_price.toFixed(2) + "&euro;");
+                $(`#total-price${id}`).html("{{__('Total')}}: " + data.new_price.toFixed(2) + "&euro;");
                 let tot = parseFloat($('#total-price').text());
                 tot -= data.old_price;
                 tot += data.new_price;
                 $('#total-price').text(tot.toFixed(2));
             } else {
-                $(`#error-${id}`).hide();
                 $(`#quantity${id}`).attr("class", "form-control mb-2 is-invalid");
                 $(`#error${id}`).html("<strong>" + data.error + "</strong>");
                 $(`#error${id}`).show();
@@ -83,59 +82,62 @@
                                     @php
                                         $product = $fo["product"];
                                     @endphp
-                                    <div class="row mt-3">
-                                        <div class="col-3">
-                                            <a href="{{route('product.id', $product->id)}}"><img
-                                                    src="{{$product->path}}"
-                                                    class="card-img-top"
-                                                    alt="{{$product->name}}"/></a>
-                                        </div>
-                                        <div class="col col-3 align-self-center">
-                                            <div class="row">
-                                                <a title="{{'Product detail'}}" class="text-break" href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
+                                    <div class="container border">
+                                        <div class="row mt-2 mb-2">
+                                            <div class="col-3">
+                                                <a href="{{route('product.id', $product->id)}}"><img
+                                                        src="{{$product->path}}"
+                                                        class="card-img-top"
+                                                        alt="{{$product->name}}"/></a>
                                             </div>
-                                            <div class="row">
-                                                <form id="{{'delete'.$product->id}}"
-                                                      action="{{route('customer.cart.delete-product')}}"
-                                                      method="POST">
-                                                    @csrf
+                                            <div class="col col-4 align-self-center">
+                                                <div class="row">
+                                                    <a title="{{'Product detail'}}" class="text-break"
+                                                       href="{{route('product.id', $product->id)}}"><strong>{{ $product->name }}</strong></a>
+                                                </div>
+                                                <div class="row">
+                                                    <form id="{{'delete'.$product->id}}"
+                                                          action="{{route('customer.cart.delete-product')}}"
+                                                          method="POST">
+                                                        @csrf
+                                                        <input id="{{'product'.$product->id}}" value="{{$product->id}}"
+                                                               name="id"
+                                                               type="hidden">
+                                                    </form>
+                                                    <a href="#"
+                                                       onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="d-flex row justify-content-center">
                                                     <input id="{{'product'.$product->id}}" value="{{$product->id}}"
                                                            name="id"
                                                            type="hidden">
-                                                </form>
-                                                <a href="#"
-                                                   onclick="document.getElementById('{{"delete".$product->id}}').submit();">{{__('Delete')}}</a>
-                                            </div>
-                                        </div>
-                                        <div class="col col-6 align-self-center">
-                                            <div
-                                                class="row mt-2 align-items-center align-content-center align-self-center">
-                                                <input id="{{'product'.$product->id}}" value="{{$product->id}}"
-                                                       name="id"
-                                                       type="hidden">
-                                                <input id="{{'quantity'.$product->id}}" type="number"
-                                                       name="quantity"
-                                                       class="@error('quantity'.$product->id) form-control is-invalid @enderror"
-                                                       value="{{$fo["ordered_quantity"]}}"/>
-                                                <label id="{{'single-price'.$product->id}}">
-                                                    x {{ $fo["single_price"] }} &euro; = &nbsp;
-                                                </label>
-                                                <label id="{{'total-price'.$product->id}}">
-                                                    {{ $fo["total_price"] }} &euro;
-                                                </label>
-                                                <div class="row">
+                                                    <input id="{{'quantity'.$product->id}}" type="number"
+                                                           name="quantity"
+                                                           class="@error('quantity'.$product->id) form-control is-invalid @enderror"
+                                                           value="{{$fo["ordered_quantity"]}}"/>
                                                     <span id="{{'error'.$product->id}}" class="invalid-feedback"
                                                           role="alert">
+                                                        @error('quantity'.$product->id)
+                                                            <strong>{{$message}}</strong>
+                                                        @enderror
                                                     </span>
                                                 </div>
-                                                @error('quantity'.$product->id)
-                                                <span id="{{'error-'.$product->id}}" class="invalid-feedback">
-                                                    <strong>{{$message}}</strong>
-                                                </span>
-                                                @enderror
+                                                <div class="d-flex row justify-content-center">
+                                                    <label id="{{'single-price'.$product->id}}">
+                                                        {{__('Price')}}: {{ $fo["single_price"] }} &euro;
+                                                    </label>
+                                                </div>
+                                                <div class="d-flex row justify-content-center">
+                                                    <label id="{{'total-price'.$product->id}}">
+                                                        {{__('Total')}}: {{ $fo["total_price"] }} &euro;
+                                                    </label>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 @endforeach
                                 <div class="row mt-4">
                                     <div class="col">
