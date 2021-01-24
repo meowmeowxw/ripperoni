@@ -15,7 +15,12 @@
                                 href="{{route('seller.id', $sellerOrder->seller->id)}}">{{$sellerOrder->seller->company}}</a>
                         </p>
                     </div>
-                    <div class="col">
+                    <div class="col text-center">
+                        <p>
+                            {{date('d-m-Y', strtotime($order->created_at))}}
+                        </p>
+                    </div>
+                    <div class="col text-right">
                         <p class="h5">
                             <x-status :status="$sellerOrder->status->name"></x-status>
                         </p>
