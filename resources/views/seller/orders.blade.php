@@ -41,9 +41,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="justify-content-center row mt-3">
-            <div class="justify-content-center">
-                {!! $sellerOrders->links() !!}
-            </div>
-        </div>
+        <x-paginator>
+            {!! $sellerOrders->links() !!}
+        </x-paginator>
 @endsection

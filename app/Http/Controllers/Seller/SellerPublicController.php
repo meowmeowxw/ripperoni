@@ -10,6 +10,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 
 class SellerPublicController extends Controller
@@ -32,7 +33,7 @@ class SellerPublicController extends Controller
     public function create($id)
     {
         $seller = Seller::find($id);
-        $products = $seller->products;
+        $products = $seller->products()->paginate(Config::get('constants.numProducts', 15));
         return view('seller.public', [
             'seller' => $seller,
             'products' => $products,

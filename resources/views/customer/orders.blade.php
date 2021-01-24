@@ -9,10 +9,8 @@
                 @endforeach
             </div>
         </div>
-        <div class="justify-content-center row mt-2">
-            <div class="justify-content-center">
-                {!! $orders->links() !!}
-            </div>
-        </div>
+        <x-paginator>
+            {!! $orders->links() !!}
+        </x-paginator>
     </div>
 @endsection

@@ -17,10 +17,8 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div id="pagination" class="d-inline-block mt-3">
-                {!! $products->links() !!}
-            </div>
-        </div>
+        <x-paginator>
+            {!! $products->links() !!}
+        </x-paginator>
     </div>
 @endsection
