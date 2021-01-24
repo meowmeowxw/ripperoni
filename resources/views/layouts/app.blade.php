@@ -27,39 +27,18 @@
     <x-nav-bar/>
 </header>
 <div id="app">
-    {{--
-
-    @php
-   $allpath = \App\Models\Product::select('path')->get()
-@endphp
-
-    style="background-image:
-@foreach($allpath as $path)
-@if($loop->last)
-   url({{substr($path->path, 1)}});
-@else
-   url({{substr($path->path, 1)}}),
-@endif
-@endforeach
-   background-repeat: space fixed; background-size: 50px;"
-    --}}
-
-
-
     <main class="p-2">
         @yield('content')
     </main>
 </div>
-{{--
-<footer class="text-muted bg-dark">
-    <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
-        <p>Album example is © Bootstrap, but please download and customize it for yourself!</p>
-        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting started guide</a>.</p>
+
+<footer id="footer" class="footer fixed-bottom text-center">
+    <div class="text-center p-3">
+        © 2021 Copyright:
+        <a class="text-dark" href="{{config('app.url', 'http://localhost')}}">{{ config('app.name', 'Ripperoni') }}</a>
     </div>
 </footer>
---}}
+
 </body>
+
 </html>

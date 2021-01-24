@@ -24,10 +24,16 @@
     color: $grey !important;
 }
 
+.text-center#footer {
+    background-color: $yellow !important;
+    color: $black !important;
+}
+
 .card {
     a {
         color: $orange !important;
     }
+
     .btn-primary {
         background-color: $green !important;
         color: $white !important;

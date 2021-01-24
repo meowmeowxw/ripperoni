@@ -1,7 +1,13 @@
+#footer {
+    clear: both;
+    position: relative;
+}
+
 @media screen and ( max-width: 512px ) {
     li.page-item {
         display: none;
     }
+
     .page-item:first-child,
     .page-item:nth-child(3),
     .page-item:nth-last-child(5),

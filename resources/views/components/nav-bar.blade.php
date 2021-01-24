@@ -16,33 +16,34 @@
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link container-fluid" href="#"
                        data-toggle="dropdown" aria-expanded="false" v-pre>
-                        <form class="form-inline text-center" autocomplete="off">
-                            <input class="form-control" type="search" id="search" name="search" placeholder="Search"
-                                   aria-label="Search" >
+                        <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
+                            <input class="form-control" type="search" id="search" name="search"
+                                   placeholder="Search"
+                                   aria-label="Search">
                         </form>
                     </a>
-                    <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0" aria-labelledby="search-item">
+                    <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0"
+                         aria-labelledby="search-item">
                     </div>
                 </li>
             </ul>
 
             <!-- TODO: implement search ? -->
-            {{--
-            <a data-toggle="dropdown" aria-expanded="false">
-                <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
-                    <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search"
-                           aria-label="Search" data-bs>
-                    <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
-                </form>
-            </a>
-            <div class="nav-item dropdown">
-                <div class="dropdown-menu">
+        {{--
+        <a data-toggle="dropdown" aria-expanded="false">
+                <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search"
+                       aria-label="Search" data-bs>
+                <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
+            </form>
+        </a>
+        <div class="nav-item dropdown">
+            <div class="dropdown-menu">
 
-                </div>
             </div>
-            --}}
+        </div>
+        --}}
 
-            <!-- Right Side Of Navbar -->
+        <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Authentication Links -->
                 @guest
@@ -69,7 +70,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seller">
                                 <a class="dropdown-item" href="{{route('seller.settings')}}">{{__('Settings')}}</a>
-                                <a class="dropdown-item" href="{{route('seller.products')}}">{{__('My products')}}</a>
+                                <a class="dropdown-item" href="{{route('seller.id', Auth::user()->seller->id)}}">{{__('My products')}}</a>
                                 <a class="dropdown-item" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
                             </div>
                         </li>

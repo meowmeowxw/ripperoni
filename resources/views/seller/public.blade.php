@@ -9,6 +9,13 @@
                     <p class="lead">
                     </p>
                 </div>
+                @if (Auth::user()->is_seller)
+                    @if (Auth::user()->seller->id === $seller->id)
+                        <div class="d-flex row justify-content-center m-3">
+                            <x-seller-product-new/>
+                        </div>
+                    @endif
+                @endif
                 <div class="row row-cols-md-2 justify-content-center">
                     @foreach($products as $product)
                         <x-product-square :product=$product/>
