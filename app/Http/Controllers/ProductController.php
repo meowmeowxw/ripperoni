@@ -25,8 +25,11 @@ class ProductController extends Controller
     public function view($id = 1)
     {
         $product = Product::find($id);
-        $seller = Seller::find($product->seller_id);
-        $category = Category::find($product->category_id);
+        if (!$product->active) {
+            return redirect(route('dashboard'));
+        }
+        $seller = $product->seller;
+        $category = $product->category;
         return view('product', [
             'product' => $product,
             'seller' => $seller,

@@ -6,7 +6,7 @@
             <x-seller-product-new/>
         </div>
         <div class="row justify-content-center mt-3">
-            <a id="products" class="btn btn-primary btn-lg" href="{{route('seller.id', Auth::user()->seller->id)}}">
+            <a id="products" class="btn btn-primary btn-lg" href="{{route('seller.products')}}">
                 {{__('My Products')}}
             </a>
         </div>
