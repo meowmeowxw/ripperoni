@@ -27,7 +27,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-12 col-md-5">
+                <div class="col-12 col-md-5 align-self-center">
                     <div class="product-img">
                         <img src="{{$product->path}}" class="" alt="Beer {{$product->id ?? '0'}}"/>
                     </div>
@@ -60,7 +60,7 @@
 
                     <div class="col-12 my-3">
                         <div class="card bg-transparent border-0 text-center">
-                            <div class="card-body m-0">
+                            <div class="card-body m-0 d-flex justify-content-center">
                                 {{--da fare if seller e if not seller per edit--}}
 
                                 @guest
@@ -80,14 +80,14 @@
 
             <div class="row justify-content-center mt-1">
                 <div class="col-12 col-md-6">
-                    <table id="details" class="table table-striped ">
+                    <table id="details" class="table table-striped text-center">
                         <caption class="h4">{{__('Details')}}:</caption>
                         <tr>
                             <th>
                                 {{__('Category')}}
                             </th>
                             <td>
-                                <a href="{{route('category.id', $category->id)}}">
+                                <a href="{{route('category.id', $category->id)}}" class="text-info">
                                     {{$category->name}}
                                 </a>
                             </td>
