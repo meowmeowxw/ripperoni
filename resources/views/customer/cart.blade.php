@@ -109,7 +109,7 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <div class="d-flex row justify-content-center">
+                                                <div class="d-flex row justify-content-center mb-2">
                                                     <input id="{{'product'.$product->id}}" value="{{$product->id}}"
                                                            name="id"
                                                            type="hidden">
@@ -124,12 +124,12 @@
                                                         @enderror
                                                     </span>
                                                 </div>
-                                                <div class="d-flex row justify-content-center">
+                                                <div class="row justify-content-center">
                                                     <label id="{{'single-price'.$product->id}}">
                                                         {{__('Price')}}: {{ $fo["single_price"] }} &euro;
                                                     </label>
                                                 </div>
-                                                <div class="d-flex row justify-content-center">
+                                                <div class="row justify-content-center">
                                                     <label id="{{'total-price'.$product->id}}">
                                                         {{__('Total')}}: {{ $fo["total_price"] }} &euro;
                                                     </label>
