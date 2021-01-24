@@ -9,41 +9,26 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-collapse collapse justify-content-between align-items-center w-100" id="navbarSupportedContent">
             <!-- center Side Of Navbar -->
-            <ul class="navbar-nav mx-auto">
+            <ul class="navbar-nav mx-auto align-items-center">
 
-                <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link container-fluid" href="#"
+                <li class="nav-item dropdown ">
+                    <a id="navbarDropdown" class="nav-link" href="#"
                        data-toggle="dropdown" aria-expanded="false" v-pre>
                         <form class="form-inline text-center" autocomplete="off">
                             <input class="form-control" type="search" id="search" name="search" placeholder="Search"
-                                   aria-label="Search" >
+                                   aria-label="Search">
                         </form>
                     </a>
-                    <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0" aria-labelledby="search-item">
+                    <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0 w-100"
+                         aria-labelledby="search-item">
                     </div>
                 </li>
             </ul>
 
-            <!-- TODO: implement search ? -->
-            {{--
-            <a data-toggle="dropdown" aria-expanded="false">
-                <form class="navbar-nav form-inline my-2 my-lg-0 text-align:center" autocomplete="off">
-                    <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search"
-                           aria-label="Search" data-bs>
-                    <!-- <button class="btn btn-outline-success my-2 my-sm-0 bg-dark" type="submit">Search</button> -->
-                </form>
-            </a>
-            <div class="nav-item dropdown">
-                <div class="dropdown-menu">
-
-                </div>
-            </div>
-            --}}
-
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto align-items-center">
                 <!-- Authentication Links -->
                 @guest
                     @if (Route::has('login'))
@@ -67,7 +52,7 @@
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{Auth::user()->seller->company}}
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="seller">
+                            <div class="dropdown-menu dropdown-menu" aria-labelledby="seller">
                                 <a class="dropdown-item" href="{{route('seller.settings')}}">{{__('Settings')}}</a>
                                 <a class="dropdown-item" href="{{route('seller.products')}}">{{__('My products')}}</a>
                                 <a class="dropdown-item" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
