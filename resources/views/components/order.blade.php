@@ -1,4 +1,4 @@
-<div class="card m-1" id="customer-order.{{$order->id}}">
+<div class="card mt-2" id="customer-order.{{$order->id}}">
     <a title="{{__('Order details')}}" href="{{route('customer.order.id', $order->id)}}">
         <div class="card-header d-flex flex-row">
             <div class="mr-auto">{{__('Order ID')}}: <strong>{{$order->id}}</strong></div>
@@ -8,7 +8,7 @@
     </a>
     <div class="card-body">
         <div class="card-text">
-            @foreach ($order->sellerOrders as $sellerOrder)
+            @foreach ($order->sellerOrders as $i => $sellerOrder)
                 <div class="row">
                     <div class="col">
                         <p>{{__('From')}}: <a
@@ -38,8 +38,10 @@
                     <div class="row mt-2">
                     </div>
                 </div>
+                @if ($i !== $order->sellerOrders->count() - 1)
                 <div class="row mt-4">
                 </div>
+                @endif
             @endforeach
         </div>
     </div>
