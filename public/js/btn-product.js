@@ -1,11 +1,11 @@
 $("#btn-minus").click(function () {
-    let quantity = parseInt($('#quantityNew').val());
+    let quantity = parseInt($('#quantityCart').val());
     if (quantity > 1) {
-        $('#quantityNew').val(quantity - 1);
+        $('#quantityCart').val(quantity - 1);
     }
 });
 
 $("#btn-plus").click(function () {
-    let quantity = parseInt($('#quantityNew').val());
-    $('#quantityNew').val(quantity + 1);
+    let quantity = parseInt($('#quantityCart').val());
+    $('#quantityCart').val(quantity + 1);
 });

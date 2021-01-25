@@ -42,20 +42,48 @@
                         </div>
                         <div class="row justify-content-center m-1">
                             <p class="h4">
-                            @if($product->isAvailable())
-                                ( {{$product->quantity}} {{__('in stock')}} )
-                            @else
-                                ({{__('Not in stocks')}} )
-                            @endif
+                                @if($product->isAvailable())
+                                    ( {{$product->quantity}} {{__('in stock')}} )
+                                @else
+                                    ({{__('Not in stocks')}} )
+                                @endif
                             </p>
                         </div>
 
-                        <div class=" jumbotron p-3">
-                            <h4 class="border-bottom text-center">
-                                    {{__('Description')}}:
-                            </h4>
-                            <p class="text-break small">{{$product->description}}</p>
+                        <div class="row justify-content-center mt-1">
+                            <div class="col-12">
+                                <table id="details" class="table table-striped text-center ">
+                                    <caption class="h4 mb-0 pb-0">{{__('Details')}}:</caption>
+                                    <tr>
+                                        <th>
+                                            {{__('Category')}}
+                                        </th>
+                                        <td>
+                                            <a href="{{route('category.id', $category->id)}}" class="text-info">
+                                                {{$category->name}}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{__('Format')}}
+                                        </th>
+                                        <td>
+                                            {{$product->cl}} cl
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            {{__('Alcohol')}}
+                                        </th>
+                                        <td>
+                                            {{$product->alcohol}} %
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
+
                     </div>
 
                     <div class="col-12 my-3">
@@ -69,7 +97,38 @@
                                     @if (Auth::user()->is_seller)
                                         <x-form.row-edit-product :product=$product></x-form.row-edit-product>
                                     @else
-                                        <x-form.add-to-cart :product=$product></x-form.add-to-cart>
+                                        <form id="add_to_cart" action="{{route('customer.cart')}}" method="POST"
+                                              class="form-inline mb-2">
+                                            @csrf
+                                            <div class="form-row justify-content-center">
+                                                <div class="form-group col-12 col-md-6">
+
+                                                    <label for="quantityCart" class="sr-only">{{__('Quantity')}}</label>
+                                                    <input id="quantityCart" placeholder="{{__('Quantity')}}"
+                                                           type="number"
+                                                           class="form-control @error('quantity') is-invalid @enderror"
+                                                           required="" name="quantity" value="1" min="1">
+
+                                                    @error('quantity')
+                                                    <span class="invalid-feedback"
+                                                          role="alert"><strong>{{ $message }}</strong></span>
+                                                    @enderror
+                                                </div>
+                                                <div class="form-group btn-group col-12 col-md-6">
+                                                    <button id="btn-minus" type="button" class="ml-md-2 btn btn-danger">
+                                                        -
+                                                    </button>
+                                                    <button id="btn-plus" type="button" class="btn btn-info">
+                                                        +
+                                                    </button>
+                                                    <button type="submit" class="btn btn-primary ">
+                                                        {{__('Add to cart')}}
+                                                    </button>
+                                                </div>
+
+                                                <input id="id" value="{{$product->id}}" name="id" type="hidden">
+                                            </div>
+                                        </form>
                                     @endif
                                 @endguest
                             </div>
@@ -78,39 +137,14 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center mt-1">
-                <div class="col-12 col-md-6">
-                    <table id="details" class="table table-striped text-center">
-                        <caption class="h4">{{__('Details')}}:</caption>
-                        <tr>
-                            <th>
-                                {{__('Category')}}
-                            </th>
-                            <td>
-                                <a href="{{route('category.id', $category->id)}}" class="text-info">
-                                    {{$category->name}}
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{__('Format')}}
-                            </th>
-                            <td>
-                                {{$product->cl}} cl
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{__('Alcohol')}}
-                            </th>
-                            <td>
-                                {{$product->alcohol}} %
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="col-12 jumbotron p-3">
+                <h4 class="border-bottom text-center">
+                    {{__('Description')}}:
+                </h4>
+                <p class="text-break ">{{$product->description}}</p>
             </div>
+
+
         </div>
     </div>
 @endsection
