@@ -2,18 +2,6 @@
 
 @section('styles')
     <link href="{{ asset('css/product.css') }}" rel="stylesheet">
-    <style>
-        {{--
-        #quantityCart {
-            width: 100px;
-            padding: 5px;
-        }
-        input[type=number] {
-            width: 50px;
-            padding: 5px;
-        }
-        --}}
-    </style>
 @endsection
 
 @section('scripts')
@@ -37,7 +25,7 @@
     <li>{{$category->name}}</li>
     --}}
     <div class="container pt-3">
-        <div class="col-12 col-md-12 col-xl-8 mx-auto">
+        <div class="col-12 col-md-12 col-xl-9 mx-auto">
             <div id="name" class="my-3 page-header">
                 <p class="h1 text-break text-center">
                     <strong>
@@ -103,49 +91,47 @@
                     </div>
 
                     <div class="col-12 my-3">
-                        {{--da fare if seller e if not seller per edit--}}
 
                         @guest
-                            <p class="text-danger "><a href="{{route('login')}}" class="link">{{__('Login needed to buy')}}</a></p>
+                            <p class="text-danger "><a href="{{route('login')}}"
+                                                       class="link">{{__('Login needed to buy')}}</a></p>
                         @else
                             @if (!Auth::user()->is_seller)
-                                <div class="card bg-transparent border-0 text-center">
-                                    <div class="card-body m-0 d-flex justify-content-center">
-                                        <form id="add_to_cart" action="{{route('customer.cart')}}" method="POST"
-                                              class="form-inline mb-2">
-                                            @csrf
-                                            <div class="form-row justify-content-center">
-                                                <div class="form-group col-12 col-md-5">
+                                <form id="add_to_cart" action="{{route('customer.cart')}}" method="POST"
+                                      class="form-inline justify-content-center">
+                                    @csrf
+                                    <div class="form-row">
+                                        <div class="form-group col-12 col-md-5 mb-0">
 
-                                                    <label for="quantityCart"
-                                                           class="sr-only visually-hidden">{{__('Quantity')}}</label>
-                                                    <input id="quantityCart" placeholder="{{__('Quantity')}}"
-                                                           type="number"
-                                                           class="form-control @error('quantity') is-invalid @enderror"
-                                                           required="" name="quantity" value="1" min="1">
+                                            <label for="quantityCart"
+                                                   class="sr-only visually-hidden">{{__('Quantity')}}</label>
+                                            <input id="quantityCart" placeholder="{{__('Quantity')}}"
+                                                   type="number"
+                                                   class="form-control w-100 @error('quantity') is-invalid @enderror"
+                                                   required="" name="quantity" value="1" min="1">
+                                            @error('quantity')
+                                            <span class="small invalid-feedback"
+                                                  role="alert"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
 
-                                                    @error('quantity')
-                                                    <span class="invalid-feedback"
-                                                          role="alert"><strong>{{ $message }}</strong></span>
-                                                    @enderror
-                                                </div>
-                                                <div class="form-group btn-group col-12 col-md-7">
-                                                    <button id="btn-minus" type="button" class="ml-lg-2 btn btn-danger">
-                                                        -
-                                                    </button>
-                                                    <button id="btn-plus" type="button" class="btn btn-info">
-                                                        +
-                                                    </button>
-                                                    <button type="submit" class="btn btn-primary ">
-                                                        {{__('Add to cart')}}
-                                                    </button>
-                                                </div>
+                                        <div class="form-group btn-group col-12 col-md-7">
+                                            <button id="btn-minus" type="button" class=" btn btn-danger">
+                                                -
+                                            </button>
+                                            <button id="btn-plus" type="button" class="btn btn-info">
+                                                +
+                                            </button>
+                                            <button type="submit" class="btn btn-primary ">
+                                                {{__('Add to cart')}}
+                                            </button>
+                                        </div>
 
-                                                <input id="id" value="{{$product->id}}" name="id" type="hidden">
-                                            </div>
-                                        </form>
+
+
+                                        <input id="id" value="{{$product->id}}" name="id" type="hidden">
                                     </div>
-                                </div>
+                                </form>
                             @else
                                 <div class="row">
                                     <!-- Button trigger modal -->
@@ -204,6 +190,8 @@
         </div>
     </div>
 
+
+
     <!-- Modal Edit -->
     <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -217,7 +205,6 @@
                 <form id="edit" method="POST" action="{{route('seller.product.edit')}}">
                     @csrf
                     <div class="modal-body">
-                        <input type="id" name="id" value="{{$product->id}}" hidden/>
                         <div class="form-row">
                             <div id="div-name" class="col">
                                 <label for="name">{{__('Name')}}</label>
@@ -291,10 +278,7 @@
                                       role="alert"><strong>{{ $message }}</strong></span>
                                 @enderror
                             </div>
-
-
                         </div>
-
 
                     </div>
                     <div class="modal-footer">
@@ -302,6 +286,7 @@
                         <button type="submit" class="btn btn-primary">
                             {{__('Save')}}
                         </button>
+                        <input id="product_id_edit" value="{{$product->id}}" name="id" type="hidden">
                     </div>
                 </form>
             </div>
@@ -310,15 +295,3 @@
 
 
 @endsection
-
-{{--
-            <div class="col-12 d-sm-none text-center">
-                <p class="h1">
-                    <strong>
-                        {{$product->name}}
-                    </strong>
-                </p>
-                <p class="text-light small m-0">{{__('sell by')}} {{$seller->company}}</p>
-                <p class=" bg-light rounded-pill">  {{ $category->name }}  </p>
-            </div>
---}}
