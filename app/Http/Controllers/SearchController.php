@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\Product;
 use App\Models\Seller;
 use App\Models\Category;
+use Illuminate\Support\Facades\Config;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -40,8 +41,20 @@ class SearchController extends Controller
             } else {
                 $output .= '<li class="list-group-item">' . 'No results' . '</li>';
             }
+            return $output;
+        } else {
+            $request->validate([
+                'search' => 'required|string',
+            ]);
+
+            $products = Product::where('active', true)
+                ->where('name', 'like', '%' . $request->search . '%')
+                ->get();
+
+            return view('search', [
+                'products' => $products,
+            ]);
         }
-        return $output;
     }
 
 }

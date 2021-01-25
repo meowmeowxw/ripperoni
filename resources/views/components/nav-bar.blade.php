@@ -15,9 +15,17 @@
             <li class="nav-item dropdown ">
                 <a id="navbarDropdown" class="nav-link" href="#"
                    data-toggle="dropdown" aria-expanded="false" v-pre>
-                    <form class="form-inline text-center" autocomplete="off">
-                        <input class="form-control" type="search" id="search" name="search" placeholder="Search"
-                               aria-label="Search">
+                    <form class="form-inline text-center" autocomplete="off" method="POST" action="{{route('search')}}">
+                        @csrf
+                        <div class="input-group">
+                            <input class="form-control" type="search" id="search" name="search" placeholder="Search"
+                                   aria-label="Search" value="{{old('search')}}">
+                            <span class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
                     </form>
                 </a>
                 <div id="product_list" class="dropdown-menu bg-transparent border-0 p-0 w-100"
