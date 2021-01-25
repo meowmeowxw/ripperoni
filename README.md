@@ -2,11 +2,11 @@
 
 ## Install
 
-If `php` is installed you can install dependencies with:
+If `php` and `composer` are installed installed then you can install dependencies with:
 
-`php composer install`
+`composer install`
 
-or use docker:
+otherwise use docker:
 
 ```sh
 docker run --rm \
@@ -20,13 +20,13 @@ Alias sail:
 
 `alias sail="./vendor/bin/sail"`
 
+Copy .env:
+
+`cp .env.develop .env`
+
 Start the server:
 
 `sail up`
-
-Copy .env:
-
-`cp .env.example .env`
 
 Then generate key:
 
@@ -53,9 +53,9 @@ npm run prod
 `Ripperoni` è scritto in laravel 8, bootstrap 4, html 5 e jquery.
 
 Per la fase di development abbiamo usato [sail](https://laravel.com/docs/8.x/sail), che ci
-permette di avere un ambiente dockerizzato semplice da usare. Una volta fatto partire con
-`./vendor/bin/sail up` il programma possiamo accedere all'interfaccia web su `http://localhost`
-e al mail server su `http://localhost:8025`.
+permette di avere un ambiente dockerizzato semplice da usare (Su windows è consigliato
+avere WSL2). Una volta fatto partire con `./vendor/bin/sail up` il programma possiamo 
+accedere all'interfaccia web su `http://localhost` e al mail server su `http://localhost:8025`.
 
 ### Struttura
 
