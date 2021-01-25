@@ -179,7 +179,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <form id="delete" method="POST" action="{{route('seller.product.delete')}}">
-
+                        @csrf
                         <button type="submit" class="btn btn-primary">
                             {{ __('Delete') }}
                         </button>
