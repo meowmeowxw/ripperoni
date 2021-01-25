@@ -47,13 +47,17 @@
             @else
                 @if (Auth::user()->is_seller)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('seller.products')}}">{{__('My products')}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('seller.product.add')}}">{{__('Add product')}}</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="navbarSeller" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ __('Products')  }}
+                        </a>
+                        <div class="text-center dropdown-menu dropdown-menu-right" aria-labelledby="navbarSeller">
+                            <a class="dropdown-item" href="{{route('seller.products')}}">{{__('List')}}</a>
+                            <a class="dropdown-item" href="{{route('seller.product.add')}}">{{__('Add')}}</a>
+                        </div>
                     </li>
                 @else
                     <li class="nav-item">
