@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('scripts')
     <script src="{{ asset('js/btn-product.js') }}" defer></script>
     <link href="{{ asset('css/product.css') }}" rel="stylesheet">
