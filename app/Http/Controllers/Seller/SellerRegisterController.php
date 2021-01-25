@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewUser;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -63,6 +65,7 @@ class SellerRegisterController extends Controller
         ]);
 
         event(new Registered($user));
+        Mail::to($request->email)->send(new NewUser($user));
 
         return redirect(RouteServiceProvider::HOME);
     }

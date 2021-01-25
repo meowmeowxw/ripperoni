@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -48,6 +48,9 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:1',
+            'credit_card' => 'string|numeric|digits_between:10,24',
+            'street' => 'string|max:128',
+            'city' => 'string|max:128',
         ]);
 
         Auth::login($user = User::create([
@@ -56,6 +59,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'is_seller' => false,
         ]));
+
+        $user->customer()->create([
+            'credit_card' => $request->credit_card,
+            'street' => $request->street,
+            'city' => $request->city,
+        ]);
 
         event(new Registered($user));
         Mail::to($request->email)->send(new NewUser($user));

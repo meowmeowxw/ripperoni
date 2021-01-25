@@ -3,6 +3,10 @@
     position: relative;
 }
 
+.page-item.active .page-link {
+    z-index: -1;
+}
+
 @media screen and ( max-width: 512px ) {
     li.page-item {
         display: none;
