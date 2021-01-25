@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 @foreach ($sellerOrders as $sellerOrder)
-                    <div class="card text-center mt-3" id="customer-order.{{$sellerOrder->order}}">
+                    <div class="card mt-3" id="customer-order.{{$sellerOrder->order}}">
                         <a titlte="{{__('Order details')}}" href="{{route('seller.order.id', $sellerOrder->id)}}">
                             <div class="card-header d-flex flex-row">
                                 <div class="mr-auto">{{__('Order ID')}}: <strong>{{$sellerOrder->id}}</strong></div>
