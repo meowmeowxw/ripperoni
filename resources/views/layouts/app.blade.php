@@ -14,10 +14,18 @@
     <script src="{{ asset('js/search.js') }}" defer></script>
     @yield('scripts')
 
-    <!-- Styles -->
+<!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/img-box.css') }}" rel="stylesheet">
     <link href="{{ asset('css/page.css') }}" rel="stylesheet">
+    <style>
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
     @yield('styles')
 
 </head>
@@ -32,12 +40,17 @@
     </main>
 </div>
 
-<footer id="footer" class="footer fixed-bottom text-center">
+<footer id="footer" class="footer text-center">
+    <div id="cookie-banner" class="d-flex col-md-auto justify-content-center">
+        @include('cookieConsent::index')
+    </div>
+
     <div class="text-center p-3">
         © 2021 Copyright:
         <a class="text-dark" href="{{config('app.url', 'http://localhost')}}">{{ config('app.name', 'Ripperoni') }}</a>
     </div>
 </footer>
+
 
 </body>
 
