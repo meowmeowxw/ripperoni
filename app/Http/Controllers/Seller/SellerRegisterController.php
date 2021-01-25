@@ -59,13 +59,13 @@ class SellerRegisterController extends Controller
             'is_seller' => true,
         ]));
 
-        Auth::user()->seller()->create([
+        $user->seller()->create([
             'company' => $request->company,
             'credit_card' => $request->credit_card,
         ]);
 
         event(new Registered($user));
-        Mail::to($request->email)->send(new NewUser($user));
+        Mail::to($user->email)->send(new NewUser($user));
 
         return redirect(RouteServiceProvider::HOME);
     }

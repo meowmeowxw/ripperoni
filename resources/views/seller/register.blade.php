@@ -11,7 +11,7 @@
                     <x-form.form method="POST" action="{{route('seller.register')}}" btntext="{{__('Register')}}"
                                  btnaddclass="btn-block">
                         <x-FormInput name="name" idAndFor="name" :lblName="__('Name')" type="text"
-                                     :value="old('name')"/>
+                                     inputValue="{{old('name')}}"/>
                         <x-FormInput name="email" idAndFor="email" :lblName="__('E-mail Address')" type="email"/>
                         <x-FormInput name="password" idAndFor="password" :lblName="__('Password')" type="password"/>
                         <label for="password-confirm"
@@ -20,8 +20,9 @@
                                name="password_confirmation" required autocomplete="new-password"
                                placeholder="{{__('Confirm Password')}}">
                         <x-formInput name="credit_card" idAndFor="credit_card" :lblName="__('Credit Card')"
-                                     type="numeric"/>
-                        <x-formInput name="company" idAndFor="company" :lblName="__('Company Name')" type="text"/>
+                                     type="numeric" inputValue="{{old('credit_card')}} "/>
+                        <x-formInput name="company" idAndFor="company" :lblName="__('Company Name')" type="text"
+                                     inputValue="{{old('company')}}"/>
                     </x-form.form>
                 </x-card>
             </div>

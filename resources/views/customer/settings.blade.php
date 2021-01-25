@@ -25,11 +25,11 @@
                                  btnaddclass="btn-block"
                                  inputid="type-customer" name="type" inputvalue="customer">
                         <x-FormInput name="credit_card" idAndFor="credit_card" :lblName="__('Credit Card')"
-                                     inputValue="{{Auth::user()->customer->credit_card}}" type="text"/>
+                                     inputValue="{{$customer->credit_card}}" type="text"/>
                         <x-FormInput name="street" idAndFor="street" :lblName="__('Street Address')"
-                                     inputValue="{{Auth::user()->customer->street}}" type="text"/>
+                                     inputValue="{{$customer->street}}" type="text"/>
                         <x-FormInput name="city" idAndFor="city" :lblName="__('City')"
-                                     inputValue="{{Auth::user()->customer->city}}" type="text"/>
+                                     inputValue="{{$customer->city}}" type="text"/>
                     </x-form.form>
                 </x-card>
                 <x-card>
