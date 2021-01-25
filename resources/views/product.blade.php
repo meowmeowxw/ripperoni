@@ -1,8 +1,21 @@
 @extends('layouts.app')
 
+@section('styles')
+    <link href="{{ asset('css/product.css') }}" rel="stylesheet">
+@endsection
+
 @section('scripts')
     <script src="{{ asset('js/btn-product.js') }}" defer></script>
-    <link href="{{ asset('css/product.css') }}" rel="stylesheet">
+    @if ($errors->any())
+        @if (Auth::user()->is_seller)
+            <script>
+                window.addEventListener('load', function () {
+                    $('#modalEdit').modal('toggle');
+                });
+            </script>
+        @endif
+    @endif
+
 @endsection
 
 @section('content')
@@ -12,7 +25,7 @@
     <li>{{$category->name}}</li>
     --}}
     <div class="container pt-3">
-        <div class="col align-content-center">
+        <div class="col-12 col-md-12 col-xl-8 mx-auto">
             <div id="name" class="my-3 page-header">
                 <p class="h1 text-break text-center">
                     <strong>
@@ -78,14 +91,14 @@
                     </div>
 
                     <div class="col-12 my-3">
-                        <div class="card bg-transparent border-0 text-center">
-                            <div class="card-body m-0 d-flex justify-content-center">
-                                {{--da fare if seller e if not seller per edit--}}
+                        {{--da fare if seller e if not seller per edit--}}
 
-                                @guest
-                                    <p class="text-danger ">Login needed to buy</p>
-                                @else
-                                    @if (!Auth::user()->is_seller)
+                        @guest
+                            <p class="text-danger ">Login needed to buy</p>
+                        @else
+                            @if (!Auth::user()->is_seller)
+                                <div class="card bg-transparent border-0 text-center">
+                                    <div class="card-body m-0 d-flex justify-content-center">
                                         <form id="add_to_cart" action="{{route('customer.cart')}}" method="POST"
                                               class="form-inline mb-2">
                                             @csrf
@@ -119,10 +132,28 @@
                                                 <input id="id" value="{{$product->id}}" name="id" type="hidden">
                                             </div>
                                         </form>
-                                    @endif
-                                @endguest
-                            </div>
-                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <div class="row">
+                                    <!-- Button trigger modal -->
+                                    <div class="col">
+                                        <button id="myModal" type="button" class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#modalEdit">
+                                            {{__('Edit')}}
+                                        </button>
+                                    </div>
+                                    <div class="col text-right">
+                                        <button id="myModal" type="button" class="btn btn-primary"
+                                                data-toggle="modal"
+                                                data-target="#modalDelete">
+                                            {{__('Delete')}}
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
+                        @endguest
                     </div>
                 </div>
             </div>
@@ -134,22 +165,6 @@
                 <p class="text-break ">{{$product->description}}</p>
             </div>
 
-            @if (Auth::user()->is_seller)
-                <div class="row justify-content-center">
-                    <div class="row justify-content-center">
-                        <!-- Button trigger modal -->
-                        <button id="myModal" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#modalEdit">
-                            {{__('Edit Product')}}
-                        </button>
-                        <button id="myModal" type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#modalDelete">
-                            {{__('Delete Product')}}
-                        </button>
-
-                    </div>
-                </div>
-            @endif
         </div>
     </div>
 
@@ -187,10 +202,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form id="edit" method="POST" action="{{route('seller.product.edit', $product->id)}}">
+                <form id="edit" method="POST" action="{{route('seller.product.edit')}}">
+                    @csrf
                     <div class="modal-body">
-
-
+                        <input type="id" name="id" value="{{$product->id}}" hidden/>
                         <div class="form-row">
                             <div id="div-name" class="col">
                                 <label for="name">{{__('Name')}}</label>
@@ -206,8 +221,8 @@
                         </div>
                         <div class="form-row">
                             <div id="div-price" class="col">
-                                <label for="price{{$product->id}}">{{__('Price')}}</label>
-                                <input id="price{{$product->id}}" placeholder="{{__('Price')}}" type="number"
+                                <label for="price">{{__('Price')}}</label>
+                                <input id="price" placeholder="{{__('Price')}}" type="number"
                                        step="0.01" required="" name="price" value="{{$product->price}}"
                                        class="form-control @error('price') is-invalid @enderror">
 
@@ -217,8 +232,8 @@
                                 @enderror
                             </div>
                             <div id="div-quantity" class="col">
-                                <label for="quantity{{$product->id}}">{{__('Quantity')}}</label>
-                                <input id="quantity{{$product->id}}" placeholder="{{__('Quantity')}}" type="number"
+                                <label for="quantity">{{__('Quantity')}}</label>
+                                <input id="quantity" placeholder="{{__('Quantity')}}" type="number"
                                        step="1" required="" name="quantity" value="{{$product->quantity}}"
                                        class="form-control @error('quantity') is-invalid @enderror">
 
@@ -230,8 +245,8 @@
                         </div>
                         <div class="form-row">
                             <div id="div-alcohol" class="col">
-                                <label for="price{{$product->id}}">{{__('Alcohol')}}</label>
-                                <input id="price{{$product->id}}" placeholder="{{__('Alcohol')}}" type="number"
+                                <label for="price">{{__('Alcohol')}}</label>
+                                <input id="price" placeholder="{{__('Alcohol')}}" type="number"
                                        step="0.01" required="" name="alcohol" value="{{$product->alcohol}}"
                                        class="form-control @error('alcohol') is-invalid @enderror">
 
