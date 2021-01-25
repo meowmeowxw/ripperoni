@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8 col-xl-7">
                 @isset($orders)
                     @foreach ($orders as $order)
                         <x-order :order="$order"/>
