@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-8 col-xl-6">
                 <x-card>
                     <x-slot name="title">
                         {{ __('Register') }}
@@ -20,7 +20,7 @@
                                name="password_confirmation" required autocomplete="new-password"
                                placeholder="{{__('Confirm Password')}}">
                         <label for=credit_card" class="mb-0">{{__('Credit Card')}}</label>
-                        <input id="credit_card" placeholder="{{__('Credit Card')}}" type="numeric"
+                        <input id="credit_card" placeholder="{{__('Credit Card')}}" type="text"
                                class="form-control mb-2 @error('credit_card') is-invalid @enderror"
                                name="credit_card" value="{{old('credit_card')}}">
                         @error('credit_card')

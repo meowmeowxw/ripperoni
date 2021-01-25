@@ -39,19 +39,18 @@
         <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
             <!-- Authentication Links -->
             @guest
-                @if (Route::has('login'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                    </li>
-                @endif
-
-                @if (Route::has('register'))
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                    </li>
-                @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('seller.register') }}">{{ __('Register as seller') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a id="navbarRegister" class="nav-link dropdown-toggle" href="#" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ __('Register')  }}
+                    </a>
+                    <div class="text-center dropdown-menu dropdown-menu-right" aria-labelledby="navbarSeller">
+                        <a class="dropdown-item" href="{{route('register')}}">{{__('Customer')}}</a>
+                        <a class="dropdown-item" href="{{route('seller.register')}}">{{__('Seller')}}</a>
+                    </div>
                 </li>
             @else
                 @if (Auth::user()->is_seller)

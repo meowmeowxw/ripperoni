@@ -6,7 +6,7 @@
             <h3>{{__('Total Profit')}}: {{$totalProfit}} &euro;</h3>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-8 col-xl-7">
                 @foreach ($sellerOrders as $sellerOrder)
                     <div class="card mt-3" id="customer-order.{{$sellerOrder->order}}">
                         <a titlte="{{__('Order details')}}" href="{{route('seller.order.id', $sellerOrder->id)}}">

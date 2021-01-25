@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8" style="max-width: 768px;">
+            <div class="col-md-8 col-xl-7">
                 <div class="card mt-3" id="customer-order.{{$sellerOrder->order}}">
                     <div class="card-header d-flex flex-row">
                         <div class="mr-auto">{{__('Order ID')}}: <strong>{{$sellerOrder->order_id}}</strong></div>
