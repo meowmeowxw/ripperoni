@@ -1,9 +1,5 @@
-#footer {
-    clear: both;
-    position: relative;
-}
 
-#app {
+body {
     background-color: #f8eeb6;
 }
 
