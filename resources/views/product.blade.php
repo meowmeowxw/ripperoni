@@ -26,7 +26,7 @@
     --}}
     <div class="container pt-3">
         <div class="col-12 col-md-12 col-xl-9 mx-auto">
-            <div id="name" class="my-3 page-header">
+            <div id="name-product" class="my-3 page-header">
                 <p class="h1 text-break text-center">
                     <strong>
                         {{$product->name}}
@@ -128,28 +128,29 @@
                                         </div>
 
 
-
                                         <input id="id" value="{{$product->id}}" name="id" type="hidden">
                                     </div>
                                 </form>
                             @else
-                                <div class="row">
-                                    <!-- Button trigger modal -->
-                                    <div class="col">
-                                        <button id="myModal" type="button" class="btn btn-primary"
-                                                data-toggle="modal"
-                                                data-target="#modalEdit">
-                                            {{__('Edit')}}
-                                        </button>
+                                @can('edit-product', $product)
+                                    <div class="row">
+                                        <!-- Button trigger modal -->
+                                        <div class="col">
+                                            <button id="modal-edit" type="button" class="btn btn-primary"
+                                                    data-toggle="modal"
+                                                    data-target="#modalEdit">
+                                                {{__('Edit')}}
+                                            </button>
+                                        </div>
+                                        <div class="col text-right">
+                                            <button id="modal-delete" type="button" class="btn btn-primary"
+                                                    data-toggle="modal"
+                                                    data-target="#modalDelete">
+                                                {{__('Delete')}}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col text-right">
-                                        <button id="myModal" type="button" class="btn btn-primary"
-                                                data-toggle="modal"
-                                                data-target="#modalDelete">
-                                            {{__('Delete')}}
-                                        </button>
-                                    </div>
-                                </div>
+                                @endcan
                             @endif
                         @endguest
                     </div>
@@ -171,7 +172,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{__('Delete Product')}}</h5>
+                    <h5 class="modal-title" id="delete-product">{{__('Delete Product')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -197,7 +198,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">{{__('Edit Product')}}</h5>
+                    <h5 class="modal-title" id="edit-product">{{__('Edit Product')}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -244,8 +245,8 @@
                         </div>
                         <div class="form-row">
                             <div id="div-alcohol" class="col">
-                                <label for="price">{{__('Alcohol')}}</label>
-                                <input id="price" placeholder="{{__('Alcohol')}}" type="number"
+                                <label for="alcohol">{{__('Alcohol')}}</label>
+                                <input id="alcohol" placeholder="{{__('Alcohol')}}" type="number"
                                        step="0.01" required="" name="alcohol" value="{{$product->alcohol}}"
                                        class="form-control @error('alcohol') is-invalid @enderror">
 

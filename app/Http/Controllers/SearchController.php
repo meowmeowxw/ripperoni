@@ -53,6 +53,7 @@ class SearchController extends Controller
 
             return view('search', [
                 'products' => $products,
+                'search' => $request->search,
             ]);
         }
     }

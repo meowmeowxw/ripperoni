@@ -6,10 +6,11 @@
             <div class="col text-center">
                 <div class="jumbotron py-4">
                     @isset($products)
-                    <h3 class="text-center text-uppercase border-bottom">{{__('Search Result')}}</h3>
-                    <p class="lead">
-                        {{count($products)}}
-                    </p>
+                        <h3 class="text-center border-bottom">{{__('Search')}}</h3>
+                        <p class="lead">
+                            {{__('Result for')}} {{ $search }} <br>
+                            {{count($products)}}
+                        </p>
                     @endisset
                 </div>
                 <div class="row row-cols-md-2 justify-content-center">

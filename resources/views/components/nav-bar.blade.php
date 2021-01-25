@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light navbar-expand-md bg-white shadow-sm justify-content-center">
+<nav id="nav-bar" class="navbar navbar-light navbar-expand-md bg-white shadow-sm justify-content-center">
     <a class="navbar-brand w-50 mr-auto" href="{{ url('/') }}">
         {{ config('app.name', 'Ripperoni') }}
     </a>
@@ -13,16 +13,17 @@
         <ul class="navbar-nav w-100 justify-content-center">
 
             <li class="nav-item dropdown ">
-                <a id="navbarDropdown" class="nav-link" href="#"
+                <a id="navbarSearch" class="nav-link" href="#"
                    data-toggle="dropdown" aria-expanded="false" v-pre>
                     <form class="form-inline text-center" autocomplete="off" method="POST" action="{{route('search')}}">
                         @csrf
                         <div class="input-group">
+                            <label for="search" hidden>{{__('Search Beers')}}</label>
                             <input class="form-control" type="search" id="search" name="search" placeholder="Search"
                                    aria-label="Search" value="{{old('search')}}">
                             <span class="input-group-append">
                                 <button class="btn btn-outline-secondary" type="submit">
-                                    <i class="fa fa-search"></i>
+                                    <em class="fa fa-search"></em>
                                 </button>
                             </span>
                         </div>
