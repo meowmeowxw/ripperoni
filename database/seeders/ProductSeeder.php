@@ -146,7 +146,7 @@ class ProductSeeder extends Seeder
                 'alcohol' => $faker->randomFloat(2, 4, 13),
                 'cl' => rand(30, 1000),
                 'seller_id' => Seller::inRandomOrder()->first()->id,
-                'path' => '/img/placeholder.jpg',
+                'path' => '/img/ripperoni-' . rand(1, 8) . '.png',
             ]);
         }
 
