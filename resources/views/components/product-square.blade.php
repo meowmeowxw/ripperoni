@@ -6,7 +6,7 @@
             <img src="{{$product->path ?? '-'}}"
                  alt="Card Beer {{$product->id+1 ?? '0'}}">
         </div>
-        <div class="bg-warning">
+        <div class="">
             <div class="col justify-content-center">
                 <div class="row">
                     @if ($product->isAvailable())
