@@ -174,7 +174,9 @@
                     </div>
             </div>
             @else
-                {{__('The cart is empty')}}
+                <div class="alert alert-warning text-center" role="alert">
+                    <p class="h5">{{__('The cart is empty')}}</p>
+                </div>
             @endisset
         </div>
     </div>
