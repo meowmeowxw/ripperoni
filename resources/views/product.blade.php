@@ -101,7 +101,7 @@
                                               class="form-inline mb-2">
                                             @csrf
                                             <div class="form-row justify-content-center">
-                                                <div class="form-group col-12 col-md-6">
+                                                <div class="form-group col-12 col-md-5">
 
                                                     <label for="quantityCart" class="sr-only">{{__('Quantity')}}</label>
                                                     <input id="quantityCart" placeholder="{{__('Quantity')}}"
@@ -114,8 +114,8 @@
                                                           role="alert"><strong>{{ $message }}</strong></span>
                                                     @enderror
                                                 </div>
-                                                <div class="form-group btn-group col-12 col-md-6">
-                                                    <button id="btn-minus" type="button" class="ml-md-2 btn btn-danger">
+                                                <div class="form-group btn-group col-12 col-md-7">
+                                                    <button id="btn-minus" type="button" class="ml-lg-2 btn btn-danger">
                                                         -
                                                     </button>
                                                     <button id="btn-plus" type="button" class="btn btn-info">
