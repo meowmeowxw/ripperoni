@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\NewUser;
+use App\Models\Customer;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Mail;
@@ -48,10 +49,30 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:1',
-            'credit_card' => 'string|numeric|digits_between:10,24',
-            'street' => 'string|max:128',
-            'city' => 'string|max:128',
         ]);
+
+        $customer = new Customer();
+
+        if ($request->filled('credit_card')) {
+            $request->validate([
+                'credit_card' => 'string|numeric|digits_between:10,24',
+            ]);
+            $customer->credit_card = $request->credit_card;
+        }
+
+        if ($request->filled('street')) {
+            $request->validate([
+                'street' => 'string|max:128',
+            ]);
+            $customer->street = $request->street;
+        }
+
+        if ($request->filled('city')) {
+            $request->validate([
+                'city' => 'string|max:128',
+            ]);
+            $customer->city = $request->city;
+        }
 
         Auth::login($user = User::create([
             'name' => $request->name,
@@ -60,16 +81,12 @@ class RegisteredUserController extends Controller
             'is_seller' => false,
         ]));
 
-        $user->customer()->create([
-            'credit_card' => $request->credit_card,
-            'street' => $request->street,
-            'city' => $request->city,
-        ]);
+
+        $user->customer()->save($customer);
 
         event(new Registered($user));
         Mail::to($request->email)->send(new NewUser($user));
 
-        $user->customer()->create([]);
         return redirect(RouteServiceProvider::HOME);
     }
 }

@@ -3,8 +3,12 @@
     position: relative;
 }
 
+#app {
+    background-color: #f8eeb6;
+}
+
 .page-item.active .page-link {
-    z-index: -1;
+    z-index: 0;
 }
 
 @media screen and ( max-width: 512px ) {

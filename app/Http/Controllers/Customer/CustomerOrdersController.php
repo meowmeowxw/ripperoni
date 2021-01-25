@@ -37,7 +37,15 @@ class CustomerOrdersController extends Controller
                 abort(403);
             }
         }
+
         $customer = Auth::user()->customer;
+
+        if ($customer->orders()->count() === 0) {
+            return view('customer.orders', [
+                'orders' => null,
+            ]);
+        }
+
         return view('customer.orders', [
             'orders' => $customer->orders()->orderBy('id', 'DESC')->paginate(5)
         ]);

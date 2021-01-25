@@ -50,6 +50,9 @@
                         <a class="nav-link" href="{{route('seller.products')}}">{{__('My products')}}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{route('seller.product.add')}}">{{__('Add product')}}</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{route('seller.orders')}}">{{__('Orders')}}</a>
                     </li>
                 @else
