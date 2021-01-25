@@ -2,6 +2,18 @@
 
 @section('styles')
     <link href="{{ asset('css/product.css') }}" rel="stylesheet">
+    <style>
+        {{--
+        #quantityCart {
+            width: 100px;
+            padding: 5px;
+        }
+        input[type=number] {
+            width: 50px;
+            padding: 5px;
+        }
+        --}}
+    </style>
 @endsection
 
 @section('scripts')
@@ -71,7 +83,7 @@
                                     <tr>
                                         <th>{{__('Category')}}</th>
                                         <td>
-                                            <a href="{{route('category.id', $category->id)}}" class="text-info">
+                                            <a href="{{route('category.id', $category->id)}}" class="link">
                                                 {{$category->name}}
                                             </a>
                                         </td>
@@ -94,7 +106,7 @@
                         {{--da fare if seller e if not seller per edit--}}
 
                         @guest
-                            <p class="text-danger ">Login needed to buy</p>
+                            <p class="text-danger "><a href="{{route('login')}}" class="link">{{__('Login needed to buy')}}</a></p>
                         @else
                             @if (!Auth::user()->is_seller)
                                 <div class="card bg-transparent border-0 text-center">
