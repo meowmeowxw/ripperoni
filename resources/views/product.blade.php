@@ -136,132 +136,152 @@
 
             @if (Auth::user()->is_seller)
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-6">
-                        <div class="row justify-content-between">
-                            <!-- Button trigger modal -->
-                            <button id="myModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-                                Launch demo modal
-                            </button>
+                    <div class="row justify-content-center">
+                        <!-- Button trigger modal -->
+                        <button id="myModal" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modalEdit">
+                            {{__('Edit Product')}}
+                        </button>
+                        <button id="myModal" type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#modalDelete">
+                            {{__('Delete Product')}}
+                        </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            ...
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <form id="delete" method="POST" action="{{route('seller.product.delete')}}">
-
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Delete') }}
-                                </button>
-                                <input id="product_id_delete" value="{{$product->id}}" name="id" type="hidden">
-                            </form>
-                        </div>
-                        <div class="row justify-content-center">
-                            <form id="edit" method="POST" action="{{route('seller.product.edit', $product->id)}}">
-                                <div class="form-row my-2">
-                                    <div id="div-name" class="col">
-                                        <label for="name">{{__('Name')}}</label>
-                                        <input id="name" placeholder="{{__('Name')}}" type="text"
-                                               class="form-control @error('name') is-invalid @enderror"
-                                               required="" name="name" value="{{$product->name}}">
-
-                                        @error('name')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-
-
-                                </div>
-                                <div class="form-row">
-                                    <div id="div-price" class="col">
-                                        <label for="price{{$product->id}}">{{__('Price')}}</label>
-                                        <input id="price{{$product->id}}" placeholder="{{__('Price')}}" type="number"
-                                               step="0.01" required="" name="price" value="{{$product->price}}"
-                                               class="form-control @error('price') is-invalid @enderror">
-
-                                        @error('price')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                    <div id="div-quantity" class="col">
-                                        <label for="quantity{{$product->id}}">{{__('Quantity')}}</label>
-                                        <input id="quantity{{$product->id}}" placeholder="{{__('Quantity')}}" type="number"
-                                               step="1" required="" name="quantity" value="{{$product->quantity}}"
-                                               class="form-control @error('quantity') is-invalid @enderror">
-
-                                        @error('quantity')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div id="div-alcohol" class="col">
-                                        <label for="price{{$product->id}}">{{__('Alcohol')}}</label>
-                                        <input id="price{{$product->id}}" placeholder="{{__('Alcohol')}}" type="number"
-                                               step="0.01" required="" name="alcohol" value="{{$product->alcohol}}"
-                                               class="form-control @error('alcohol') is-invalid @enderror">
-
-                                        @error('alcohol')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                    <div id="div-cl" class="col">
-                                        <label for="cl">{{__('Cl')}}</label>
-                                        <input id="cl" placeholder="{{__('Cl')}}" type="number"
-                                               step="1" required="" name="cl" value="{{$product->cl}}"
-                                               class="form-control @error('cl') is-invalid @enderror">
-
-                                        @error('cl')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-row my-2">
-                                    <div id="div-description" class="col">
-                                        <label for="description">{{__('Description')}}</label>
-                                        <textarea  id="description" placeholder="{{__('Description')}}" type="text"
-                                               class="form-control @error('description') is-invalid @enderror"
-                                               required="" name="description" rows="5">{{$product->description}}</textarea>
-
-                                        @error('description')
-                                        <span class="invalid-feedback"
-                                              role="alert"><strong>{{ $message }}</strong></span>
-                                        @enderror
-                                    </div>
-
-
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Save') }}
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             @endif
         </div>
     </div>
+
+    <!-- Modal Delete -->
+    <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{__('Delete Product')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form id="delete" method="POST" action="{{route('seller.product.delete')}}">
+
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Delete') }}
+                        </button>
+                        <input id="product_id_delete" value="{{$product->id}}" name="id" type="hidden">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{__('Edit Product')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="edit" method="POST" action="{{route('seller.product.edit', $product->id)}}">
+                    <div class="modal-body">
+
+
+                        <div class="form-row">
+                            <div id="div-name" class="col">
+                                <label for="name">{{__('Name')}}</label>
+                                <input id="name" placeholder="{{__('Name')}}" type="text"
+                                       class="form-control @error('name') is-invalid @enderror"
+                                       required="" name="name" value="{{$product->name}}">
+
+                                @error('name')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div id="div-price" class="col">
+                                <label for="price{{$product->id}}">{{__('Price')}}</label>
+                                <input id="price{{$product->id}}" placeholder="{{__('Price')}}" type="number"
+                                       step="0.01" required="" name="price" value="{{$product->price}}"
+                                       class="form-control @error('price') is-invalid @enderror">
+
+                                @error('price')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                            <div id="div-quantity" class="col">
+                                <label for="quantity{{$product->id}}">{{__('Quantity')}}</label>
+                                <input id="quantity{{$product->id}}" placeholder="{{__('Quantity')}}" type="number"
+                                       step="1" required="" name="quantity" value="{{$product->quantity}}"
+                                       class="form-control @error('quantity') is-invalid @enderror">
+
+                                @error('quantity')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div id="div-alcohol" class="col">
+                                <label for="price{{$product->id}}">{{__('Alcohol')}}</label>
+                                <input id="price{{$product->id}}" placeholder="{{__('Alcohol')}}" type="number"
+                                       step="0.01" required="" name="alcohol" value="{{$product->alcohol}}"
+                                       class="form-control @error('alcohol') is-invalid @enderror">
+
+                                @error('alcohol')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                            <div id="div-cl" class="col">
+                                <label for="cl">{{__('Cl')}}</label>
+                                <input id="cl" placeholder="{{__('Cl')}}" type="number"
+                                       step="1" required="" name="cl" value="{{$product->cl}}"
+                                       class="form-control @error('cl') is-invalid @enderror">
+
+                                @error('cl')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div id="div-description" class="col">
+                                <label for="description">{{__('Description')}}</label>
+                                <textarea id="description" placeholder="{{__('Description')}}" type="text"
+                                          class="form-control @error('description') is-invalid @enderror"
+                                          required="" name="description" rows="5">{{$product->description}}</textarea>
+
+                                @error('description')
+                                <span class="invalid-feedback"
+                                      role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">
+                            {{__('Save')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 @endsection
 
 {{--
