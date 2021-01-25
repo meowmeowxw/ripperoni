@@ -59,7 +59,7 @@
                                 @if($product->isAvailable())
                                     ( {{$product->quantity}} {{__('in stock')}} )
                                 @else
-                                    ({{__('Not in stocks')}} )
+                                    ({{__('Not in stocks')}})
                                 @endif
                             </p>
                         </div>

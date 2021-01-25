@@ -45,7 +45,10 @@ class ProductController extends Controller
     public function show()
     {
         $products = Product::where('active', true)->paginate(Config::get('constants.numProducts'));
-        $latest = Product::orderBy('created_at', 'DESC')->where('active', true)->take(3)->get();
+        $latest = Product::orderBy('created_at', 'DESC')
+            ->where('active', true)
+            ->where('quantity', '>', 0)
+            ->take(3)->get();
         return view('dashboard', [
             'latest' => $latest,
             'products' => $products,
