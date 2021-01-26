@@ -62,8 +62,8 @@ class NotificationChangeOrderStatus extends Notification
     {
         return [
             'status' => $this->sellerOrder->status->name,
-            'sellerOrder' => $this->sellerOrder->id,
             'order' => $this->sellerOrder->order->id,
+            'url' => route('customer.order.id', $this->sellerOrder->order->id),
         ];
     }
 }

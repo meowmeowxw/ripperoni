@@ -29,7 +29,7 @@ $(".selectcategory").click(function () {
         query = null;
     } else {
         $.ajax({
-            url: searchPath,
+            url: baseUrl,
             type: "GET",
             data: {'category': query},
             success: function (data) {

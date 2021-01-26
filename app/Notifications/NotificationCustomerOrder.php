@@ -62,6 +62,7 @@ class NotificationCustomerOrder extends Notification
         return [
             'type' => 'forCustomer',
             'order' => $this->order->id,
+            'url' => route('customer.order.id', $this->order->id),
         ];
     }
 }

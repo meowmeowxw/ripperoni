@@ -61,6 +61,7 @@ class NotificationSellerOrder extends Notification
         return [
             'type' => 'forSeller',
             'order' => $this->sellerOrder->id,
+            'url' => route('seller.order.id', $this->sellerOrder->id),
         ];
     }
 }

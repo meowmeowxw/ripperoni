@@ -50,7 +50,7 @@
                 let val = parseInt($(this)[0].value);
                 if (val && val >= 1) {
                     $.ajax({
-                        url: `${searchPath}customer/cart/update`,
+                        url: `${baseUrl}customer/cart/update`,
                         type: "POST",
                         data: {"id": {{$selector}}, "quantity": val},
                         success: function (data) {
@@ -113,7 +113,7 @@
                                                     <input id="{{'product'.$product->id}}" value="{{$product->id}}"
                                                            name="id"
                                                            type="hidden">
-                                                    <input id="{{'quantity'.$product->id}}" type="number"
+                                                    <input id="{{'quantity'.$product->id}}" type="number" min="1"
                                                            name="quantity"
                                                            class="@error('quantity'.$product->id) form-control is-invalid @enderror"
                                                            value="{{$fo["ordered_quantity"]}}"/>
