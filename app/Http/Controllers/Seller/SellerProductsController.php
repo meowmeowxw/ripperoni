@@ -95,6 +95,7 @@ class SellerProductsController extends Controller
         if(config('app.env') === 'production') {
             $path = $request->file('logo')->store('logos', 's3');
             $url = Storage::disk('s3')->url($path);
+            dd($url, $path);
         } else {
             $url = '/'.$request->file('logo')->store('logos');
         }
