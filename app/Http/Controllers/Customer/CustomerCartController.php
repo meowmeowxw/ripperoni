@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Mail\NewCustomerOrder;
 use App\Mail\NewSellerOrder;
 use App\Mail\NewUser;
+use App\Notifications\NotificationCustomerOrder;
+use App\Notifications\NotificationSellerOrder;
 use App\Providers\RouteServiceProvider;
 use App\Models\Product;
 use App\Models\Order;
@@ -231,11 +233,12 @@ class CustomerCartController extends Controller
         }
         $order->save();
         */
-
+        Auth::user()->notify(new NotificationCustomerOrder($order));
         Mail::to(Auth::user()->email)->send(new NewCustomerOrder(Auth::user(), $order));
         foreach ($order->sellerOrders as $sellerOrder) {
-            $email = User::find($sellerOrder->seller->user->id)->email;
-            Mail::to($email)->send(new NewSellerOrder($sellerOrder));
+            $sellerNotify = User::find($sellerOrder->seller->user->id);
+            $sellerNotify->notify(new NotificationSellerOrder($sellerOrder));
+            Mail::to($sellerNotify->email)->send(new NewSellerOrder($sellerOrder));
         }
         $request->session()->forget('productsOrder');
 

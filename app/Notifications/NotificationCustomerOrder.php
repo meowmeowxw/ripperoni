@@ -60,6 +60,7 @@ class NotificationCustomerOrder extends Notification
     public function toArray($notifiable)
     {
         return [
+            'type' => 'forCustomer',
             'order' => $this->order->id,
         ];
     }

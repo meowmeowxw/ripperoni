@@ -41,6 +41,12 @@ $(document).ready(function () {
                         if (data.status !== "") {
                             askForApproval('Order Status Updated', `Order n. ${data.order}: ${data.status}`);
                         }
+                        if (data.type === 'forCustomer'){
+                            askForApproval('Checkout Confirmed', `The new order it's added lo the list (id ${data.order})`);
+                        }
+                        if (data.type === 'forSeller'){
+                            askForApproval('New order!!', `ggg (id ${data.order})`);
+                        }
                     });
                     // askForApproval('10', 'ciao');
                 }
