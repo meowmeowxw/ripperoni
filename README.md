@@ -2,7 +2,7 @@
 
 ## Install
 
-If `php` and `composer` are installed installed then you can install dependencies with:
+If `php` and `composer` are installed then you can install dependencies with:
 
 `composer install`
 
@@ -15,6 +15,8 @@ docker run --rm \
     laravelsail/php80-composer:latest \
     composer install
 ```
+
+## Run
 
 Alias sail:
 
@@ -39,7 +41,7 @@ sail php artisan migrate:fresh
 sail php artisan db:seed
 ```
 
-Install js/css components:
+Install js/css dependencies and compile sass:
 
 ```sh
 npm install
@@ -54,7 +56,7 @@ npm run prod
 
 Per la fase di development abbiamo usato [sail](https://laravel.com/docs/8.x/sail), che ci
 permette di avere un ambiente dockerizzato semplice da usare (Su windows è consigliato
-avere WSL2). Una volta fatto partire con `./vendor/bin/sail up` il programma possiamo 
+avere WSL2). Una volta lanciato il comando `./vendor/bin/sail up` possiamo 
 accedere all'interfaccia web su `http://localhost` e al mail server su `http://localhost:8025`.
 
 ### Struttura
@@ -69,6 +71,8 @@ Il sito è protetto contro attacchi di tipo:
 * [SQL Injection](https://portswigger.net/web-security/sql-injection)
 * [XSS](https://portswigger.net/web-security/cross-site-scripting)
 * [CSRF](https://portswigger.net/web-security/csrf)
+
+Inoltre applichiamo degli hash **sicuri** alle password prima di salvarle nel DB.
 
 ### Notifiche
 
