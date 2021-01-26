@@ -76,12 +76,17 @@ Inoltre applichiamo degli hash **sicuri** alle password prima di salvarle nel DB
 
 ### Notifiche
 
-Le notifiche sono via email e vengono inviate in questi casi:
+Le notifiche sono di due tipi email:
 
 * Creazione utente
-* Ordine (sia per il customer che per il seller)
+* Ordine (sia per il customer che per i seller)
 * Cambio stato dell'ordine (per il customer)
 * Cambio password (per ogni tipo di utente)
+
+E javascript:
+
+* Creazione ordine (sia per il customer che per i seller)
+* Cambiamento dello stato dell'ordine (per il customer)
 
 ### Ajax
 
