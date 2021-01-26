@@ -4,16 +4,7 @@ use Illuminate\Support\Str;
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection Name
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify which of the database connections below you wish
-    | to use as your default connection for all database work. Of course
-    | you may use many connections at once using the Database library.
-    |
-    */
+    $DATABASE_URL = parse_url(env('DATABASE_URL')),
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
@@ -34,8 +25,6 @@ return [
     */
 
     'connections' => [
-
-        $DATABASE_URL = parse_url(env('DATABASE_URL')),
 
         'sqlite' => [
             'driver' => 'sqlite',
