@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class SellerProductsController extends Controller
 {
@@ -91,6 +92,12 @@ class SellerProductsController extends Controller
         ]);
 
         $category = Category::where('name', $request->category)->first();
+        if(config('app.env') === 'production') {
+            $path = $request->file('logo')->store('logos', 's3');
+            $url = Storage::disk('s3')->url($path);
+        } else {
+            $url = '/'.$request->file('logo')->store('logos');
+        }
         $product = new Product([
             'name' => $request->name,
             'description' => $request->description,
@@ -98,7 +105,7 @@ class SellerProductsController extends Controller
             'quantity' => $request->quantity,
             'cl' => $request->cl,
             'alcohol' => $request->alcohol,
-            'path' => "/".$request->file('logo')->store('logos'),
+            'path' => $url,
         ]);
         $product->category_id = $category->id;
         $product->seller_id = Auth::user()->seller->id;
