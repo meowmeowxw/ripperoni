@@ -35,7 +35,7 @@ class SearchController extends Controller
             if (count($products) > 0) {
                 $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
                 foreach ($products as $product) {
-                    $output .= '<a href="' . route('product.id', $product->id) . '">' . '<li class="list-group-item">' . $product->name . '</li></a>';
+                    $output .= '<a href="' . route('product.id', $product->id) . '">' . '<li class="list-group-item">' . htmlspecialchars($product->name) . '</li></a>';
                 }
                 $output .= '</ul>';
             } else {
