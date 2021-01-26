@@ -22,8 +22,7 @@ use App\Models\Category;
 use App\Models\Product;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
+|-------------------------------------------------------------------------- | Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -105,16 +104,6 @@ Route::get('/', [ProductController::class, 'show'])
 Route::post('/user/password-change', [PasswordChangeController::class, 'edit'])
     ->name('password.change');
 
-
-Route::get('/sellers', function () {
-    foreach (Seller::all() as $seller) {
-        echo "<h2>" . $seller->company . "</h2>";
-        foreach ($seller->products as $product) {
-            echo "<li>" . $product->name . "</li>";
-        }
-    }
-})->name('sellers');
-
 Route::prefix('/register')->group(function () {
     Route::get('/', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -131,13 +120,13 @@ Route::prefix('/login')->group(function () {
         ->middleware('guest');
 });
 
-Route::prefix('/confirm-password')->group(function () {
-    Route::get('/', [ConfirmablePasswordController::class, 'show'])
-        ->name('password.confirm');
-
-    Route::post('/', [ConfirmablePasswordController::class, 'store']);
-});
-
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+Route::get('/notifications', function () {
+    $user = \Illuminate\Support\Facades\Auth::user();
+    $notifications = json_encode($user->unreadNotifications);
+    $user->unreadNotifications->markAsRead();
+    return $notifications;
+})->middleware(['auth'])->name('notifications');
