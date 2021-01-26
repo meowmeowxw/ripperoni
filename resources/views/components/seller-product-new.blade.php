@@ -7,7 +7,19 @@
                      btntext="{{ __('Save') }}" btnaddclass="btn-block">
 
             <x-FormInput name="name" idAndFor="nameNew" :lblName="__('Name')" type="text" inputValue="{{old('name')}}"/>
-            <x-FormInput name="description" idAndFor="descriptionNew" :lblName="__('Description')" type="text" inputValue="{{old('description')}}" />
+            <div class="form-row">
+                <div id="div-description" class="col">
+                    <label for="description">{{__('Description')}}</label>
+                    <textarea id="description" placeholder="{{__('Description')}}" type="text"
+                              class="form-control @error('description') is-invalid @enderror"
+                              required="" name="description" rows="5"></textarea>
+
+                    @error('description')
+                    <span class="invalid-feedback"
+                          role="alert"><strong>{{ $message }}</strong></span>
+                    @enderror
+                </div>
+            </div>
             <x-FormInput name="price" idAndFor="priceNew" :lblName="__('Price')" type="number" step="0.01" inputValue="{{old('price')}}"/>
             <x-FormInput name="quantity" idAndFor="quantityNew" :lblName="__('Quantity')" type="number" inputValue="{{old('quantity')}}" />
             <x-FormInput name="alcohol" idAndFor="alcoholNew" :lblName="__('Alcohol level')" type="number"
