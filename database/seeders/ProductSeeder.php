@@ -139,12 +139,12 @@ class ProductSeeder extends Seeder
                 $description .= Str::random(rand(8, 20)) . ' ';
             }
             $category->products()->create([
-                'name' => Str::random(rand(5, 15)),
+                'name' => $faker->word,
                 'description' => $description,
                 'price' => $faker->randomFloat(2, 1, 20),
                 'quantity' => rand(1, 100),
                 'alcohol' => $faker->randomFloat(2, 4, 13),
-                'cl' => rand(30, 1000),
+                'cl' => rand(30, 100),
                 'seller_id' => Seller::inRandomOrder()->first()->id,
                 'path' => '/img/ripperoni-' . rand(1, 8) . '.png',
             ]);
