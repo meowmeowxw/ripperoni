@@ -25,6 +25,10 @@ class ProductController extends Controller
     public function view($id = 1)
     {
         $product = Product::find($id);
+        if (!$product) {
+            abort(404);
+        }
+
         if (!$product->active) {
             return redirect(route('dashboard'));
         }

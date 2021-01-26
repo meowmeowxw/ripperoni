@@ -33,6 +33,10 @@ class SellerPublicController extends Controller
     public function create($id)
     {
         $seller = Seller::find($id);
+        if (!$seller) {
+            return abort(404);
+        }
+
         $products = $seller->products()
             ->where('active', true)
             ->orderBy('id', 'DESC')
