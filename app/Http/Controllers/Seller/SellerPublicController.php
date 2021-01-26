@@ -35,6 +35,7 @@ class SellerPublicController extends Controller
         $seller = Seller::find($id);
         $products = $seller->products()
             ->where('active', true)
+            ->orderBy('id', 'DESC')
             ->paginate(Config::get('constants.numProducts', 15));
         return view('seller.public', [
             'seller' => $seller,
