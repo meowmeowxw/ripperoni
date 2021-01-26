@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Seller;
 use App\Mail\ChangeOrderStatus;
 use App\Models\Status;
 use App\Models\SellerOrder;
+use App\Notifications\NotificationChangeOrderStatus;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -86,9 +87,11 @@ class SellerOrdersController extends Controller
             back();
         }
 
-        Mail::to($sellerOrder->order->customer->user->email)->send(new ChangeOrderStatus($sellerOrder));
         $sellerOrder->status_id = $newStatus->id;
         $sellerOrder->save();
+        $customerUser = $sellerOrder->order->customer->user;
+        $customerUser->notify(new NotificationChangeOrderStatus($sellerOrder));
+        Mail::to($customerUser->email)->send(new ChangeOrderStatus($sellerOrder));
         return back();
     }
 
