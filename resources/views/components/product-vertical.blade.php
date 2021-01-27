@@ -7,7 +7,7 @@
             <div class="card-title">
                 <strong>{{$product->name ?? '-'}}</strong>
             </div>
-            <p class="card-text">sell by
+            <p class="card-text">sold by
                 <strong>{{ \App\Models\Seller::where('id', $product->seller_id)->first()->company }}</strong>
             </p>
             {{--<b>{{ \App\Models\Seller::find($beer->seller_id)->company }}</b>--}}
