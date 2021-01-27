@@ -1,6 +1,7 @@
 # Ripperoni
 
-Project made by:
+## Team
+
 * Giovanni Di Santi (giovanni.disanti@studio.unibo.it)
 * Massimiliano Conti (massimiliano.conti8@studio.unibo.it)
 
@@ -56,17 +57,43 @@ npm run prod
 
 ## Relazione (ITA)
 
-`Ripperoni` è scritto in laravel 8, bootstrap 4, html 5 e jquery.
+`Ripperoni` è un sito e-commerce di birre scritto in laravel 8, bootstrap 4, html 5 e jquery.
+
+### Struttura
+
+Il progetto è stato pensato con i principi del design mobile-first, abbiamo usato bootstrap
+per raggiungere lo scopo. Inizialmente abbiamo fatto dei [mockups](./mockups).
+
+Ci sono vari tipi di utenti, che possono effettuare le seguenti azioni:
+
+#### Guest
+
+* Navigare i prodotti ed eseguire ricerche
+
+#### Customer
+
+* Cambiare i propri dati personali e la password
+* Può aggiungere al carrello i prodotti
+* Effettuare ordini e visualizzarli, verificandone lo stato (waiting, confirmed, shipped, delivered)
+
+#### Seller
+
+* Aggiungere prodotti
+* Modificare e cancellare i propri prodotti
+* Visualizzare e modificare lo stato degli ordini
+* Cambiare i propri dati personali e la password
+
+### Development
 
 Per la fase di development abbiamo usato [sail](https://laravel.com/docs/8.x/sail), che ci
 permette di avere un ambiente dockerizzato semplice da usare (Su windows è consigliato
 avere WSL2). Una volta lanciato il comando `./vendor/bin/sail up` possiamo 
 accedere all'interfaccia web su `http://localhost` e al mail server su `http://localhost:8025`.
 
-### Struttura
+In production [(heroku)](https://www.heroku.com) usiamo:
 
-Il progetto è stato pensato con i principi del design mobile-first, abbiamo usato bootstrap
-per raggiungere lo scopo. Inizialmente abbiamo fatto dei [mockups](./mockups)
+* [Mail trap](https://mailtrap.io/) per mandare le mail
+* [AWS S3](https://aws.amazon.com/s3/) per salvare le immagini dei nuovi prodotti inseriti
 
 ### Sicurezza
 
@@ -80,14 +107,16 @@ Inoltre applichiamo degli hash **sicuri** alle password prima di salvarle nel DB
 
 ### Notifiche
 
-Le notifiche sono di due tipi email:
+Le notifiche sono di due tipi:
+
+#### Email
 
 * Creazione utente
 * Ordine (sia per il customer che per i seller)
 * Cambio stato dell'ordine (per il customer)
 * Cambio password (per ogni tipo di utente)
 
-E javascript:
+#### Javascript
 
 * Creazione ordine (sia per il customer che per i seller)
 * Cambiamento dello stato dell'ordine (per il customer)
