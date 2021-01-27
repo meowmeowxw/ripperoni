@@ -54,11 +54,11 @@ class SellerProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:60',
             'description' => 'required|string|max:1024',
-            'price' => 'required|numeric',
-            'quantity' => 'required|numeric|integer',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|numeric|integer|min:0',
             'id' => 'required|numeric|integer',
-            'cl' => 'required|numeric|integer',
-            'alcohol' => 'required|numeric',
+            'cl' => 'required|numeric|integer|min:10',
+            'alcohol' => 'required|numeric|min:0',
             // 'path' => 'required|string|max:1024',
         ]);
 
@@ -83,15 +83,20 @@ class SellerProductsController extends Controller
         $request->validate([
             'name' => 'required|string|max:60',
             'description' => 'required|string|max:1024',
-            'price' => 'required|numeric',
-            'quantity' => 'required|numeric|integer',
+            'price' => 'required|numeric|min:0',
+            'quantity' => 'required|numeric|integer|min:0',
             'logo' => 'mimes:jpg,bmp,png|required',
             'category' => 'required|string',
-            'cl' => 'required|numeric|integer',
-            'alcohol' => 'required|numeric',
+            'cl' => 'required|numeric|integer|min:10',
+            'alcohol' => 'required|numeric|min:0',
         ]);
 
         $category = Category::where('name', $request->category)->first();
+        if (!$category) {
+            return back()->withErrors([
+                'category' => 'invalid category',
+            ]);
+        }
         if(config('app.env') === 'production') {
             $path = $request->file('logo')->store('logos', 's3');
             $url = Storage::disk('s3')->url($path);
