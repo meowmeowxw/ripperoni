@@ -19,6 +19,8 @@
                         <input id="password-confirm" type="password" class="form-control mb-2"
                                name="password_confirmation" required autocomplete="new-password"
                                placeholder="{{__('Confirm Password')}}">
+                        <label for="credit_card"
+                               class="">{{ __('Credit Card') }}</label>
                         <input id="credit_card" placeholder="{{__('Credit Card')}}" type="text"
                                class="form-control mb-2 @error('credit_card') is-invalid @enderror"
                                name="credit_card" value="{{old('credit_card')}}">
