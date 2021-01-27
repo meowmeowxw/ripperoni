@@ -1,5 +1,9 @@
 # Ripperoni
 
+Project made by:
+* Giovanni Di Santi (giovanni.disanti@studio.unibo.it)
+* Massimiliano Conti (massimiliano.conti8@studio.unibo.it)
+
 ## Install
 
 If `php` and `composer` are installed then you can install dependencies with:
